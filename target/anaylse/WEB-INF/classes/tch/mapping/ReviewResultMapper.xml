@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tch.dao.ReviewResultMapper">
+  <resultMap id="BaseResultMap" type="tch.model.ReviewResult">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="p_id" jdbcType="VARCHAR" property="pId" />
+    <result column="t_id" jdbcType="VARCHAR" property="tId" />
+    <result column="validity_a" jdbcType="DOUBLE" property="validityA" />
+    <result column="validity_b" jdbcType="DOUBLE" property="validityB" />
+    <result column="reliability" jdbcType="DOUBLE" property="reliability" />
+    <result column="difficulty" jdbcType="DOUBLE" property="difficulty" />
+    <result column="distinction" jdbcType="DOUBLE" property="distinction" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, p_id, t_id, validity_a, validity_b, reliability, difficulty, distinction
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from review_result
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from review_result
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="tch.model.ReviewResult">
+    insert into review_result (id, p_id, t_id, 
+      validity_a, validity_b, reliability, 
+      difficulty, distinction)
+    values (#{id,jdbcType=VARCHAR}, #{pId,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}, 
+      #{validityA,jdbcType=DOUBLE}, #{validityB,jdbcType=DOUBLE}, #{reliability,jdbcType=DOUBLE}, 
+      #{difficulty,jdbcType=DOUBLE}, #{distinction,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="tch.model.ReviewResult">
+    insert into review_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="tId != null">
+        t_id,
+      </if>
+      <if test="validityA != null">
+        validity_a,
+      </if>
+      <if test="validityB != null">
+        validity_b,
+      </if>
+      <if test="reliability != null">
+        reliability,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="distinction != null">
+        distinction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="tId != null">
+        #{tId,jdbcType=VARCHAR},
+      </if>
+      <if test="validityA != null">
+        #{validityA,jdbcType=DOUBLE},
+      </if>
+      <if test="validityB != null">
+        #{validityB,jdbcType=DOUBLE},
+      </if>
+      <if test="reliability != null">
+        #{reliability,jdbcType=DOUBLE},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="distinction != null">
+        #{distinction,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="tch.model.ReviewResult">
+    update review_result
+    <set>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="tId != null">
+        t_id = #{tId,jdbcType=VARCHAR},
+      </if>
+      <if test="validityA != null">
+        validity_a = #{validityA,jdbcType=DOUBLE},
+      </if>
+      <if test="validityB != null">
+        validity_b = #{validityB,jdbcType=DOUBLE},
+      </if>
+      <if test="reliability != null">
+        reliability = #{reliability,jdbcType=DOUBLE},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="distinction != null">
+        distinction = #{distinction,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="tch.model.ReviewResult">
+    update review_result
+    set p_id = #{pId,jdbcType=VARCHAR},
+      t_id = #{tId,jdbcType=VARCHAR},
+      validity_a = #{validityA,jdbcType=DOUBLE},
+      validity_b = #{validityB,jdbcType=DOUBLE},
+      reliability = #{reliability,jdbcType=DOUBLE},
+      difficulty = #{difficulty,jdbcType=DOUBLE},
+      distinction = #{distinction,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,18 @@
+2018-01-25 13:49:20  [ main:0 ] - [ DEBUG ]  Adding [systemProperties] PropertySource with lowest search precedence
+2018-01-25 13:49:20  [ main:5 ] - [ DEBUG ]  Adding [systemEnvironment] PropertySource with lowest search precedence
+2018-01-25 13:49:20  [ main:7 ] - [ DEBUG ]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+2018-01-25 13:49:20  [ main:12 ] - [ INFO ]  Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@ea4a92b: startup date [Thu Jan 25 13:49:20 CST 2018]; root of context hierarchy
+2018-01-25 13:49:20  [ main:77 ] - [ DEBUG ]  Adding [systemProperties] PropertySource with lowest search precedence
+2018-01-25 13:49:20  [ main:77 ] - [ DEBUG ]  Adding [systemEnvironment] PropertySource with lowest search precedence
+2018-01-25 13:49:20  [ main:78 ] - [ DEBUG ]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+2018-01-25 13:49:20  [ main:93 ] - [ INFO ]  Loading XML bean definitions from class path resource [spring.xml]
+2018-01-25 13:49:20  [ main:112 ] - [ DEBUG ]  Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+2018-01-25 13:52:45  [ main:0 ] - [ DEBUG ]  Adding [systemProperties] PropertySource with lowest search precedence
+2018-01-25 13:52:45  [ main:9 ] - [ DEBUG ]  Adding [systemEnvironment] PropertySource with lowest search precedence
+2018-01-25 13:52:45  [ main:10 ] - [ DEBUG ]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+2018-01-25 13:52:45  [ main:18 ] - [ INFO ]  Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@ea4a92b: startup date [Thu Jan 25 13:52:45 CST 2018]; root of context hierarchy
+2018-01-25 13:52:45  [ main:80 ] - [ DEBUG ]  Adding [systemProperties] PropertySource with lowest search precedence
+2018-01-25 13:52:45  [ main:80 ] - [ DEBUG ]  Adding [systemEnvironment] PropertySource with lowest search precedence
+2018-01-25 13:52:45  [ main:81 ] - [ DEBUG ]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+2018-01-25 13:52:45  [ main:95 ] - [ INFO ]  Loading XML bean definitions from class path resource [spring.xml]
+2018-01-25 13:52:45  [ main:111 ] - [ DEBUG ]  Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
