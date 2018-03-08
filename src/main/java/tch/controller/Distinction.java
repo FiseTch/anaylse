@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Copyright:
  * 
  * @class: tch.controller
- * @Description: 区分度计算
+ * @Description: Distinction 区分度计算
  *
  * @version: v1.0.0
  * @author: tongch
