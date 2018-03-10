@@ -2,18 +2,20 @@ package tch.util;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.mail.internet.MimeUtility;
 
-import org.apache.commons.lang.StringUtils;  
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.DateUtil;  
   
 /**
  *
  * @author tongchaohua
  *
  */
-public class MyDateUtil {  
+public class MyDateUtil extends DateUtil{  
 	
 	/** 
 	   * 设置下载文件中文件的名称 
@@ -67,6 +69,9 @@ public class MyDateUtil {
         Date date=formatString("1993/10/12", "yyyy/MM/dd");  
         String str=formatDate(date, "yyyy-MM-dd");  
         System.out.println(str);  
+    }  
+    public static int absoluteDay(Calendar cal, boolean use1904windowing) {    
+        return DateUtil.absoluteDay(cal, use1904windowing);    
     }  
    
 } 

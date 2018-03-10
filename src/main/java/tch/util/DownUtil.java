@@ -74,7 +74,7 @@ public class DownUtil {
      * @throws Exception
      * @return 
      */
-    public static void downloadExcel(HttpServletRequest request, HttpServletResponse response,ExcelExportEnum excelExportEnum, LinkedHashMap<String, String> map, List<?> list) throws Exception {
+/*    public static void downloadExcel(HttpServletRequest request, HttpServletResponse response,ExcelExportEnum excelExportEnum, LinkedHashMap<String, String> map, List<?> list) throws Exception {
 
         // 第一步，创建一个webbook，对应一个Excel文件  
         HSSFWorkbook wb = init();
@@ -96,7 +96,7 @@ public class DownUtil {
         // 第六步，输出Excel文件  
         String fileName = new SimpleDateFormat("yyyyMMdd").format(new Date()) + "_" + excelExportEnum.getTypeName() +".xls";
         outWrite(request, response, wb, fileName);  
-    }
+    }*/
 
     private static void outWrite(HttpServletRequest request, HttpServletResponse response, HSSFWorkbook wb,
             String fileName) throws IOException {
@@ -150,7 +150,7 @@ public class DownUtil {
     /**
      * @Description: 创建表格数据
      */
-    private static void creatTableDataRows(ExcelExportEnum excelExportEnum, HSSFSheet sheet, List<?> list, String[] colContents) {
+/*    private static void creatTableDataRows(ExcelExportEnum excelExportEnum, HSSFSheet sheet, List<?> list, String[] colContents) {
         HSSFRow row = null;
         for (int i = 0; i < list.size(); i++) { 
             row = sheet.createRow((int) i + 2);
@@ -164,7 +164,7 @@ public class DownUtil {
             else
                 createTeableDefaultDate(colContents, list.get(i), row);
         }
-    }
+    }*/
     /**
      * @Description: 预约客户信息
      */

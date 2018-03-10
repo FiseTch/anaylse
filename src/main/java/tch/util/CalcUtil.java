@@ -134,6 +134,15 @@ public class CalcUtil {
 		return sum;
 	}
 	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: sortList
+	 * @Description: 对数组元素降序排序
+	 * @param grade
+	 * @return
+	 * @return: List<Integer>
+	 */
 	public static List<Integer> sortList(List<Integer> grade){		
 		if (null != grade && grade.size() > 0)  {
 			Collections.sort(grade);//升序排列
@@ -156,10 +165,11 @@ public class CalcUtil {
 	 * @Description: 重测系数法与折半法计算信度
 	 * @param oddList奇数题目的总分
 	 * @param evenList偶数题目的总分
-	 * @return: void
+	 * @return: double
 	 * @throws Exception 
+	 * 
 	 */
-	public double calcValidity(List<Integer> oddList,List<Integer> evenList) throws Exception{
+	public static double calcValidity(List<Integer> oddList,List<Integer> evenList) throws Exception{
 		
 		double calcDeviation = calcDeviation(oddList, evenList);
 		double oddVariance = calcVariance(oddList);
@@ -169,7 +179,7 @@ public class CalcUtil {
 			return -1;
 		}else{
 			if (oddVariance != 0 && evenVariance != 0) {
-				double r =  evenVariance/(oddList.size()*oddVariance*evenVariance);
+				double r =  calcDeviation/(oddList.size()*oddVariance*evenVariance);
 				return 2*r/(r+1);
 			}else{
 				return 0;
@@ -183,13 +193,12 @@ public class CalcUtil {
 	 * @Description: 克伦巴赫系数法
 	 * @param totalNum 试卷总题目数
 	 * @param totalNo 测验人数
-	 * @param tch1 试卷总分list
-	 * @param tch2 各题总分map
+	 * @param tch2 各题总分map 试卷总分list
 	 * @return
 	 * @return: double
 	 * @throws Exception 
 	 */
-	public double calcValidity2(int totalNum,int totalNo, List<Integer> tch1,Map<Integer,List<Integer>> tch2) throws Exception{
+	public static double calcValidity2(int totalNum,int totalNo, Map<Integer,List<Integer>> tch2) throws Exception{
 		int sum = 0 ;
 		for (int i = 0; i < totalNo; i++) {
 			List<Integer> tch3 = new ArrayList<Integer>();
@@ -200,7 +209,7 @@ public class CalcUtil {
 			}
 			sum += calcStandard4One;	
 		}
-		double calcStandard4All = calcVariance(tch1);//计算试卷的方差
+		double calcStandard4All = calcVariance(tch2.get(String.valueOf(totalNum)));//计算试卷的方差
 		if (calcStandard4All == -1) {
 			throw new Exception("计算试卷方差出错！！！");
 		}		
@@ -215,8 +224,8 @@ public class CalcUtil {
 	 * @param validity 信度
 	 * @return: boolean
 	 */
-	public boolean checkValidity(double validity){
-		return (validity < 0.5) ? true :false;		
+	public static String checkValidity(double validity){
+		return (validity > 0.5) ? ConstantTch.RELIABILITY_A :ConstantTch.RELIABILITY_B;		
 	}
 	/**
 	 * 
@@ -228,7 +237,7 @@ public class CalcUtil {
 	 * @param hopeValidity 希望信度
 	 * @return: void
 	 */
-	public int updatevalidity(int totalNum,double factValidity,double hopeValidity){
+	public static int updatevalidity(int totalNum,double factValidity,double hopeValidity){
 		if ((1-hopeValidity)*factValidity != 0) {			
 			return  (int) (((1-factValidity)*hopeValidity)/((1-hopeValidity)*factValidity));
 		}else{
@@ -244,7 +253,7 @@ public class CalcUtil {
 	 * @return pi难度系数 p_i=x i/y_i 
 	 * @return: double
 	 */
-	public double calcSingleDifficulty(List<Integer> grade){
+	public static double calcSingleDifficulty(List<Integer> grade){
 		
 		double avg = calcAvg(grade);
 		double sum = calcSum(grade);
@@ -262,7 +271,7 @@ public class CalcUtil {
 	 * @return 试卷难度
 	 * @return: double
 	 */
-	public double calcDifficulty(int totalNum, int totalGrade,Map<Integer,List<Integer>> grade ){
+	public static double calcDifficulty(int totalNum, int totalGrade,Map<Integer,List<Integer>> grade ){
 		double sum  = 0;
 		for (int i = 0; i < totalNum; i++) {
 			//calcSingleDifficulty(grade.get(i));//计算每道题目的pi*yi = 计算每道题目的平均分相加即可
@@ -280,11 +289,11 @@ public class CalcUtil {
 	 * @return 
 	 * @return: String
 	 */
-	public String checkDifficulty(double difficulty){
+	public static String checkDifficulty(double difficulty){
 		if (difficulty < 0.8 && difficulty > 0.6) {
-			return ConstantTch.difficulty_A;
+			return ConstantTch.DIFFICULTY_A;
 		}else{			
-			return ConstantTch.difficulty_B;
+			return ConstantTch.DIFFICULTY_B;
 		}
 	
 	}
@@ -294,13 +303,12 @@ public class CalcUtil {
 	 * @user: tongchaohua
 	 * @Title: calcReliability
 	 * @Description: TODO
-	 * @param factList 实际的分数
-	 * @param standardList  校准的分数列表
+	 * @param factList 实际的总分
+	 * @param standardList  校准的分数列表r_xy=(∑▒(x-x ̅ )(y-y ̅ ) )/(NS_X S_Y )
 	 * @return: void
 	 * @throws Exception 
 	 */
-	@RequestMapping("/calcReliability")
-	public double calcReliability(List<Integer> factList, List<Integer> standardList) throws Exception{
+	public static double calcReliability(List<Integer> factList, List<Integer> standardList) throws Exception{
 		double factAvg = CalcUtil.calcDeviation(factList, standardList);
 		
 		double factVariance =  CalcUtil.calcVariance(factList);		
@@ -311,18 +319,26 @@ public class CalcUtil {
 		
 		
 	}
+	
 	/**
 	 * 
 	 * @user: tongchaohua
-	 * @Title: calcReliability
-	 * @Description: TODO
-	 * @param factList  实际分数
-	 * @param avg  校准均值 ---由历年均值确定，或者方差评定
-	 * @param standard  校准方差 ---由历年均值确定，或者方差评定
-	 * @return: void
+	 * @Title: checkReliability
+	 * @Description: 对信度进行校验
+	 * @param reliability
+	 * @return
+	 * @return: String
 	 */
-	public void calcReliability(List<Integer> factList,double avg,double standard){
-		//无法评定
+	public static String checkReliability(double reliability){
+		if (reliability == 1) {
+			return ConstantTch.RELIABILITY_A;
+		}else if (reliability > 0.7) {
+			return ConstantTch.RELIABILITY_D;
+		}else if (reliability > 0.4) {
+			return ConstantTch.RELIABILITY_C;
+		}else {
+			return (reliability == 0) ?ConstantTch.RELIABILITY_B :ConstantTch.RELIABILITY_D;
+		}
 	}
 	/**
 	 * 
@@ -338,7 +354,7 @@ public class CalcUtil {
 	 * @return
 	 * @return: double
 	 */
-	public double calcDistinction(List<Integer> grade,int totalGrade){
+	public static double calcDistinction(List<Integer> grade,int totalGrade){
 		List<Integer> list = new ArrayList<Integer>();
 		list = sortList(grade);//将测验成绩从高到底排序
 		if (null != list && list.size() > 0) {
@@ -349,7 +365,17 @@ public class CalcUtil {
 		}
 		return 0;		
 	}
-	public String checkDistinction(double d){
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: checkDistinction
+	 * @Description: 对区分度进行校验
+	 * @param d
+	 * @return
+	 * @return: String
+	 */
+	public static String checkDistinction(double d){
 		if(d >= 0.4){
 			return ConstantTch.DISTINCTION_A;
 		}else if (d >= 0.3) {

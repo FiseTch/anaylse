@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tch.controller.Validity;
 import tch.dao.TeacherMapper;
 import tch.model.Teacher;
 
@@ -26,7 +25,6 @@ import tch.model.Teacher;
  * 2018-02-04     tongch          v1.1.0
  */
 public class TeacherServiceImpl implements TeacherMapper {
-	private static Log log = LogFactory.getLog(Validity.class);
 	
 	private TeacherMapper teacherMapper;
 	

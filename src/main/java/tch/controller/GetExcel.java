@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import tch.util.ExcelUtil;
+import tch.util.ExcelUpUtil;
 
 
 /**
@@ -60,9 +60,9 @@ import tch.util.ExcelUtil;
 @RequestMapping(value = "/getExcel")//访问路径
 public class GetExcel {
 	private static Log log = LogFactory.getLog(GetExcel.class);
-	private static int totalRows; //sheet中总行数  
+/*	private static int totalRows; //sheet中总行数  
 	private static int totalCells; //每一行总单元格数  
-	/**
+*/	/**
 	 * 
 	 * @user: tongchaohua
 	 * @Title: upExcel
@@ -75,14 +75,14 @@ public class GetExcel {
 	public ModelAndView  upExcel(@RequestParam("file")MultipartFile file){
 		ModelAndView modle = new ModelAndView();
 		if (!file.isEmpty()) {
-			String fileNameExtension = ExcelUtil.getPostfix(file.getOriginalFilename());
+			String fileNameExtension = ExcelUpUtil.getPostfix(file.getOriginalFilename());
 			//String fileNameExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
 			if ("xls".equals(fileNameExtension) || "xlsx".equals(fileNameExtension)) {				
 		        Date now = new Date();// 获取当前时间
 		        Long longNow = now.getTime();
 		        DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd");
 		        String strToday = dFormat.format(longNow);
-				String foldPath = ExcelUtil.ROOT_CATALOG + File.separator + strToday;//文件上传的目标位置		
+				String foldPath = ExcelUpUtil.ROOT_CATALOG + File.separator + strToday;//文件上传的目标位置		
 				File myFolderPath = new File(foldPath);  //新建文件夹  
 				try {
 					if (!myFolderPath.exists()) {   
@@ -99,8 +99,8 @@ public class GetExcel {
 					FileOutputStream fos = new FileOutputStream(myFilePath);//利用输出流向文件中传输数据		
 					fos.write(bytes);
 					fos.close();
-					List<Map<Integer,List<String>>> data = readExcel(file);
-					modle.addObject("data", data);
+					List<Map<Integer,List<String>>> data = ExcelUpUtil.readExcel(file);
+					modle.addObject("data", data.get(0));//存取第一页的数据
 				} catch (IOException e) {
 					log.error(e);
 				}catch (Exception eFilePath){    
@@ -149,145 +149,6 @@ public class GetExcel {
         }  
         out.close();  
     } 
-    /** 
-     * read the Excel .xlsx,.xls 
-     * @param file jsp中的上传文件 
-     * @return 
-     * @throws IOException  
-     */  
-    public List<Map<Integer,List<String>>> readExcel(MultipartFile file) throws IOException {  
-        if(file==null||ExcelUtil.EMPTY.equals(file.getOriginalFilename().trim())){  
-            return null;  
-        }else{  
-            String postfix = ExcelUtil.getPostfix(file.getOriginalFilename());  
-            if(!ExcelUtil.EMPTY.equals(postfix)){  
-                if(ExcelUtil.OFFICE_EXCEL_2003_POSTFIX.equals(postfix)){  
-                    return readXls(file);  
-                }else if(ExcelUtil.OFFICE_EXCEL_2010_POSTFIX.equals(postfix)){  
-                    return readXlsx(file);  
-                }else{                    
-                    return null;  
-                }  
-            }  
-        }
-		return null;  
-    }
-    
-	    /** 
-	     * read the Excel 2010 .xlsx 
-	     * @param file 
-	     * @param beanclazz 
-	     * @param titleExist 
-	     * @return 
-	     * @throws IOException  
-	     */   
-	    public  List<Map<Integer,List<String>>> readXlsx(MultipartFile file){  
-	       List<Map<Integer,List<String>>> list = new ArrayList<Map<Integer,List<String>>>();  
-	        // IO流读取文件  
-	        Map<Integer,List<String>> map = new HashMap<Integer, List<String>>();
-	        InputStream input = null;  
-	        XSSFWorkbook wb = null;  
-	        List<String> rowList = null;  
-	        try {  
-	            input = file.getInputStream();  
-	            // 创建文档  
-	            wb = new XSSFWorkbook(input);                         
-	            //读取sheet(页)  
-	            for(int numSheet=0;numSheet<wb.getNumberOfSheets();numSheet++){  
-	                XSSFSheet xssfSheet = wb.getSheetAt(numSheet);  
-	                if(xssfSheet == null){  
-	                    continue;  
-	                }  
-	                totalRows = xssfSheet.getLastRowNum();                
-	                //读取Row,从第一行开始  
-	                for(int rowNum = 0;rowNum <= totalRows;rowNum++){  
-	                    XSSFRow xssfRow = xssfSheet.getRow(rowNum);  
-	                    if(xssfRow!=null){  
-	                        rowList = new ArrayList<String>();  
-	                        totalCells = xssfRow.getLastCellNum();  
-	                        //读取列，从第一列开始  
-	                        for(int c=0;c<totalCells;c++){  
-	                            XSSFCell cell = xssfRow.getCell(c);  
-	                            if(cell==null){  
-	                                rowList.add(ExcelUtil.EMPTY);  
-	                                continue;  
-	                            }                             
-	                            rowList.add(ExcelUtil.getXValue(cell).trim());  
-	                        }     
-	                    map.put(rowNum,rowList);                                            
-	                    }  
-	                } 
-	                list.add(map);
-	            }  
-	            return list;  
-	        } catch (IOException e) {             
-	            e.printStackTrace();  
-	        } finally{  
-	            try {  
-	                input.close();  
-	            } catch (IOException e) {  
-	                e.printStackTrace();  
-	            }  
-	        }  
-	        return null;  
-	          
-	    }  
-	    /** 
-	     * read the Excel 2003-2007 .xls 
-	     * @param file 
-	     * @param beanclazz 
-	     * @param titleExist 
-	     * @return 
-	     * @throws IOException  
-	     */  
-	    public List<Map<Integer,List<String>>> readXls(MultipartFile file){   
-	        List<Map<Integer,List<String>>> list = new ArrayList<Map<Integer,List<String>>>();  
-	        // IO流读取文件  
-	    	Map<Integer,List<String>> map = new HashMap<Integer, List<String>>();
-	        InputStream input = null;  
-	        HSSFWorkbook wb = null;  
-	        List<String> rowList = null;  
-	        try {  
-	            input = file.getInputStream();  
-	            // 创建文档  
-	            wb = new HSSFWorkbook(input);                         
-	            //读取sheet(页)  
-	            for(int numSheet=0;numSheet<wb.getNumberOfSheets();numSheet++){  
-	                HSSFSheet hssfSheet = wb.getSheetAt(numSheet);  
-	                if(hssfSheet == null){  
-	                    continue;  
-	                }  
-	                totalRows = hssfSheet.getLastRowNum();                
-	                //读取Row,从第二行开始  
-	                for(int rowNum = 0;rowNum <= totalRows;rowNum++){  
-	                    HSSFRow hssfRow = hssfSheet.getRow(rowNum);  
-	                    if(hssfRow!=null){  
-	                        rowList = new ArrayList<String>();  
-	                        totalCells = hssfRow.getLastCellNum();  
-	                        //读取列，从第一列开始  
-	                        for(short c=0;c<totalCells;c++){  
-	                            HSSFCell cell = hssfRow.getCell(c);  
-	                            if(cell==null){  
-	                                rowList.add(ExcelUtil.EMPTY);  
-	                                continue;  
-	                            }                             
-	                            rowList.add(ExcelUtil.getHValue(cell).trim());  
-	                        }          
-	                        map.put(rowNum,rowList);  
-	                    }                     
-	                }  
-	                list.add(map);
-	            }  
-	            return list;  
-	        } catch (IOException e) {             
-	            e.printStackTrace();  
-	        } finally{  
-	            try {  
-	                input.close();  
-	            } catch (IOException e) {  
-	                e.printStackTrace();  
-	            }  
-	        }  
-	        return null;  
-	    } 
+	
+ 
 }

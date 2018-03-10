@@ -15,9 +15,9 @@ import tch.service.IUserService;
 
 @Controller
 @RequestMapping(value = "/excelTest")
-public class ExcelTest {
+public class Test {
 	
-	private static Log  log = LogFactory.getLog(ExcelTest.class);
+	private static Log  log = LogFactory.getLog(Test.class);
 	
 	@Autowired
 	private IUserService userService;

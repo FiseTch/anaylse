@@ -4,7 +4,7 @@
 <html>  
 <head>  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
-<title>Insert title here</title>  
+<title>upExcel上传excel</title>  
 </head>  
 <script src="js/jquery-2.1.4.min.js"></script> 
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script> 

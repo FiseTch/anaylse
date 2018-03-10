@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <!-- css -->
+<%@include file="/view/common/header.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/bootstrap.min.css"/>" />
 
 <!-- js -->
