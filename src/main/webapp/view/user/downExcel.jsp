@@ -10,10 +10,16 @@
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script> 
 <script src="js/jquery.form.js"></script>  
 <body>  
-
+<script>
+function newDoc(){
+    window.location.assign("${ctx}/view/user/upExcel.jsp")
+}
+</script>
 <form id = "downExcel"action="${ctx}/excelTempleDown/downloadExcel.do" method = "post">
-最多不超过25道题<input id = "num"type = "text" name = "num">
-<input id = "down" value = "下载" type = "submit">
+	最多不超过25道题<input id = "num"type = "text" name = "num">
+	<input id = "down" value = "下载" type = "submit">
 </form>
+	<input type="button" value="上传文档" onclick="newDoc()">
+
 </body>
 </html>

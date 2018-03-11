@@ -23,29 +23,27 @@ import tch.util.CalcUtil;
 import tch.util.ConstantTch;
 
 @Controller
-@RequestMapping("/anaylse")
+@RequestMapping(value = "/anaylse")
 
 public class Anaylse {
 	
 	private static Log log = LogFactory.getLog(Anaylse.class);
 	@SuppressWarnings("unchecked")
-	@RequestMapping("/dealData")
-	//@RequestParam("data")String data
+	@RequestMapping(value = "/dealData")
 	public static ModelAndView dealData(Map<Integer,List<String>> data,HttpServletRequest request,
-			HttpServletResponse response){
+			HttpServletResponse response,HttpSession session){
 		ModelAndView model = new ModelAndView();
-		data = (Map<Integer, List<String>>) request.getAttribute("data");
+		data = (Map<Integer, List<String>>) session.getAttribute("data");
 		Map<Integer,List<Integer>> map = new HashMap<Integer, List<Integer>>();//
 		//List<String> totalGrade = new ArrayList<String>();//试卷总分list
 		int totalNo = Integer.parseInt(data.get(0).get(0));//excel总行，测验总人数-1	
 		int totalNum = data.get(1).size();//excel总列，测验题目数-2
 		for (int i = 1; i < totalNum; i++) { //每一行中第二个位置开始，即是第一题，随后到总分
-			List<Integer> totalGrade = null;
-			for (int j = 1; j < totalNo; j++) {
-				totalGrade = new ArrayList<Integer>();
+			List<Integer> totalGrade = new ArrayList<Integer>();
+			for (int j = 2; j <= totalNo; j++) {//map中第3个位置开始才是分数
 				totalGrade.add(Integer.parseInt(data.get(j).get(i)));//循环得到每一道题目的成绩
-				map.put(i -1, totalGrade);
 			}
+			map.put(i -1, totalGrade);
 		}
 		try {
 			double validity = CalcUtil.calcValidity2(totalNum-2, totalNo-1, map);
@@ -58,9 +56,11 @@ public class Anaylse {
 			resultMap.put(ConstantTch.RELIABILITY, reliability);
 			resultMap.put(ConstantTch.DISTINCTION, distinction);
 			model.addObject("result",resultMap);
+/*			session.setAttribute("resultMap", resultMap);*/
 			model.setViewName("/result/showResult");
 		} catch (Exception e) {	
 			log.error(e);
+			model.setViewName("/result/uploadFailure");
 			e.printStackTrace();
 		}
 		return model;

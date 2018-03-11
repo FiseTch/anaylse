@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -72,7 +73,7 @@ public class GetExcel {
 	 * @return: ModelAndView
 	 */
 	@RequestMapping(value = "/upExcel")
-	public ModelAndView  upExcel(@RequestParam("file")MultipartFile file){
+	public ModelAndView  upExcel(@RequestParam("file")MultipartFile file,HttpSession session){
 		ModelAndView modle = new ModelAndView();
 		if (!file.isEmpty()) {
 			String fileNameExtension = ExcelUpUtil.getPostfix(file.getOriginalFilename());
@@ -100,6 +101,7 @@ public class GetExcel {
 					fos.write(bytes);
 					fos.close();
 					List<Map<Integer,List<String>>> data = ExcelUpUtil.readExcel(file);
+					session.setAttribute("data", data.get(0));
 					modle.addObject("data", data.get(0));//存取第一页的数据
 				} catch (IOException e) {
 					log.error(e);
@@ -117,38 +119,4 @@ public class GetExcel {
 		}
 		return modle;
 	}
-	/**
-	 * 
-	 * @user: tongchaohua
-	 * @Title: down
-	 * @Description: 文件的下载
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 * @return: void
-	 */
-	@RequestMapping("/downExcel")
-    public void down(HttpServletRequest request,HttpServletResponse response) throws Exception{  
-        //模拟文件，myfile.txt为需要下载的文件  
-        String fileName = request.getSession().getServletContext().getRealPath("upload")+"/myfile.txt";  
-        //获取输入流  
-        InputStream bis = new BufferedInputStream(new FileInputStream(new File(fileName)));  
-        //假如以中文名下载的话  
-        String filename = "下载文件.txt";  
-        //转码，免得文件名中文乱码  
-        filename = URLEncoder.encode(filename,"UTF-8");  
-        //设置文件下载头  
-        response.addHeader("Content-Disposition", "attachment;filename=" + filename);    
-        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型    
-        response.setContentType("multipart/form-data");   
-        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());  
-        int len = 0;  
-        while((len = bis.read()) != -1){  
-            out.write(len);  
-            out.flush();  
-        }  
-        out.close();  
-    } 
-	
- 
 }

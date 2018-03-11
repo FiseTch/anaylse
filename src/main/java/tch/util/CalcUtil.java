@@ -200,16 +200,16 @@ public class CalcUtil {
 	 */
 	public static double calcValidity2(int totalNum,int totalNo, Map<Integer,List<Integer>> tch2) throws Exception{
 		int sum = 0 ;
-		for (int i = 0; i < totalNo; i++) {
+		for (int i = 0; i < totalNum; i++) {
 			List<Integer> tch3 = new ArrayList<Integer>();
-			tch3 = tch2.get(String.valueOf(i));
+			tch3 = tch2.get(i);
 			double calcStandard4One = calcVariance(tch3);//计算每一道题目的标准差
 			if (calcStandard4One == -1) {
 				throw new Exception("计算第"+i+"位同学的标准差出错！！！");
 			}
 			sum += calcStandard4One;	
 		}
-		double calcStandard4All = calcVariance(tch2.get(String.valueOf(totalNum)));//计算试卷的方差
+		double calcStandard4All = calcVariance(tch2.get(totalNum));//计算试卷的方差
 		if (calcStandard4All == -1) {
 			throw new Exception("计算试卷方差出错！！！");
 		}		
