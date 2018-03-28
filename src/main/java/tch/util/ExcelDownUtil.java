@@ -142,7 +142,7 @@ public class ExcelDownUtil extends AbstractExcelView {
                 cell.setCellValue(list.get(i).getRemark());
             }
 */
-            //web浏览通过MIME类型判断文件是excel类型
+        //web浏览通过MIME类型判断文件是excel类型
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         response.setCharacterEncoding("utf-8");
 

@@ -36,7 +36,7 @@ public class UserOperate {
 			User u = userService.getUserById(username);
 			if (null != u) {				
 				model.addObject("user", u);
-				model.setViewName("user/showUser");
+				model.setViewName("user/downExcel");
 			}else{
 				model.setViewName("result/uploadFailure");
 			}
