@@ -1,55 +1,53 @@
 package tch.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import tch.dao.PaperMapper;
 import tch.model.Paper;
+import tch.service.IPaperService;
 
 
 @Service("paperService")
-public class PaperServiceImpl implements PaperMapper {
+public class PaperServiceImpl implements IPaperService {
 
+	private Log log = LogFactory.getLog(UserServiceImpl.class);
 	
-	@Autowired
+	@Resource
 	private PaperMapper paperMapper;
-	
-	public PaperMapper getPaperMapper() {
-		return paperMapper;
+
+	public int deleteById(String id) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperMapper.deleteByPrimaryKey(id);
 	}
 
-	public void setPaperMapper(PaperMapper paperMapper) {
-		this.paperMapper = paperMapper;
+	public int insertPaper(Paper paper) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperMapper.insert(paper);
 	}
 
-	public int deleteByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertPaperSelective(Paper paper) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperMapper.insertSelective(paper);
 	}
 
-	public int insert(Paper record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Paper selectById(String id) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperMapper.selectByPrimaryKey(id);
 	}
 
-	public int insertSelective(Paper record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateByIdSelective(Paper paper) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperMapper.updateByPrimaryKeySelective(paper);
 	}
 
-	public Paper selectByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateById(Paper paper) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperMapper.updateByPrimaryKey(paper);
 	}
 
-	public int updateByPrimaryKeySelective(Paper record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int updateByPrimaryKey(Paper record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }

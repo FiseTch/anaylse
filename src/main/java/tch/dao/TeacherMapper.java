@@ -5,13 +5,13 @@ import tch.model.Teacher;
 public interface TeacherMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(Teacher record);
+    int insert(Teacher teacher);
 
-    int insertSelective(Teacher record);
+    int insertSelective(Teacher teacher);
 
     Teacher selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Teacher record);
+    int updateByPrimaryKeySelective(Teacher teacher);
 
-    int updateByPrimaryKey(Teacher record);
+    int updateByPrimaryKey(Teacher teacher);
 }

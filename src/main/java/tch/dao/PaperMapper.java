@@ -5,13 +5,13 @@ import tch.model.Paper;
 public interface PaperMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(Paper record);
+    int insert(Paper paper);
 
-    int insertSelective(Paper record);
+    int insertSelective(Paper paper);
 
     Paper selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Paper record);
+    int updateByPrimaryKeySelective(Paper paper);
 
-    int updateByPrimaryKey(Paper record);
+    int updateByPrimaryKey(Paper paper);
 }

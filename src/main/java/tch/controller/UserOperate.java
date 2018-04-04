@@ -1,5 +1,7 @@
 package tch.controller;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,8 @@ import tch.service.IUserService;
 @RequestMapping(value = "/user")
 public class UserOperate {
 	private static Log log = LogFactory.getLog(UserOperate.class);
-	private static IUserService userService;
+	@Resource
+	IUserService userService;//实现spring的控制反转。对接口的调用
 	
 	
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
@@ -26,13 +29,13 @@ public class UserOperate {
 		model = checkUser(username,pwd,model);
 		return model;		
 	}
-	public static ModelAndView checkUser(String username,String pwd,ModelAndView model){
+	public  ModelAndView checkUser(String username,String pwd,ModelAndView model){
 		if (null == username || null == pwd) {
 			log.error("用户名或密码为空");
 			model.setViewName("index");
 		}else{
-			ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-mybatis.xml"});
-			userService = (IUserService) ac.getBean("userService");
+//			ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-mybatis.xml"});
+//			userService = (IUserService) ac.getBean("userService");
 			User u = userService.getUserById(username);
 			if (null != u) {				
 				model.addObject("user", u);

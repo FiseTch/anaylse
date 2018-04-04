@@ -3,7 +3,13 @@ package tch.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import tch.model.User;
+
 public class ConstantTch {
+	
+	//默认User
+	public static final User DEFAULT_USER = getUser();
+	
 	//excel下载时文件格式
 	public static final String FILEEXTENSION = ".xls";//文件下载时的格式控制
 	public static final String DOWNFILENAME = "试卷结果";//Excel下载时的名称
@@ -36,6 +42,13 @@ public class ConstantTch {
 	public static final String RELIABILITY_B = "测验完全不符合校标";//==0
 	public static final String RELIABILITY_C = "校标度适中";//0.4-0.7
 	public static final String RELIABILITY_D = "校标度不合理";//其他 
+	
+	private static  User getUser(){
+		User user = new User();
+		user.setUsername("default");
+		user.setPassword("default");
+		return user;
+	}
 	
 	public static List<Integer> setStandardList(int size){
 		list = new ArrayList<Integer>();

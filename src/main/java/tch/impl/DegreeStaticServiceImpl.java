@@ -1,55 +1,50 @@
 package tch.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import tch.dao.DegreeStaticMapper;
 import tch.model.DegreeStatic;
+import tch.service.IDegreeStaticService;
 
 @Service("degreeStaticService")
-public class DegreeStaticServiceImpl implements DegreeStaticMapper {
+public class DegreeStaticServiceImpl implements IDegreeStaticService {
 
+	private Log log = LogFactory.getLog(UserServiceImpl.class);
 	
-	@Autowired
+	@Resource
 	private DegreeStaticMapper degreeStaticMapper;
-	
-	
-	public DegreeStaticMapper getDegreeStaticMapper() {
-		return degreeStaticMapper;
+
+	public int deleteById(Integer id) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return degreeStaticMapper.deleteByPrimaryKey(id);
 	}
 
-	public void setDegreeStaticMapper(DegreeStaticMapper degreeStaticMapper) {
-		this.degreeStaticMapper = degreeStaticMapper;
+	public int insertDegreeStatic(DegreeStatic degreeStatic) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return degreeStaticMapper.insert(degreeStatic);
 	}
 
-	public int deleteByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertDegreeStaticSelective(DegreeStatic degreeStatic) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return degreeStaticMapper.insertSelective(degreeStatic);
 	}
 
-	public int insert(DegreeStatic record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public DegreeStatic selectById(Integer id) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return degreeStaticMapper.selectByPrimaryKey(id);
 	}
 
-	public int insertSelective(DegreeStatic record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateByIdSelective(DegreeStatic degreeStatic) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return degreeStaticMapper.updateByPrimaryKeySelective(degreeStatic);
 	}
 
-	public DegreeStatic selectByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateById(DegreeStatic degreeStatic) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return degreeStaticMapper.updateByPrimaryKey(degreeStatic);
 	}
-
-	public int updateByPrimaryKeySelective(DegreeStatic record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int updateByPrimaryKey(DegreeStatic record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

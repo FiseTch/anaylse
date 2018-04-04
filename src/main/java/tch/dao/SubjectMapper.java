@@ -5,13 +5,13 @@ import tch.model.Subject;
 public interface SubjectMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Subject record);
+    int insert(Subject subject);
 
-    int insertSelective(Subject record);
+    int insertSelective(Subject subject);
 
     Subject selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Subject record);
+    int updateByPrimaryKeySelective(Subject subject);
 
-    int updateByPrimaryKey(Subject record);
+    int updateByPrimaryKey(Subject subject);
 }

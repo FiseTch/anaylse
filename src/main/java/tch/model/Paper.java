@@ -1,11 +1,25 @@
 package tch.model;
 
+import java.util.Date;
+
 public class Paper {
     private String id;
 
     private String subject;
 
     private Integer score;
+
+    private String subjectperson;
+
+    private String teacher;
+
+    private Date time;
+
+    private String papername;
+
+    private String term;
+
+    private Integer num;
 
     private String param1;
 
@@ -79,6 +93,54 @@ public class Paper {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public String getSubjectperson() {
+        return subjectperson;
+    }
+
+    public void setSubjectperson(String subjectperson) {
+        this.subjectperson = subjectperson == null ? null : subjectperson.trim();
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher == null ? null : teacher.trim();
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public String getPapername() {
+        return papername;
+    }
+
+    public void setPapername(String papername) {
+        this.papername = papername == null ? null : papername.trim();
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term == null ? null : term.trim();
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public String getParam1() {

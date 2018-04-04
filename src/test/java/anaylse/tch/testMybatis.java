@@ -41,7 +41,7 @@ public class testMybatis {
 	}
 	@Test
 	public void test1() throws Exception{
-		List<User> u = userService.getAll();				
+		List<User> u = userService.getAllUser();				
 		log.info(JSON.toJSONString(u));
 		
 	}

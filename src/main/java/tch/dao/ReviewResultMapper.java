@@ -5,13 +5,13 @@ import tch.model.ReviewResult;
 public interface ReviewResultMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(ReviewResult record);
+    int insert(ReviewResult reviewResult);
 
-    int insertSelective(ReviewResult record);
+    int insertSelective(ReviewResult reviewResult);
 
     ReviewResult selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(ReviewResult record);
+    int updateByPrimaryKeySelective(ReviewResult reviewResult);
 
-    int updateByPrimaryKey(ReviewResult record);
+    int updateByPrimaryKey(ReviewResult reviewResult);
 }

@@ -1,53 +1,52 @@
 package tch.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import tch.dao.ReviewResultMapper;
 import tch.model.ReviewResult;
+import tch.service.IReviewResultService;
 
 @Service("reviewResultService")
-public class ReviewResultServiceImpl implements ReviewResultMapper {
+public class ReviewResultServiceImpl implements IReviewResultService {
 
-	@Autowired
-	private ReviewResultMapper reviewResultMapper;
+	private Log log = LogFactory.getLog(UserServiceImpl.class);
 	
-	public ReviewResultMapper getReviewResultMapper() {
-		return reviewResultMapper;
+	@Resource
+	private ReviewResultMapper reviewResultMapper;
+
+	public int deleteById(String id) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.deleteByPrimaryKey(id);
 	}
 
-	public void setReviewResultMapper(ReviewResultMapper reviewResultMapper) {
-		this.reviewResultMapper = reviewResultMapper;
+	public int insertReviewResult(ReviewResult reviewResult) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.insert(reviewResult);
 	}
 
-	public int deleteByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertReviewResultSelective(ReviewResult reviewResult) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.insertSelective(reviewResult);
 	}
 
-	public int insert(ReviewResult record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ReviewResult selectById(String id) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.selectByPrimaryKey(id);
 	}
 
-	public int insertSelective(ReviewResult record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateByIdSelective(ReviewResult reviewResult) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.updateByPrimaryKeySelective(reviewResult);
 	}
 
-	public ReviewResult selectByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateById(ReviewResult reviewResult) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.updateByPrimaryKey(reviewResult);
 	}
-
-	public int updateByPrimaryKeySelective(ReviewResult record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int updateByPrimaryKey(ReviewResult record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
+	
 }

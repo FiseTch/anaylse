@@ -5,13 +5,13 @@ import tch.model.DegreeStatic;
 public interface DegreeStaticMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(DegreeStatic record);
+    int insert(DegreeStatic degreeStatic);
 
-    int insertSelective(DegreeStatic record);
+    int insertSelective(DegreeStatic degreeStatic);
 
     DegreeStatic selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(DegreeStatic record);
+    int updateByPrimaryKeySelective(DegreeStatic degreeStatic);
 
-    int updateByPrimaryKey(DegreeStatic record);
+    int updateByPrimaryKey(DegreeStatic degreeStatic);
 }
