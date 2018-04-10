@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,13 @@ import tch.model.User;
 import tch.service.IUserService;
 
 @Controller
+@Scope("prototype")
 @RequestMapping(value = "/user")
 public class UserOperate {
 	private static Log log = LogFactory.getLog(UserOperate.class);
+	
 	@Resource
-	IUserService userService;//实现spring的控制反转。对接口的调用
+	private IUserService userService;//实现spring的控制反转。对接口的调用
 	
 	
 	@RequestMapping(value = "/login",method = RequestMethod.POST)

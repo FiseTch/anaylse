@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import tch.dao.UserMapper;
@@ -13,7 +14,24 @@ import tch.model.User;
 import tch.service.IUserService;
 import tch.util.ConstantTch;
 
+/**
+ * 
+ * 
+ * Copyright:tch
+ * 
+ * @class: tch.impl
+ * @Description: 
+ *
+ * @version: v1.0.0
+ * @author: tongch
+ * @date: 2018-04-05
+ * Modification History:
+ * date         Author          Version            Description
+ *------------------------------------------------------------
+ * 2018-04-05     tongch          v1.1.0
+ */
 @Service("userService")
+@Scope("prototype")
 public class UserServiceImpl implements IUserService {
 	
 	private Log log = LogFactory.getLog(UserServiceImpl.class);

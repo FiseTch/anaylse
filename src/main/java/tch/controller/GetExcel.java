@@ -32,6 +32,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +59,7 @@ import tch.util.ExcelUpUtil;
  * 2018-03-03     tongch          v1.1.0
  */
 @Controller
+@Scope("prototype")
 @RequestMapping(value = "/getExcel")//访问路径
 public class GetExcel {
 	private static Log log = LogFactory.getLog(GetExcel.class);

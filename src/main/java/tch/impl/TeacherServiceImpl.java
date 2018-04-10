@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import tch.dao.TeacherMapper;
@@ -29,6 +30,7 @@ import tch.service.ITeacherService;
  */
 
 @Service("teacherService")
+@Scope("prototype")
 public class TeacherServiceImpl implements ITeacherService {
 	
 	private Log log = LogFactory.getLog(TeacherServiceImpl.class);

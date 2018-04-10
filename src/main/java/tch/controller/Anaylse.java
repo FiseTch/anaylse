@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import tch.util.CalcUtil;
 import tch.util.ConstantTch;
 
 @Controller
+@Scope("prototype")
 @RequestMapping(value = "/anaylse")
 
 public class Anaylse {

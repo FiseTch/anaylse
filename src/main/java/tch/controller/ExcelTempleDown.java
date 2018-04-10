@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import tch.model.User;
 import tch.util.ExcelExportUtil;
 
 @Controller
+@Scope("prototype")
 @RequestMapping("/excelTempleDown")
 
 public class ExcelTempleDown {

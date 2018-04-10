@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +29,7 @@ import tch.util.ExcelDownUtil;
 
 
 @Controller
+@Scope("prototype")
 @RequestMapping(value = "/downResult")
 public class DownResult {
 	private static Log log = LogFactory.getLog(DownResult.class);

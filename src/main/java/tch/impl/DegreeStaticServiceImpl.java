@@ -4,13 +4,31 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import tch.dao.DegreeStaticMapper;
 import tch.model.DegreeStatic;
 import tch.service.IDegreeStaticService;
 
+/**
+ * 
+ * 
+ * Copyright:tch
+ * 
+ * @class: tch.impl
+ * @Description: 
+ *
+ * @version: v1.0.0
+ * @author: tongch
+ * @date: 2018-04-05
+ * Modification History:
+ * date         Author          Version            Description
+ *------------------------------------------------------------
+ * 2018-04-05     tongch          v1.1.0
+ */
 @Service("degreeStaticService")
+@Scope("prototype")
 public class DegreeStaticServiceImpl implements IDegreeStaticService {
 
 	private Log log = LogFactory.getLog(UserServiceImpl.class);
