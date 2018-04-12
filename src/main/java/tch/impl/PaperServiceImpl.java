@@ -36,34 +36,60 @@ public class PaperServiceImpl implements IPaperService {
 	@Resource
 	private PaperMapper paperMapper;
 
+	/**
+	 * 通过主键id删除记录
+	 */
 	public int deleteById(String id) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return paperMapper.deleteByPrimaryKey(id);
 	}
 
+	/**
+	 * 插入记录（属性不允许为空）
+	 */
 	public int insertPaper(Paper paper) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return paperMapper.insert(paper);
 	}
 
+	/**
+	 * 插入记录（除主键外，其余的属性允许为空）
+	 */
 	public int insertPaperSelective(Paper paper) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return paperMapper.insertSelective(paper);
 	}
 
-	public Paper selectById(String id) {
+	/**
+	 * 通过id查询记录
+	 */
+	public Paper getPaperById(String id) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
-		return paperMapper.selectByPrimaryKey(id);
+		return paperMapper.getPaperByPrimaryKey(id);
 	}
 
+	/**
+	 * 根据主键id更新记录（其余属性允许为空）
+	 */
 	public int updateByIdSelective(Paper paper) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return paperMapper.updateByPrimaryKeySelective(paper);
 	}
 
+	/**
+	 * 根据主键id更新记录（属性不允许为空）
+	 */
 	public int updateById(Paper paper) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return paperMapper.updateByPrimaryKey(paper);
+	}
+
+	/**
+	 * 根据属性值查记录
+	 */
+	public Paper getPaperById(Paper paper) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperMapper.getPaperByAttr(paper);
 	}
 
 

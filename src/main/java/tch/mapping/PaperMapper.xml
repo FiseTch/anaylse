@@ -43,7 +43,7 @@
     param13, param14, param15, param16, param17, param18, param19, param20, param21, 
     param22, param23, param24, param25
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getPaperByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from paper
@@ -432,4 +432,115 @@
       param25 = #{param25,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  
+<select id="getPaperByAttr" parameterType="tch.model.Paper" resultMap="BaseResultMap">
+  	select 
+  	 <include refid="Base_Column_List" />
+  	 from paper 
+  	<where>
+	<if test="id != null">
+		id = #{id,jdbcType=VARCHAR}
+	</if>
+	<if test="subject != null">
+		and subject =  #{subject,jdbcType=VARCHAR}
+	</if>
+	<if test="score != null">
+		and score = #{score,jdbcType=INTEGER}
+	</if>
+	<if test="subjectperson != null">
+		and subjectperson = #{subjectperson,jdbcType=VARCHAR}
+	</if>
+	<if test="teacher != null">
+		and teacher = #{teacher,jdbcType=VARCHAR}
+	</if>
+	<if test="time != null">
+		and time = #{time,jdbcType=TIMESTAMP}
+	</if>
+	<if test="papername != null">
+		and papername = #{papername,jdbcType=VARCHAR}
+	</if>
+	<if test="term != null">
+		and term = #{term,jdbcType=VARCHAR}
+	</if>
+	<if test="num != null">
+		and num = #{num,jdbcType=INTEGER}
+	</if>
+	<if test="param1 != null">
+		and param1 = #{param1,jdbcType=VARCHAR}
+	</if>
+	<if test="param2 != null">
+		and param2 = #{param2,jdbcType=VARCHAR}
+	</if>
+	<if test="param3 != null">
+		and param3 = #{param3,jdbcType=VARCHAR}
+	</if>
+	<if test="param4 != null">
+		and param4 = #{param4,jdbcType=VARCHAR}
+	</if>
+	<if test="param5 != null">
+		and param5 = #{param5,jdbcType=VARCHAR}
+	</if>
+	<if test="param6 != null">
+		and param6 = #{param6,jdbcType=VARCHAR}
+	</if>
+	<if test="param7 != null">
+		and param7 = #{param7,jdbcType=VARCHAR}
+	</if>
+	<if test="param8 != null">
+		and param8 = #{param8,jdbcType=VARCHAR}
+	</if>
+	<if test="param9 != null">
+		and param9 = #{param9,jdbcType=VARCHAR}
+	</if>
+	<if test="param10 != null">
+		and param10 = #{param10,jdbcType=VARCHAR}
+	</if>
+	<if test="param11 != null">
+		and param11 = #{param11,jdbcType=VARCHAR}
+	</if>
+	<if test="param12 != null">
+		and param12 = #{param12,jdbcType=VARCHAR}
+	</if>
+	<if test="param13 != null">
+		and param13 = #{param13,jdbcType=VARCHAR}
+	</if>
+	<if test="param14 != null">
+		and param14 = #{param14,jdbcType=VARCHAR}
+	</if>
+	<if test="param15 != null">
+		and param15 = #{param15,jdbcType=VARCHAR}
+	</if>
+	<if test="param16 != null">
+		and param16 = #{param16,jdbcType=VARCHAR}
+	</if>
+	<if test="param17 != null">
+		and param17 = #{param17,jdbcType=VARCHAR}
+	</if>
+	<if test="param18 != null">
+		and param18 = #{param18,jdbcType=VARCHAR}
+	</if>
+	<if test="param19 != null">
+		and param19 = #{param19,jdbcType=VARCHAR}
+	</if>
+	<if test="param20 != null">
+		and param20 = #{param20,jdbcType=VARCHAR}
+	</if>
+	<if test="param21 != null">
+		and param21 = #{param21,jdbcType=VARCHAR}
+	</if>
+	<if test="param22 != null">
+		and param22 = #{param22,jdbcType=VARCHAR}
+	</if>
+	<if test="param23 != null">
+		and param23 = #{param23,jdbcType=VARCHAR}
+	</if>
+	<if test="param24 != null">
+		and param24 = #{param24,jdbcType=VARCHAR}
+	</if>
+	<if test="param25 != null">
+		and param25 = #{param25,jdbcType=VARCHAR}
+	</if>
+</where> 	
+  </select>
 </mapper>

@@ -9,14 +9,14 @@
 <title>结果展示</title>
 </head>
 <body>
-<table border="1" style ="color:red">
+	<table border="1" style ="color:red">
 		<c:forEach var = "map" items = "${result}">
 			<tr>
 				<td> ${map.key}</td>
 				<td> ${map.value}</td>				
 			</tr>			
 		</c:forEach>		
-		</table>
+	</table>
 		<c:set var = "resultMap" value = "${result}" scope = "session"></c:set>		
 		<form action="${ctx}/downResult/downResult.do" method = "post">
 			<input id = "down" value = "导出到excel" type = "submit">

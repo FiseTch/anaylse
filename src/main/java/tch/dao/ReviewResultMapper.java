@@ -9,7 +9,9 @@ public interface ReviewResultMapper {
 
     int insertSelective(ReviewResult reviewResult);
 
-    ReviewResult selectByPrimaryKey(String id);
+    ReviewResult getRevByPrimaryKey(String id);
+    
+    ReviewResult getRevByAttr(ReviewResult reviewResult);
 
     int updateByPrimaryKeySelective(ReviewResult reviewResult);
 

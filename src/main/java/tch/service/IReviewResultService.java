@@ -8,13 +8,24 @@ public interface IReviewResultService {
 	/**
 	 * 
 	 * @user: tongchaohua
-	 * @Title: deleteById
-	 * @Description: 删除记录
+	 * @Title: selectById
+	 * @Description: 根据主键查询记录
 	 * @param id
 	 * @return
-	 * @return: int
+	 * @return: ReviewResult
 	 */
-    public int deleteById(String id);
+	public ReviewResult getRevById(String id);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getRevByAttr
+	 * @Description: 通过属性查询记录
+	 * @param reviewResult
+	 * @return
+	 * @return: ReviewResult
+	 */
+	public ReviewResult getRevByAttr(ReviewResult reviewResult);
 
     /**
      * 
@@ -38,16 +49,6 @@ public interface IReviewResultService {
      */  
     public int insertReviewResultSelective(ReviewResult reviewResult);
 
-    /**
-     * 
-     * @user: tongchaohua
-     * @Title: selectById
-     * @Description: 根据主键查询记录
-     * @param id
-     * @return
-     * @return: ReviewResult
-     */
-    public ReviewResult selectById(String id);
 
     /**
      * 
@@ -70,4 +71,15 @@ public interface IReviewResultService {
      * @return: int
      */
     public int updateById(ReviewResult reviewResult);
+    
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: deleteById
+     * @Description: 删除记录
+     * @param id
+     * @return
+     * @return: int
+     */
+    public int deleteById(String id);
 }

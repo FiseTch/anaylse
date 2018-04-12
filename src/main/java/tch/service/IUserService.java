@@ -20,6 +20,17 @@ public interface IUserService {
 	/**
 	 * 
 	 * @user: tongchaohua
+	 * @Title: getUserByAttr
+	 * @Description: 根据属性值查记录
+	 * @param user
+	 * @return
+	 * @return: User
+	 */
+	public User getUserByAttr(User user);	
+	
+	/**
+	 * 
+	 * @user: tongchaohua
 	 * @Title: getAll
 	 * @Description: 查询所有用户
 	 * @return
@@ -49,15 +60,6 @@ public interface IUserService {
 	 */
 	public int insertUserSelective(User user);
 	
-	/**
-	 * 
-	 * @user: tongchaohua
-	 * @Title: deleteUserById
-	 * @Description: 通过username删除用户
-	 * @param username
-	 * @return: void
-	 */
-	public void deleteUserById(String username);
 	
 	/**
 	 * 
@@ -80,4 +82,14 @@ public interface IUserService {
 	 * @return: int
 	 */
 	public int updateUserByIdSelective(User user);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: deleteUserById
+	 * @Description: 通过username删除用户
+	 * @param username
+	 * @return: void
+	 */
+	public void deleteUserById(String username);
 }

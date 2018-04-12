@@ -9,7 +9,9 @@ public interface TeacherMapper {
 
     int insertSelective(Teacher teacher);
 
-    Teacher selectByPrimaryKey(String id);
+    Teacher getTeacByPrimaryKey(String id);
+    
+    Teacher getTeacByAttr(Teacher teacher);
 
     int updateByPrimaryKeySelective(Teacher teacher);
 

@@ -7,13 +7,24 @@ public interface IPaperService {
 	/**
 	 * 
 	 * @user: tongchaohua
-	 * @Title: deleteById
-	 * @Description: 删除记录
+	 * @Title: selectById
+	 * @Description: 根据主键查询记录
 	 * @param id
 	 * @return
-	 * @return: int
+	 * @return: Paper
 	 */
-    public int deleteById(String id);
+	public Paper getPaperById(String id);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getPaperById
+	 * @Description: 通过属性查询记录
+	 * @param paper
+	 * @return
+	 * @return: Paper
+	 */
+	public Paper getPaperById(Paper paper);
 
     /**
      * 
@@ -40,17 +51,6 @@ public interface IPaperService {
     /**
      * 
      * @user: tongchaohua
-     * @Title: selectById
-     * @Description: 根据主键查询记录
-     * @param id
-     * @return
-     * @return: Paper
-     */
-    public Paper selectById(String id);
-
-    /**
-     * 
-     * @user: tongchaohua
      * @Title: updateByIdSelective
      * @Description: 更新记录（除主键外。其他属性允许为空）
      * @param paper
@@ -69,4 +69,15 @@ public interface IPaperService {
      * @return: int
      */
     public int updateById(Paper paper);
+    
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: deleteById
+     * @Description: 删除记录
+     * @param id
+     * @return
+     * @return: int
+     */
+    public int deleteById(String id);
 }

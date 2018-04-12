@@ -18,7 +18,7 @@
 	 <form method="post" action="${ctx}/user/login.do" class="login">
     <p>
       <label for="login">Email:</label>
-      <input type="text" name="username" id="login" value="name@example.com">
+      <input type="text" name="username" id="login" value="tel">
     </p>
 
     <p>
@@ -30,18 +30,17 @@
       <button type="submit" class="login-button" onclick="Login_Checked()">Login</button>
     </p>
 
-    <p class="forgot-password"><a href="index.html">Forgot your password?</a></p>
+    <p class="forgot-password"><a href="${ctx}/view/user/forgetPassword.jsp">忘记密码</a></p>
   </form>
 
   <section class="about">
     <p class="about-links">
-      <a href="http://www.cssflow.com/snippets/dark-login-form" target="_parent">View Article</a>
-      <a href="http://www.cssflow.com/snippets/dark-login-form.zip" target="_parent">Download</a>
+      <a href="https://github.com/FiseTch" target="_parent">联系作者</a>
+      <a href="https://github.com/FiseTch/anaylse" target="_parent">源码下载</a>
     </p>
     <p class="about-author">
-      &copy; 2012&ndash;2013 <a href="http://thibaut.me" target="_blank">Thibaut Courouble</a>
-      <a href="http://www.cssflow.com/mit-license" target="_blank">MIT License</a><br>
-      Original PSD by <a href="http://365psd.com/day/2-234/" target="_blank">Rich McNabb</a>
+      &copy; 2018 备案<br>    
+                <!-- 作者<a href="http://365psd.com/day/2-234/" target="_blank">Tch</a> -->
   </section>
 </body>  
 </html> 

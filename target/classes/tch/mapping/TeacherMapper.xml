@@ -16,7 +16,7 @@
   <sql id="Base_Column_List">
     id, name, tel, idCard, sex, birthday, prof, depart, hireDate, subject
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getTeacByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from teacher
@@ -149,4 +149,42 @@
       subject = #{subject,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="getTeacByAttr" parameterType="tch.model.Teacher" resultMap="BaseResultMap">
+  	select 
+  	 <include refid="Base_Column_List" />
+  	 from Teacher 
+  	 <where>
+	  	<if test="id != null">
+        id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+       and name =  #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="tel != null">
+       and tel = #{tel,jdbcType=VARCHAR}
+      </if>
+      <if test="idcard != null">
+       and  idcard = #{idcard,jdbcType=VARCHAR}
+      </if>
+      <if test="sex != null">
+       and sex =  #{sex,jdbcType=VARCHAR}
+      </if>
+      <if test="birthday != null">
+       and  birthday = #{birthday,jdbcType=DATE}
+      </if>
+      <if test="prof != null">
+        and prof = #{prof,jdbcType=VARCHAR}
+      </if>
+      <if test="depart != null">
+        and depart = #{depart,jdbcType=VARCHAR}
+      </if>
+      <if test="hiredate != null">
+        and hiredate = #{hiredate,jdbcType=DATE}
+      </if>
+      <if test="subject != null">
+       and subject = #{subject,jdbcType=VARCHAR}
+      </if>
+  	 </where> 	
+  </select>
 </mapper>

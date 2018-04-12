@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>错误</title>
+<title> 忘记密码</title>
 </head>
 <body>
-	用户名或密码错误！！！
+	忘记密码
 </body>
 </html>

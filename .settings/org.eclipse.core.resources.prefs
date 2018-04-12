@@ -1,11 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/resources/config.properties=UTF-8
 encoding//src/main/resources/log4j.properties=UTF-8
-encoding//src/main/webapp/Demo.jsp=UTF-8
-encoding//src/main/webapp/common/footer.html=UTF-8
-encoding//src/main/webapp/common/header.html=UTF-8
-encoding//src/main/webapp/error.jsp=UTF-8
 encoding//src/main/webapp/index.jsp=UTF-8
-encoding//src/main/webapp/view/user/testExcel.jsp=UTF-8
 encoding//src/main/webapp/view/user/upExcel.jsp=UTF-8
 encoding/<project>=UTF-8

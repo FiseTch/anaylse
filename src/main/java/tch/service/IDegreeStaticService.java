@@ -4,17 +4,29 @@ import tch.model.DegreeStatic;
 
 public interface IDegreeStaticService {
     
+
 	/**
 	 * 
 	 * @user: tongchaohua
-	 * @Title: deleteById
-	 * @Description: 通过主键id删除记录
+	 * @Title: selectById
+	 * @Description: 通过主键id查询记录
 	 * @param id
 	 * @return
-	 * @return: int
+	 * @return: DegreeStatic
 	 */
-	public int deleteById(Integer id);
-
+	public DegreeStatic getDegById(Integer id);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getDegByAttr
+	 * @Description: 通过属性查询记录
+	 * @param degreeStatic
+	 * @return
+	 * @return: DegreeStatic
+	 */
+	public DegreeStatic getDegByAttr(DegreeStatic degreeStatic);
+	
 	/**
 	 * 
 	 * @user: tongchaohua
@@ -37,16 +49,6 @@ public interface IDegreeStaticService {
      */
     public int insertDegreeStaticSelective(DegreeStatic degreeStatic);
 
-    /**
-     * 
-     * @user: tongchaohua
-     * @Title: selectById
-     * @Description: 通过主键id查询记录
-     * @param id
-     * @return
-     * @return: DegreeStatic
-     */
-    public DegreeStatic selectById(Integer id);
 
     /**
      * 
@@ -70,4 +72,14 @@ public interface IDegreeStaticService {
      */
     public int updateById(DegreeStatic degreeStatic);
 
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: deleteById
+     * @Description: 通过主键id删除记录
+     * @param id
+     * @return
+     * @return: int
+     */
+    public int deleteById(Integer id);
 }

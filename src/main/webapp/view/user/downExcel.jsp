@@ -5,10 +5,7 @@
 <head>  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
 <title>downExcel下载</title>  
-</head>  
-<script src="js/jquery-2.1.4.min.js"></script> 
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script> 
-<script src="js/jquery.form.js"></script>  
+</head>   
 <body>  
 <script>
 function newDoc(){
@@ -25,6 +22,5 @@ function newDoc(){
 	<input id = "down" value = "下载" type = "submit">
 </form>
 	<input type="button" value="上传文档" onclick="newDoc()">
-
 </body>
 </html>

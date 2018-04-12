@@ -36,34 +36,60 @@ public class ReviewResultServiceImpl implements IReviewResultService {
 	@Resource
 	private ReviewResultMapper reviewResultMapper;
 
+	/**
+	 * 通过主键id删除记录
+	 */
 	public int deleteById(String id) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return reviewResultMapper.deleteByPrimaryKey(id);
 	}
 
+	/**
+	 * 插入记录（属性不允许为空）
+	 */
 	public int insertReviewResult(ReviewResult reviewResult) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return reviewResultMapper.insert(reviewResult);
 	}
 
+	/**
+	 * 插入记录（除主键外，其余的属性允许为空）
+	 */
 	public int insertReviewResultSelective(ReviewResult reviewResult) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return reviewResultMapper.insertSelective(reviewResult);
 	}
 
-	public ReviewResult selectById(String id) {
+	/**
+	 * 通过id查询记录
+	 */
+	public ReviewResult getRevById(String id) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
-		return reviewResultMapper.selectByPrimaryKey(id);
+		return reviewResultMapper.getRevByPrimaryKey(id);
 	}
 
+	/**
+	 * 根据主键id更新记录（其余属性允许为空）
+	 */
 	public int updateByIdSelective(ReviewResult reviewResult) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return reviewResultMapper.updateByPrimaryKeySelective(reviewResult);
 	}
 
+	/**
+	 * 根据主键id更新记录（属性不允许为空）
+	 */
 	public int updateById(ReviewResult reviewResult) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return reviewResultMapper.updateByPrimaryKey(reviewResult);
+	}
+
+	/**
+	 * 根据属性值查记录
+	 */
+	public ReviewResult getRevByAttr(ReviewResult reviewResult) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.getRevByAttr(reviewResult);
 	}
 	
 	

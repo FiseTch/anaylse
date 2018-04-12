@@ -54,7 +54,7 @@ public class UserServiceImpl implements IUserService {
 	public User getUserById(String username) {	
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		User user = new User();
-		user = userMapper.selectByPrimaryKey(username);
+		user = userMapper.getUserByPrimaryKey(username);
 		if (user != null) {
 			log.info("user:" + user.toString());
 			return user;
@@ -72,9 +72,6 @@ public class UserServiceImpl implements IUserService {
 		return userMapper.getAll() ;
 	}
 	 
-/*	public static boolean saveBatchInsert(List<User> listUser) {		
-		return false;
-	}*/
 
 	/**
 	 * 插入记录，不允许为空
@@ -114,5 +111,13 @@ public class UserServiceImpl implements IUserService {
 	public int updateUserByIdSelective(User user) {	
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	/**
+	 * 根据属性值查记录
+	 */
+	public User getUserByAttr(User user) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return userMapper.getUserByAttr(user);
 	}
 }

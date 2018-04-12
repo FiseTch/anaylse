@@ -62,9 +62,9 @@ public class TeacherServiceImpl implements ITeacherService {
 	/**
 	 * 通过id查询记录
 	 */
-	public Teacher selectById(String id) {
+	public Teacher getTeacById(String id) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
-		return teacherMapper.selectByPrimaryKey(id);
+		return teacherMapper.getTeacByPrimaryKey(id);
 	}
 
 	/**
@@ -81,6 +81,13 @@ public class TeacherServiceImpl implements ITeacherService {
 	public int updateById(Teacher teacher) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return teacherMapper.updateByPrimaryKey(teacher);
+	}
+	/**
+	 * 根据属性值查记录
+	 */
+	public Teacher getTeacByAttr(Teacher teacher) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return teacherMapper.getTeacByAttr(teacher);
 	}
 
 }

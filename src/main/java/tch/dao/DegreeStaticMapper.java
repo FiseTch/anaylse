@@ -9,7 +9,9 @@ public interface DegreeStaticMapper {
 
     int insertSelective(DegreeStatic degreeStatic);
 
-    DegreeStatic selectByPrimaryKey(Integer id);
+    DegreeStatic getDegByPrimaryKey(Integer id);
+    
+    DegreeStatic getDegByAttr(DegreeStatic degreeStatic);
 
     int updateByPrimaryKeySelective(DegreeStatic degreeStatic);
 

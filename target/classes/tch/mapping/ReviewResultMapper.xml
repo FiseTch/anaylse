@@ -14,7 +14,7 @@
   <sql id="Base_Column_List">
     id, p_id, t_id, validity_a, validity_b, reliability, difficulty, distinction
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getRevByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from review_result
@@ -125,4 +125,36 @@
       distinction = #{distinction,jdbcType=DOUBLE}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="getRevByAttr" parameterType="tch.model.ReviewResult" resultMap="BaseResultMap">
+  	select 
+  	 <include refid="Base_Column_List" />
+  	 from review_result 
+  	 <where>
+	  	 <if test="id != null">
+	       id =  #{id,jdbcType=VARCHAR}
+	      </if>
+	      <if test="pId != null">
+	       and pId = #{pId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="tId != null">
+	        and tId = #{tId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="validityA != null">
+	        and validityA = #{validityA,jdbcType=DOUBLE}
+	      </if>
+	      <if test="validityB != null">
+	        and validityB = #{validityB,jdbcType=DOUBLE}
+	      </if>
+	      <if test="reliability != null">
+	       and reliability =  #{reliability,jdbcType=DOUBLE}
+	      </if>
+	      <if test="difficulty != null">
+	       and  difficulty = #{difficulty,jdbcType=DOUBLE}
+	      </if>
+	      <if test="distinction != null">
+	        and distinction = #{distinction,jdbcType=DOUBLE}
+	      </if>	
+  	 </where> 	
+  </select>
 </mapper>

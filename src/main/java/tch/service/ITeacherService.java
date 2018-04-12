@@ -4,16 +4,28 @@ import tch.model.Teacher;
 
 public interface ITeacherService {
 	
+	
 	/**
 	 * 
 	 * @user: tongchaohua
-	 * @Title: deleteById
-	 * @Description: 通过主键id删除记录
+	 * @Title: selectById
+	 * @Description: 通过主键id查询记录
 	 * @param id
 	 * @return
-	 * @return: int
+	 * @return: Teacher
 	 */
-    public int deleteById(String id);
+	public Teacher getTeacById(String id);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getTeacByAttr
+	 * @Description: 通过属性查询记录
+	 * @param teacher
+	 * @return
+	 * @return: Teacher
+	 */
+	public Teacher getTeacByAttr(Teacher teacher);
     
     /**
      * 
@@ -36,18 +48,7 @@ public interface ITeacherService {
      * @return: int
      */
     public int insertTeacherSelective(Teacher teacher);
-
-    /**
-     * 
-     * @user: tongchaohua
-     * @Title: selectById
-     * @Description: 通过主键id查询记录
-     * @param id
-     * @return
-     * @return: Teacher
-     */
-    public Teacher selectById(String id);
-
+    
     /**
      * 
      * @user: tongchaohua
@@ -69,4 +70,15 @@ public interface ITeacherService {
      * @return: int
      */
     public int updateById(Teacher teacher);
+    
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: deleteById
+     * @Description: 通过主键id删除记录
+     * @param id
+     * @return
+     * @return: int
+     */
+    public int deleteById(String id);
 }

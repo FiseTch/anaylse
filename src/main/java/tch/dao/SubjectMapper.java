@@ -9,7 +9,9 @@ public interface SubjectMapper {
 
     int insertSelective(Subject subject);
 
-    Subject selectByPrimaryKey(Integer id);
+    Subject getSubByPrimaryKey(Integer id);
+    
+    Subject getSubByAttr(Subject subject);
 
     int updateByPrimaryKeySelective(Subject subject);
 

@@ -9,7 +9,9 @@ public interface PaperMapper {
 
     int insertSelective(Paper paper);
 
-    Paper selectByPrimaryKey(String id);
+    Paper getPaperByPrimaryKey(String id);
+    
+    Paper getPaperByAttr(Paper paper);
 
     int updateByPrimaryKeySelective(Paper paper);
 

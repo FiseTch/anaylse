@@ -15,7 +15,9 @@ public interface UserMapper {
 
     int insertSelective(User user);
 
-    User selectByPrimaryKey(String username);
+    User getUserByPrimaryKey(String username);
+    
+    User getUserByAttr(User user);
 
     int updateByPrimaryKeySelective(User user);
 

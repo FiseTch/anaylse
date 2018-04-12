@@ -4,16 +4,28 @@ import tch.model.Subject;
 
 public interface ISubjectService {
 	
+	
 	/**
 	 * 
 	 * @user: tongchaohua
-	 * @Title: deleteById
-	 * @Description: 通过主键id删除用户
+	 * @Title: selectById
+	 * @Description: 通过抓紧id查询记录
 	 * @param id
 	 * @return
-	 * @return: int
+	 * @return: Subject
 	 */
-    public int deleteById(Integer id);
+	public Subject getSubById(Integer id);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getSubByAttr
+	 * @Description: 通过属性查询记录
+	 * @param subject
+	 * @return
+	 * @return: Subject
+	 */
+	public Subject getSubByAttr(Subject subject);
 
     /**
      * 
@@ -36,18 +48,7 @@ public interface ISubjectService {
      * @return: int
      */
     public int insertSubjectSelective(Subject subject);
-
-    /**
-     * 
-     * @user: tongchaohua
-     * @Title: selectById
-     * @Description: 通过抓紧id查询记录
-     * @param id
-     * @return
-     * @return: Subject
-     */
-    public Subject selectById(Integer id);
-
+    
     /**
      * 
      * @user: tongchaohua
@@ -70,4 +71,14 @@ public interface ISubjectService {
      */
     public int updateById(Subject subject);
 
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: deleteById
+     * @Description: 通过主键id删除用户
+     * @param id
+     * @return
+     * @return: int
+     */
+    public int deleteById(Integer id);
 }

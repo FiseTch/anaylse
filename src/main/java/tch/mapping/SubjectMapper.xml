@@ -9,7 +9,7 @@
   <sql id="Base_Column_List">
     id, name, no
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="getSubByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from subject
@@ -66,4 +66,21 @@
       no = #{no,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="getSubrByAttr" parameterType="tch.model.Subject" resultMap="BaseResultMap">
+  	select 
+  	 <include refid="Base_Column_List" />
+  	 from subject 
+  	 <where>
+	  	<if test="id != null">
+         	id = #{id,jdbcType=INTEGER}
+      	</if>
+      	<if test="name != null">
+        	and name = #{name,jdbcType=VARCHAR}
+      	</if>
+     	<if test="no != null">
+        	and no = #{no,jdbcType=VARCHAR}
+     	</if>
+  	 </where> 	
+  </select>
 </mapper>

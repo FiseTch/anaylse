@@ -8,7 +8,7 @@
   <sql id="Base_Column_List">
     username, password
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getUserByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
@@ -57,5 +57,18 @@
   </update>
   <select id="getAll" resultMap="BaseResultMap">
   	select * from User
+  </select>
+  <select id="getUserByAttr" parameterType="tch.model.User" resultMap="BaseResultMap">
+  	select 
+  	 <include refid="Base_Column_List" />
+  	 from User 
+  	 <where>
+	  	<if test = "username != null">
+	  	  username =  #{username,jdbcType=VARCHAR}  	 	
+	  	</if>
+	  	<if test="password != null">
+	  	  and password = #{password,jdbcType=VARCHAR}
+	  	</if> 	
+  	 </where> 	
   </select>
 </mapper>
