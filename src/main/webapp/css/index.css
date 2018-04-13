@@ -54,7 +54,7 @@ body{	font-family: "Microsoft YaHei","Segoe UI", "Lucida Grande", Helvetica, Ari
     height: 38px;
     line-height: 38px;
     padding: 0 18px;
-    background-color: #009688;
+    background-color: #04c7d0;
     color: #fff;
     white-space: nowrap;
     text-align: center;
@@ -68,7 +68,7 @@ body{	font-family: "Microsoft YaHei","Segoe UI", "Lucida Grande", Helvetica, Ari
 #iconDivMain1{width:0 !important;height:0 !important}
 #div_company_mini{right:0 !important}
 #loginModal .modal-content{border-radius:0}
-#loginModal .col-left{width:225px;height:319px;background:url(../img/school.jpg) no-repeat;background-size:200px;background-position:center;}
+#loginModal .col-left{width:225px;height:319px;background:url(../images/school.jpg) no-repeat;background-size:200px;background-position:center;}
 #loginModal .col-right{width:313px;height:319px;color:#b2b2b2}
 #loginModal .form-group{margin-bottom:10px}
 #loginModal .modal-body{height:263px}
@@ -77,7 +77,7 @@ body{	font-family: "Microsoft YaHei","Segoe UI", "Lucida Grande", Helvetica, Ari
 #loginModal .globalLogin{height:47px;background:#01c26f;color:#fff;font-size:14px;background:-webkit-linear-gradient(#1fd783,#1fd06b);background:-o-linear-gradient(#1fd783,#1fd06b);background:-moz-linear-gradient(#1fd783,#1fd06b);background:linear-gradient(#1fd783,#1fd06b)}
 #loginModal .threeLogin{position:absolute;left:30px;bottom:15px}
 #loginModal .threeLogin span{color:#b3c3c0;float:left;font-size:14px}
-#loginModal .threeLogin a{display:inline-block;width:20px;height:20px;background:url(../img/login_img.png) no-repeat;vertical-align:middle;margin-left:15px;cursor:pointer}
+#loginModal .threeLogin a{display:inline-block;width:20px;height:20px;background:url(../images/login_img.png) no-repeat;vertical-align:middle;margin-left:15px;cursor:pointer}
 #loginModal .threeLogin .nqq{background-position:0 0}
 #loginModal .threeLogin .nqq:hover{background-position:0 -20px}
 #loginModal .threeLogin .nwx{background-position:-20px 0}

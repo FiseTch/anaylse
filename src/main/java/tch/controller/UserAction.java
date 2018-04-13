@@ -60,9 +60,9 @@ public class UserAction {
 		User u = userService.getUserByAttr(user);
 		if (u != null) {						
 			model.addObject("user",u);
-			model.setViewName("user/downExcel");
+			model.setViewName("login");
 		}else{
-			model.setViewName("result/uploadFailure");			
+			model.setViewName("view/result/uploadFailure");			
 		}
 		return model;
 	}

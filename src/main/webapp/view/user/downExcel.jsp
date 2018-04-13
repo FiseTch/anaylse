@@ -4,7 +4,7 @@
 <html>  
 <head>  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
-<title>downExcel下载</title>  
+<title>用户登录成功页面</title>  
 </head>   
 <body>  
 <script>
@@ -12,7 +12,6 @@ function newDoc(){
     window.location.assign("${ctx}/view/user/upExcel.jsp")
 }
 </script>
-
 <div style ="margin-right">
 	<marquee scrollAmount=2 width=450 direction="left">欢迎用户 “ ${user.username} ”登录</marquee>
 </div>
@@ -22,5 +21,6 @@ function newDoc(){
 	<input id = "down" value = "下载" type = "submit">
 </form>
 	<input type="button" value="上传文档" onclick="newDoc()">
+  
 </body>
 </html>

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Scope("prototype")
 @RequestMapping(value = "/teac")
-public class teacherAction {
+public class TeacherAction {
 	
 	
 }
