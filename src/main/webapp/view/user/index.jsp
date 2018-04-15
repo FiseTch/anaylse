@@ -7,11 +7,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
 	<meta name="applicable-device" content="pc,mobile">
-	<title>登录</title>
+	<title>登录&copyFise</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">	
 	<link rel="stylesheet" type="text/css" href="../../css/index.css"> 
 </head>
+<script type="text/javascript">
+function infoMsg(){
+    alert("当前功能尚在开发中!敬请期待")
+}
+</script>
 <body>
 	<a class="a globalLoginBtn">登录</a>
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;"><div style="display:table; width:100%; height:100%;"><div style="vertical-align:middle; display:table-cell;"><div class="modal-dialog modal-sm" style="width:540px;">
@@ -24,7 +29,7 @@
                 </div>
                 <div class="modal-body">
                     <section class="box-login v5-input-txt" id="box-login">
-                        <form id="login_form" action = "${ctx}/user/login.do"method="post" autocomplete="off">                         
+                        <form id="login_form" action = "${ctx}/teacher/login.do"method="post" autocomplete="off">                         
                             <ul>
                                 <li class="form-group">
                                 	<input class="form-control" id="id_account_l" maxlength="50" name="username" placeholder="请输入邮箱账号/手机号" type="text">
@@ -35,8 +40,8 @@
                             </ul>
                         </form>
                         <p class="good-tips marginB10">
-	                        <a href="${ctx}/view/user/forgetPassword.jsp" class="fr">忘记密码？</a>还没有账号？
-	                        <a href="${ctx}/view/user/register.jsp" target="_blank" >立即注册</a>
+	                        <a href="${ctx}/forgetPassword.jsp" class="fr">忘记密码？</a>还没有账号？
+	                        <a href="${ctx}/register.jsp" >立即注册</a>
 	                    </p>
                         <div class="login-box marginB10">                        	
                             <button id="login_btn" type="button" class="btn btn-micv5 btn-block globalLogin">登录</button>
@@ -44,8 +49,8 @@
                         </div>
                        <div class="threeLogin">
 	                       <span>其他方式登录</span>
-	                       <a class="nqq" href="javascript:;"></a>
-	                       <a class="nwx" href="javascript:;"></a><!--<a class="nwb"></a>-->
+	                       <a class="nqq" href="#" onclick="infoMsg()"></a>
+	                       <a class="nwx" href="#" onclick="infoMsg()"></a><!--<a class="nwb"></a>-->
                        </div>                     
                     </section>
                 </div>

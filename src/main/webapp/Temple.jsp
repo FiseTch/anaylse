@@ -12,16 +12,20 @@
 <script type="text/javascript" src="${ctx}/js/jquery.responsivemenu.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.flexslider-min.js"></script>
 <script type="text/javascript" src="${ctx}/js/FF-cash.js"></script>
-<title></title>  
+<title>&copyFise</title>  
 </head>   
 <body>  
 <header>
 	<div class="container_24">
 		<div class="grid_24">
-			<h1 class="fleft"><a href="http://www.jxufe.edu.cn/">学校</a></h1>
+			<h1 class="fleft"><a href="http://www.jxufe.edu.cn/" title="江西财经大学" target="_blank">学校</a></h1>
 			<ul class="sf-menu">
+			
+				 <li class="current"><a href="${ctx}/index.html">主页</a></li>
+				 <li><a href="${ctx}/view/user/index.jsp">登录</a></li>
+			
 				 <li><a href="#">${user.username}<span class="arrow"></span></a><ul>
-						<li><a href="view/user/index.jsp">我的&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+						<li><a href="${ctx}/myInformation.jsp">我的&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 						<li><a href="#">修改密码&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 						<li><a href="#">Profile</a><ul>
 								<li><a href="#">Mission</a></li>
@@ -57,7 +61,7 @@
 	<div class="container_24">
 		<div class="wrapper">
 			<div class="grid_24">
-				<a href="http://www.jxufe.edu.cn/" class="link">
+				<a href="http://www.jxufe.edu.cn/" class="link" title="江西财经大学" target="_blank">
 					<img src="${ctx}/images/logo-footer.png" alt="" width="80px">
 				</a> 
 					&copy; 2018 | 

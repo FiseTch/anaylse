@@ -1,7 +1,10 @@
 package tch.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +13,8 @@ import java.util.GregorianCalendar;
 import javax.mail.internet.MimeUtility;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.DateUtil;  
   
 /**
@@ -17,15 +22,30 @@ import org.apache.poi.ss.usermodel.DateUtil;
  * @author tongchaohua
  *
  */
-public class MyDateUtil extends DateUtil{  
+public class MyCommonUtil extends DateUtil{  
 	
+	private static final Log log = LogFactory.getLog(MyCommonUtil.class);
 	/** 
 	   * 设置下载文件中文件的名称 
 	   *  
 	   * @param filename 
 	   * @param request 
 	   * @return 
+	 * @throws UnsupportedEncodingException 
 	   */  
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: changeEncode
+	 * @Description: 防止乱码
+	 * @param s
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @return: String
+	 */
+	public static String changeEncode(String s) throws UnsupportedEncodingException{
+		return (s==null)?null:URLDecoder.decode(s.trim(),"UTF-8");
+	}
 	public static String encodeFileName(String filename, String agent) {
 		/**
 		 * 获取客户端浏览器和操作系统信息 在IE浏览器中得到的是：User-Agent=Mozilla/4.0 (compatible; MSIE
@@ -72,6 +92,29 @@ public class MyDateUtil extends DateUtil{
 	/**
 	 * 
 	 * @user: tongchaohua
+	 * @Title: formatDateToDate
+	 * @Description: 将date类型的转化成自己定义（yyyy-MM-dd）格式的date
+	 * @param date
+	 * @param format
+	 * @return
+	 * @throws ParseException
+	 * @return: Date
+	 */
+	public static Date formatDateToDate(Date date){
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if (date != null) {
+			String temp = sdf.format(date);
+			ParsePosition pos = new ParsePosition(0); 
+			Date d = sdf.parse(temp,pos);
+			return d;
+		}else{			
+			return date;				
+		}
+	}
+	/**
+	 * 
+	 * @user: tongchaohua
 	 * @Title: formatDate
 	 * @Description: 对日期进行格式化
 	 * @param date
@@ -105,13 +148,36 @@ public class MyDateUtil extends DateUtil{
       * 
       * @user: tongchaohua
       * @Title: getDateFormat
-      * @Description: 将String类型的时间变成yyyy-MM-dd HH:mm:ss格式的时间
+      * @Description: 将yyyy-MM-dd HH:mm:ss格式的时间转成date
       * @param time
       * @return
       * @return: Date
       */
     public static Date getDateFormat(String time){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	if(time != null){   		
+    		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    		try {
+    			return df.parse(time+" 23:00:00");
+    		} catch (ParseException e) {           
+    			e.printStackTrace();
+    		}  
+    	}else{   		
+    		return null;
+    	}
+    	return null;
+    }
+    
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: getDateFormat
+     * @Description: 将yyyy-MM-dd格式的时间转成date
+     * @param time
+     * @return
+     * @return: Date
+     */
+    public static Date dateFormatTo8(String time){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return df.parse(time);
         } catch (ParseException e) {           

@@ -148,7 +148,7 @@ public class ExcelDownUtil extends AbstractExcelView {
 
         // 对文件名进行处理。防止文件名乱码
               
-        String fileName = ConstantTch.DOWNFILENAME + MyDateUtil.getTimeString() + ConstantTch.FILEEXTENSION; 
+        String fileName = ConstantTch.DOWNFILENAME + MyCommonUtil.getTimeString() + ConstantTch.FILEEXTENSION; 
         String userAgent = request.getHeader("User-Agent"); 
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {

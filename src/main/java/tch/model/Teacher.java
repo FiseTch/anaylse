@@ -23,6 +23,8 @@ public class Teacher {
 
     private String subject;
 
+    private String password;
+
     public String getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class Teacher {
 
     public void setSubject(String subject) {
         this.subject = subject == null ? null : subject.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 }

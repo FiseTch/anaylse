@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,7 +52,6 @@ public class UserAction {
 		} catch (UnsupportedEncodingException e) {
 			log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName()+"出错，页面编码错误");
 			log.error(e);
-			e.printStackTrace();
 		}
 		
 //			ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-mybatis.xml"});
@@ -68,9 +68,9 @@ public class UserAction {
 	}
 	
 	@RequestMapping(value = "/logout")
-	public ModelAndView logout(){
-		ModelAndView model = new ModelAndView();		
-		return model; 
+	public String logout(HttpSession session){
+		session.invalidate();
+		return "logout"; 
 	}
 		
 

@@ -1,5 +1,7 @@
 package tch.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
@@ -88,6 +90,14 @@ public class TeacherServiceImpl implements ITeacherService {
 	public Teacher getTeacByAttr(Teacher teacher) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return teacherMapper.getTeacByAttr(teacher);
+	}
+	
+	/**
+	 * 查询所有的用户id
+	 */
+	public List<String> getAllTeacId() {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return teacherMapper.getAllTeacId();
 	}
 
 }

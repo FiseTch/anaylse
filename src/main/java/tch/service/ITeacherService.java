@@ -1,5 +1,7 @@
 package tch.service;
 
+import java.util.List;
+
 import tch.model.Teacher;
 
 public interface ITeacherService {
@@ -15,6 +17,16 @@ public interface ITeacherService {
 	 * @return: Teacher
 	 */
 	public Teacher getTeacById(String id);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getAllTeacId
+	 * @Description: 查询所有的用户id
+	 * @return
+	 * @return: List<String>
+	 */
+	public List<String> getAllTeacId();
 	
 	/**
 	 * 

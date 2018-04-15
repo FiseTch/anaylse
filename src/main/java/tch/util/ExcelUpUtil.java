@@ -87,8 +87,8 @@ public class ExcelUpUtil {
              return String.valueOf(xssfCell.getBooleanCellValue());  
          } else if (xssfCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {  
              String cellValue = "";  
-             if(MyDateUtil.isCellDateFormatted(xssfCell)){  
-                 Date date = MyDateUtil.getJavaDate(xssfCell.getNumericCellValue());  
+             if(MyCommonUtil.isCellDateFormatted(xssfCell)){  
+                 Date date = MyCommonUtil.getJavaDate(xssfCell.getNumericCellValue());  
                  cellValue = sdf.format(date);  
              }else{  
                  DecimalFormat df = new DecimalFormat("#.##");  

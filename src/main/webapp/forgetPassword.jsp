@@ -12,16 +12,16 @@
 <script type="text/javascript" src="${ctx}/js/jquery.responsivemenu.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.flexslider-min.js"></script>
 <script type="text/javascript" src="${ctx}/js/FF-cash.js"></script>
-<title>错误页面&copyFise</title>  
+<title>忘记密码&copyFise</title>  
 </head>   
 <body>  
 <header>
 	<div class="container_24">
 		<div class="grid_24">
 			<h1 class="fleft"><a href="http://www.jxufe.edu.cn/" title="江西财经大学" target="_blank">学校</a></h1>
-			<ul class="sf-menu">				 
-				<li class="current"><a href="${ctx}/index.html">返回主页</a></li>	
-				<li><a href="${ctx}/view/user/index.jsp">登录</a></li>			    
+			<ul class="sf-menu">			
+				<li class="current"><a href="${ctx}/index.html">主页</a></li>
+				<li><a href="${ctx}/view/user/index.jsp">登录</a></li>							 							    
 			</ul>
 			<div class="clear"></div>
 		</div>
@@ -29,18 +29,13 @@
 	</div>
 </header>
 <section>
-	<div class="bg">
-		<div class="container_24">
-			<div class="wrapper">
-					<h4>${errorMsg}</h4>
-			</div>
+	<div class="container_24">
+		<div class="wrapper">
+			<div class="grid_8 padtop3">
+				<h3>请尽快联系<a href="https://github.com/FiseTch" target="_blank" title="作者">开发人员</a></h3>
+			</div>				
 		</div>
-		<div class="container_24">
-			<div class="wrapper">
-					
-			</div>
-		</div>
-	</div>		
+	</div>	
 </section>
 
 	

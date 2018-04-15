@@ -12,38 +12,67 @@
 <script type="text/javascript" src="${ctx}/js/jquery.responsivemenu.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.flexslider-min.js"></script>
 <script type="text/javascript" src="${ctx}/js/FF-cash.js"></script>
-<title>错误页面&copyFise</title>  
+<title>试卷分析系统&copyFise</title>  
 </head>   
-<body>  
+<body> 
 <header>
 	<div class="container_24">
 		<div class="grid_24">
 			<h1 class="fleft"><a href="http://www.jxufe.edu.cn/" title="江西财经大学" target="_blank">学校</a></h1>
-			<ul class="sf-menu">				 
-				<li class="current"><a href="${ctx}/index.html">返回主页</a></li>	
-				<li><a href="${ctx}/view/user/index.jsp">登录</a></li>			    
+			<ul class="sf-menu">
+				<li class="current"><a href="${ctx}/index.html">主页</a></li>
+				<!-- <li><a href="#">我的<span class="arrow"></span></a><ul>
+						<li><a href="view/user/index.jsp">登录&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+						<li><a href="#">注册&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+						<li><a href="#">Profile</a><ul>
+								<li><a href="#">Mission</a></li>
+								<li><a href="#">Capabilities</a></li>
+								<li><a href="#">Support</a></li>
+								<li><a href="#">Partnership</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Testimonials</a></li>
+					</ul>
+				</li>
+				<li><a href="index-2.html">Services</a></li>
+				<li><a href="index-3.html">Solutions</a></li>
+				<li><a href="index-4.html">Projects</a></li> -->
+				<li><a href="${ctx}/view/user/index.jsp">登录</a></li>
+								    
 			</ul>
 			<div class="clear"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
 </header>
-<section>
-	<div class="bg">
-		<div class="container_24">
-			<div class="wrapper">
-					<h4>${errorMsg}</h4>
-			</div>
+<div class="main-slider">
+<div class="bg-slider">
+	<div class="slider">
+		<div class="flexslider">
+			<ul class="slides">
+				<li>
+					<img src="${ctx}/images/slide1.jpg" alt="" width = "946px" height = "538px">
+						<div class=" flex-caption">
+							<span>信息管理学院</span>
+						</div>
+				</li>
+				<li>
+					<img src="${ctx}/images/slide2.jpg" alt="" width = "946px" height = "538px">
+						<div class=" flex-caption">
+							<span>麦园风光</span>
+						</div>
+				</li>
+				<li>
+					<img src="${ctx}/images/slide3.jpg" alt="" width = "946px" height = "538px">
+						<div class=" flex-caption">
+							<span>江西财经大学</span>
+					</div>
+				</li>
+			</ul>
 		</div>
-		<div class="container_24">
-			<div class="wrapper">
-					
-			</div>
-		</div>
-	</div>		
-</section>
-
-	
+	</div>
+</div>
+</div>	
 	
 <footer>
 	<div class="container_24">

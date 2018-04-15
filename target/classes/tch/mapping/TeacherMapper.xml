@@ -12,9 +12,10 @@
     <result column="depart" jdbcType="VARCHAR" property="depart" />
     <result column="hireDate" jdbcType="DATE" property="hiredate" />
     <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, tel, idCard, sex, birthday, prof, depart, hireDate, subject
+    id, name, tel, idCard, sex, birthday, prof, depart, hireDate, subject, password
   </sql>
   <select id="getTeacByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -30,11 +31,11 @@
     insert into teacher (id, name, tel, 
       idCard, sex, birthday, 
       prof, depart, hireDate, 
-      subject)
+      subject, password)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{idcard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{prof,jdbcType=VARCHAR}, #{depart,jdbcType=VARCHAR}, #{hiredate,jdbcType=DATE}, 
-      #{subject,jdbcType=VARCHAR})
+      #{subject,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="tch.model.Teacher">
     insert into teacher
@@ -69,6 +70,9 @@
       <if test="subject != null">
         subject,
       </if>
+      <if test="password != null">
+        password,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -100,6 +104,9 @@
       </if>
       <if test="subject != null">
         #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -133,6 +140,9 @@
       <if test="subject != null">
         subject = #{subject,jdbcType=VARCHAR},
       </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -146,12 +156,13 @@
       prof = #{prof,jdbcType=VARCHAR},
       depart = #{depart,jdbcType=VARCHAR},
       hireDate = #{hiredate,jdbcType=DATE},
-      subject = #{subject,jdbcType=VARCHAR}
+      subject = #{subject,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
   <select id="getTeacByAttr" parameterType="tch.model.Teacher" resultMap="BaseResultMap">
-  	select 
+    	select 
   	 <include refid="Base_Column_List" />
   	 from Teacher 
   	 <where>
@@ -185,6 +196,12 @@
       <if test="subject != null">
        and subject = #{subject,jdbcType=VARCHAR}
       </if>
+      <if test="password != null">
+       and password = #{password,jdbcType=VARCHAR}
+      </if>
   	 </where> 	
+  </select>
+  <select id="getAllTeacId" resultType = "java.lang.String" >
+  		select  id from teacher;
   </select>
 </mapper>
