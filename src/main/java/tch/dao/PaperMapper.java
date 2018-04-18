@@ -1,5 +1,7 @@
 package tch.dao;
 
+import java.util.List;
+
 import tch.model.Paper;
 
 public interface PaperMapper {
@@ -11,7 +13,7 @@ public interface PaperMapper {
 
     Paper getPaperByPrimaryKey(String id);
     
-    Paper getPaperByAttr(Paper paper);
+    List<Paper> getPaperByAttr(Paper paper);
 
     int updateByPrimaryKeySelective(Paper paper);
 

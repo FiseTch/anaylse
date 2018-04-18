@@ -20,7 +20,7 @@ public class ConstantTch {
 	public static final String DISTINCTION = "区分度";
 	public static final String RELIABILITY = "校标度";
 	//模板下载时表头数据
-	public static final String STUNO = "学号（序号）";
+	public static final String STUNO = "序号";
 	public static final String TOTAL = "总分";
 	public static final String ORDER = "第";
 	public static final String QUESTION = "题得分"; 

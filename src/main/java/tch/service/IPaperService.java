@@ -1,5 +1,7 @@
 package tch.service;
 
+import java.util.List;
+
 import tch.model.Paper;
 
 public interface IPaperService {
@@ -24,7 +26,7 @@ public interface IPaperService {
 	 * @return
 	 * @return: Paper
 	 */
-	public Paper getPaperById(Paper paper);
+	public List<Paper> getPaperByAttr(Paper paper);
 
     /**
      * 

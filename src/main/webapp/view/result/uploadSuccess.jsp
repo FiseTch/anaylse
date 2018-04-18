@@ -11,8 +11,7 @@
     border-collapse: collapse;     --折叠样式.  
     text-align:center;
 }  
-.table_border tr th{  
-   /*  background:url("../../images/gray/bg_table_th.gif") repeat;   */
+.table_border tr th{
     padding-left:4px;  
     height:27px;  
     border: solid 1px #B4B4B4;  

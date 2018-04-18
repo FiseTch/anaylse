@@ -1,8 +1,6 @@
 package tch.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,19 +8,16 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import tch.dao.TeacherMapper;
 import tch.model.Teacher;
 import tch.service.ITeacherService;
 import tch.util.MyCommonUtil;
 
 @Controller
-@Scope("prototype")
 @RequestMapping(value = "/teacher")
 public class TeacherAction {	
 	private static final Log log = LogFactory.getLog(TeacherAction.class);
@@ -99,10 +94,10 @@ public class TeacherAction {
 				teacher.setName(MyCommonUtil.changeEncode(name));
 				teacher.setSex(MyCommonUtil.changeEncode(sex));
 				teacher.setTel(MyCommonUtil.changeEncode(tel));
-				teacher.setBirthday(MyCommonUtil.getDateFormat(birthday));
+				teacher.setBirthday(MyCommonUtil.getDateFormatToDatabase(birthday));
 				teacher.setProf(MyCommonUtil.changeEncode(prof));
 				teacher.setDepart(MyCommonUtil.changeEncode(depart));
-				teacher.setHiredate(MyCommonUtil.getDateFormat(hiredate));
+				teacher.setHiredate(MyCommonUtil.getDateFormatToDatabase(hiredate));
 				teacher.setSubject(MyCommonUtil.changeEncode(subject));
 				int i = teacherService.updateByIdSelective(teacher);//进行更新操作
 				if (i == 1) {
@@ -264,7 +259,7 @@ public class TeacherAction {
 	 * @return
 	 * @return: boolean
 	 */
-	public  boolean isRegisterUser(String userId){
+	private  boolean isRegisterUser(String userId){
 		if (userId != null) {
 			List<String> s = teacherService.getAllTeacId();
 			if (null != s) {

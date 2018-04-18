@@ -19,6 +19,7 @@ function infoMsg(){
 </script>
 <body>
 	<a class="a globalLoginBtn">登录</a>
+	<img alt="" src="../../images/slide3.jpg" style = "width:1280px">
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;"><div style="display:table; width:100%; height:100%;"><div style="vertical-align:middle; display:table-cell;"><div class="modal-dialog modal-sm" style="width:540px;">
         <div class="modal-content" style="border: none;">
             <div class="col-left"></div>

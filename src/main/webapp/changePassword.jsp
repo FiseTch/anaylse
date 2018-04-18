@@ -46,6 +46,14 @@ function checkOldPwd(){
 		$("#emptyPwd").show();
     }   
 }
+function checkpas(){
+    var newPassword = document.getElementById("newPassword").value;
+    if(newPassword != null  && newPassword != "" && newPassword != undefined){
+		$("#emptyNewPassword").hide();
+    }else{
+		$("#emptyNewPassword").show();
+    }
+}
 function checkpasRe(){//当第二个密码框失去焦点时，触发checkpasRe时事件
 	$("#tip").hide();
 	var pas1=document.getElementById("newPassword").value;
@@ -137,14 +145,15 @@ function checkUpdate(){//点击提交按钮时，触发checkpas2事件，会进�
 									<label class="name">
 										请输入原密码：
 										<input type="password" name = "oldPassword" id = "oldPassword" onblur = "checkOldPwd()" autofocus="autofocus" required = "required">	
-										<span class="emptyPwd" id = "emptyPwd"style="color: red;display:none">密码不允许为空</span>
+										<span class="emptyPwd" id = "emptyPwd"style="color: red;display:none">请输入密码</span>
 										<span class="errorMsg" id = "errorMsg" style="color: red;display:none">密码输入错误</span>
 										<span class="empty">*This field is required.</span>
 										<span class="clear"></span>							
 									</label>
 									<label class="email">
 										请输入新密码：
-										<input type="password" name = "newPassword" id = "newPassword" required = "required">
+										<input type="password" name = "newPassword" id = "newPassword" onblur = "checkpas()" required = "required">
+										<span class="emptyNewPassword" id = "emptyNewPassword"style="color: red;">请输入新密码</span>
 										<span class="error">*This is not a valid name.</span>
 										<span class="empty">*This field is required.</span>
 										<span class="clear"></span>
@@ -167,6 +176,13 @@ function checkUpdate(){//点击提交按钮时，触发checkpas2事件，会进�
 						</fieldset>
 					</form>
 				</div>				
+			</div>
+		</div>
+		<div class="container_24"><!-- 用来撑开页面底部的空隙 -->
+			<div class="wrapper">
+				<div class="grid_7 suffix_1 padtop33"></div>
+				<div class="grid_7 suffix_1 padtop33"></div>
+				<div class="grid_7 suffix_1 padtop33"></div>
 			</div>
 		</div>
 	</div>

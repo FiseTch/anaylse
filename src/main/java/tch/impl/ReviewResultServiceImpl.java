@@ -1,5 +1,7 @@
 package tch.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
@@ -87,7 +89,7 @@ public class ReviewResultServiceImpl implements IReviewResultService {
 	/**
 	 * 根据属性值查记录
 	 */
-	public ReviewResult getRevByAttr(ReviewResult reviewResult) {
+	public List<ReviewResult> getRevByAttr(ReviewResult reviewResult) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return reviewResultMapper.getRevByAttr(reviewResult);
 	}

@@ -6,33 +6,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
-
+import tch.model.ReviewResult;
+import tch.service.IReviewResultService;
 import tch.util.CalcUtil;
 import tch.util.ConstantTch;
 
 @Controller
-@Scope("prototype")
-@RequestMapping(value = "/anaylse")
-
-public class Anaylse {
+@RequestMapping(value = "/calc")
+public class CalcAction {
 	
-	private static Log log = LogFactory.getLog(Anaylse.class);
+	private static Log log = LogFactory.getLog(CalcAction.class);
+	
+	@Resource
+	private IReviewResultService reviewResultService;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/dealData")
-	public static ModelAndView dealData(Map<Integer,List<String>> data,HttpServletRequest request,
+	public  ModelAndView dealData(Map<Integer,List<String>> data,HttpServletRequest request,
 			HttpServletResponse response,HttpSession session){
 		ModelAndView model = new ModelAndView();
 		data = (Map<Integer, List<String>>) session.getAttribute("data");
@@ -57,15 +58,52 @@ public class Anaylse {
 			resultMap.put(ConstantTch.DIFFICULTY, difficulty);
 			resultMap.put(ConstantTch.RELIABILITY, reliability);
 			resultMap.put(ConstantTch.DISTINCTION, distinction);
+			boolean b = saveDataToRev(resultMap,session);
+			if(b){
+				model.addObject("saveMsg","存入数据库成功");
+			}else{
+				model.addObject("saveMsg","存入数据库失败");
+			}
 			model.addObject("result",resultMap);
 /*			session.setAttribute("resultMap", resultMap);*/
-			model.setViewName("/result/showResult");
+			model.setViewName("/view/result/showResult");
 		} catch (Exception e) {	
 			log.error(e);
-			model.setViewName("/result/uploadFailure");
+			model.setViewName("/view/result/uploadFailure");
 			e.printStackTrace();
 		}
 		return model;
+		
+	}
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: saveDataToRev
+	 * @Description: 将分析结果存入表中reviewResult
+	 * @param resultMap
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 * @return: boolean
+	 */
+	private boolean saveDataToRev(Map<String,Double> resultMap,HttpSession session) throws Exception{
+		int i = 0;
+		ReviewResult rev = new ReviewResult();
+		String teacherId = (String) session.getAttribute("userId");
+		String paperId = (String) session.getAttribute("paperId");
+		if (null != teacherId && null != paperId) {			
+			rev.setpId(teacherId);
+			rev.settId(paperId);
+			rev.setValidityB(resultMap.get(ConstantTch.VALIDITY));
+			rev.setDifficulty(resultMap.get(ConstantTch.DIFFICULTY));
+			rev.setReliability(resultMap.get(ConstantTch.RELIABILITY));
+			rev.setDistinction(resultMap.get(ConstantTch.DISTINCTION));
+			i = reviewResultService.insertReviewResultSelective(rev);
+		}else{
+			throw new Exception("用户id或者试卷id为空");
+		}
+		return (i == 1)?true:false;
 		
 	}
 }

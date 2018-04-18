@@ -3,7 +3,9 @@ package tch.model;
 import java.util.Date;
 
 public class Paper {
-    private String id;
+    private Integer id;
+
+    private String paperid;
 
     private String subject;
 
@@ -15,11 +17,13 @@ public class Paper {
 
     private Date time;
 
-    private String papername;
+    private String papertime;
 
     private String term;
 
     private Integer num;
+
+    private Integer excelOrder;
 
     private String param1;
 
@@ -71,12 +75,20 @@ public class Paper {
 
     private String param25;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPaperid() {
+        return paperid;
+    }
+
+    public void setPaperid(String paperid) {
+        this.paperid = paperid == null ? null : paperid.trim();
     }
 
     public String getSubject() {
@@ -119,12 +131,12 @@ public class Paper {
         this.time = time;
     }
 
-    public String getPapername() {
-        return papername;
+    public String getPapertime() {
+        return papertime;
     }
 
-    public void setPapername(String papername) {
-        this.papername = papername == null ? null : papername.trim();
+    public void setPapertime(String papertime) {
+        this.papertime = papertime == null ? null : papertime.trim();
     }
 
     public String getTerm() {
@@ -141,6 +153,14 @@ public class Paper {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public Integer getExcelOrder() {
+        return excelOrder;
+    }
+
+    public void setExcelOrder(Integer excelOrder) {
+        this.excelOrder = excelOrder;
     }
 
     public String getParam1() {

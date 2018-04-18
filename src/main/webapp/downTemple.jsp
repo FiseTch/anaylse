@@ -82,6 +82,13 @@ function updatePassword(){
 				</div>				
 			</div>
 		</div>
+		<div class="container_24"><!-- 用来撑开页面底部的空隙 -->
+			<div class="wrapper">
+				<div class="grid_7 suffix_1 padtop33"></div>
+				<div class="grid_7 suffix_1 padtop33"></div>
+				<div class="grid_7 suffix_1 padtop33"></div>
+			</div>
+		</div>
 	</div>
 </section>
 

@@ -134,16 +134,40 @@ public class MyCommonUtil extends DateUtil{
      * 
      * @user: tongchaohua
      * @Title: getDateFormat
-     * @Description: 得到yyyy-MM-dd HH:mm:ss的时间格式
+     * @Description: 得到yyyy-MM-dd的时间格式
      * @param data
      * @return
      * @return: String
      */
     
     public static String getDateFormat(Date data){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(data);       
-    }  
+    } 
+    
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: getDateFormatToDatabase
+     * @Description: 
+     * 将yyyy-MM-dd格式的 前端日期保存至数据库 
+     * @param time
+     * @return
+     * @return: Date
+     */
+    public static Date getDateFormatToDatabase(String time){
+    	if(time != null){   		
+    		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    		try {
+    			return df.parse(time+" 23:00:00");
+    		} catch (ParseException e) {           
+    			e.printStackTrace();
+    		}  
+    	}else{   		
+    		return null;
+    	}
+    	return null;
+    }
      /**
       * 
       * @user: tongchaohua
@@ -157,7 +181,7 @@ public class MyCommonUtil extends DateUtil{
     	if(time != null){   		
     		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     		try {
-    			return df.parse(time+" 23:00:00");
+    			return df.parse(time);
     		} catch (ParseException e) {           
     			e.printStackTrace();
     		}  
@@ -167,24 +191,6 @@ public class MyCommonUtil extends DateUtil{
     	return null;
     }
     
-    /**
-     * 
-     * @user: tongchaohua
-     * @Title: getDateFormat
-     * @Description: 将yyyy-MM-dd格式的时间转成date
-     * @param time
-     * @return
-     * @return: Date
-     */
-    public static Date dateFormatTo8(String time){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return df.parse(time);
-        } catch (ParseException e) {           
-            e.printStackTrace();
-        }  
-        return null;
-    }
     /**
      * 
      * @user: tongchaohua
@@ -209,7 +215,7 @@ public class MyCommonUtil extends DateUtil{
      * 
      * @user: tongchaohua
      * @Title: getTimeString
-     * @Description: 传入一个Strin类型的时间
+     * @Description: 传入一个yyyy-MM-dd HH:mm:ss格式的时间，并将其转换成一串字符串
      * @param time
      * @return
      * @return: String
@@ -223,16 +229,32 @@ public class MyCommonUtil extends DateUtil{
      * 
      * @user: tongchaohua
      * @Title: getTimeString
-     * @Description: 如果不传参，则获取本地时间的String类型
+     * @Description: 如果不传参，则获取当前默认格式的时间，并将其转换成一串字符串输出
      * @return
      * @return: String
      */
     public static String getTimeString(){
+    	log.info(Thread.currentThread().getStackTrace()[1].getMethodName());
         Calendar calendar = new GregorianCalendar();
         return getTimeString(calendar);
     }
           
-        
+    /**
+     *  
+     * @user: tongchaohua
+     * @Title: getFilenameAddCurrentTime
+     * @Description: 传入一个文件名，将其加入 20180416125622638 当前时间的后缀，精确到毫秒(17位)	
+     * @param originalFilename 参数必须包含.
+     * @return
+     * @return: String
+     */    
+    public static String getFilenameAddCurrentTime(String originalFilename){
+    	String prefixName = originalFilename.substring(0, originalFilename.lastIndexOf(ExcelUpUtil.POINT));
+		String suffixName = originalFilename.substring(originalFilename.lastIndexOf(ExcelUpUtil.POINT)+1);
+		String fileName = prefixName + MyCommonUtil.getTimeString() + ExcelUpUtil.POINT + suffixName;
+		return fileName;
+    }
+    
     public static int absoluteDay(Calendar cal, boolean use1904windowing) {    
         return DateUtil.absoluteDay(cal, use1904windowing);    
     }  

@@ -18,6 +18,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
+/**
+ * 
+ * 
+ * Copyright:tch
+ * 
+ * @class: tch.util
+ * @Description: excel结果下载
+ *
+ * @version: v1.0.0
+ * @author: tongch
+ * @date: 2018-04-18
+ * Modification History:
+ * date         Author          Version            Description
+ *------------------------------------------------------------
+ * 2018-04-18     tongch          v1.1.0
+ */
 public class ExcelDownUtil extends AbstractExcelView {
 	@Override
 	 @SuppressWarnings({ "static-access", "deprecation" })

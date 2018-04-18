@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tch.dao.ReviewResultMapper">
   <resultMap id="BaseResultMap" type="tch.model.ReviewResult">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="p_id" jdbcType="VARCHAR" property="pId" />
     <result column="t_id" jdbcType="VARCHAR" property="tId" />
     <result column="validity_a" jdbcType="DOUBLE" property="validityA" />
@@ -14,21 +14,21 @@
   <sql id="Base_Column_List">
     id, p_id, t_id, validity_a, validity_b, reliability, difficulty, distinction
   </sql>
-  <select id="getRevByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getRevByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from review_result
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from review_result
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="tch.model.ReviewResult">
     insert into review_result (id, p_id, t_id, 
       validity_a, validity_b, reliability, 
       difficulty, distinction)
-    values (#{id,jdbcType=VARCHAR}, #{pId,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{pId,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}, 
       #{validityA,jdbcType=DOUBLE}, #{validityB,jdbcType=DOUBLE}, #{reliability,jdbcType=DOUBLE}, 
       #{difficulty,jdbcType=DOUBLE}, #{distinction,jdbcType=DOUBLE})
   </insert>
@@ -62,7 +62,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="pId != null">
         #{pId,jdbcType=VARCHAR},
@@ -112,7 +112,7 @@
         distinction = #{distinction,jdbcType=DOUBLE},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="tch.model.ReviewResult">
     update review_result
@@ -123,19 +123,16 @@
       reliability = #{reliability,jdbcType=DOUBLE},
       difficulty = #{difficulty,jdbcType=DOUBLE},
       distinction = #{distinction,jdbcType=DOUBLE}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="getRevByAttr" parameterType="tch.model.ReviewResult" resultMap="BaseResultMap">
+    <select id="getRevByAttr" parameterType="tch.model.ReviewResult" resultMap="BaseResultMap">
   	select 
   	 <include refid="Base_Column_List" />
   	 from review_result 
   	 <where>
-	  	 <if test="id != null">
-	       id =  #{id,jdbcType=VARCHAR}
-	      </if>
 	      <if test="pId != null">
-	       and pId = #{pId,jdbcType=VARCHAR}
+	       	pId = #{pId,jdbcType=VARCHAR}
 	      </if>
 	      <if test="tId != null">
 	        and tId = #{tId,jdbcType=VARCHAR}

@@ -47,64 +47,60 @@ function checkPassword(){
 	} 
 }
 function checkpasRe(){//当第二个密码框失去焦点时，触发checkpasRe时事件
-	$("#tip").hide();
 	var pas1=document.getElementById("password").value;
 	var pas2=document.getElementById("confirmPassword").value;//获取两个密码框的值
 	if(pas1 != null && pas1 != "" && pas1 != undefined){
-		$("#tip").hide();
-	    if(pas1 != pas2){
-	    	$("#tip").show();//当两个密码不相等时则显示错误信息
-	    }else{
-			$("#tip").hide();
-		}
-	}else{
-		$("#tip").hide();
-	}
-}
-function form_submit(){
-    if(document.getElementById("agree").checked){
-		var id = document.getElementById("id").value;
-		var username = document.getElementById("username").value;
-		var pas1 = document.getElementById("password").value;
-		var pas2 = document.getElementById("confirmPassword").value;
-		if(id != null && id != "" && id != undefined &&
-		username != null && username != "" && username != undefined &&
-		pas1 != null && pas1 != "" && pas1 != undefined &&
-		pas2 != null && pas2 != "" && pas2 != undefined){
-		    if(pas1 == pas2){
-				alert("注册成功，登录中...")
-			    return true;
-			}else{
-				document.getElementById("confirmPassword").value = "";
-				document.getElementById("confirmPassword").focus();
-				return false; 
+		if(pas2 != null && pas2 != "" && pas2 != undefined){
+		    $("#emptyConfirmPassword").hide();
+		    if(pas1 != pas2){
+		    	$("#tip").show();//当两个密码不相等时则显示错误信息
+		    }else{
+				$("#tip").hide();
 			}
 		}else{
-		    if(id != null && id != "" && id != undefined){
-				if(username != null && username != "" && username != undefined){
-				    if(pas1 != null && pas1 != "" && pas1 != undefined){
-						alert("请填写确认密码");
-						document.getElementById("confirmPassword").focus(); 
-					}else{
-					    alert("请填写密码");
-					    document.getElementById("password").focus(); 
-					}
-				}else{
-				    alert("请填写用户名");
-				    document.getElementById("username").focus(); 
-				}
-		    }else{
-				alert("请填写工号");
-		    	document.getElementById("id").focus(); 
-		    }
-		    return false;
+		    $("#tip").hide();
+		    $("#emptyConfirmPassword").show();
+		}		
+	}
+}
+function form_submit(){   
+	var id = document.getElementById("id").value;
+	var username = document.getElementById("username").value;
+	var pas1 = document.getElementById("password").value;
+	var pas2 = document.getElementById("confirmPassword").value;
+	if(id == null || id == "" || id == undefined){
+	    document.getElementById("id").focus();
+	    return false;
+	}
+	if(username == null || username == "" || username == undefined){
+	    document.getElementById("username").focus();
+	    return false;
+	}
+	if(pas1 == null || pas1 == "" || pas1 == undefined){
+	    document.getElementById("password").focus();
+	    return false;
+	}
+	if(pas2 != null && pas2 != "" && pas2 != undefined){
+	    $("#emptyConfirmPassword").hide();
+	    if(pas1 == pas2){
+			if(!document.getElementById("agree").checked){
+			    alert("请同意我方公司协议");
+				document.getElementById("agree").focus();
+				return false;
+			}else{
+				alert("注册成功，登录中...");
+			    return true;
+			}
+		}else{
+			document.getElementById("confirmPassword").value = "";
+			document.getElementById("confirmPassword").focus();
+			return false; 
 		}
-		
-    }else{
-		alert("请同意我方公司协议");
-		document.getElementById("agree").focus();
-		return false;
-    }
+	}else{
+	    $("#emptyConfirmPassword").show();
+		document.getElementById("confirmPassword").focus(); 					
+	    return false;
+	}		    
 }
 </script>   
 <body>
@@ -135,7 +131,8 @@ function form_submit(){
 							<label class="col-sm-4 control-label" for="firstname">用户工号</label>
 							<div class="col-sm-5">
 								<input type="text" class="form-control" onblur = "checkId()" autofocus = "autofocus" id="id" name="id" placeholder="工号" />
-								<span class="emptyId" id = "emptyId"style="color: red;display:none">用户工号不允许为空</span>
+								<!-- <span class="emptyId" id = "emptyId"style="color: red;display:none">用户工号不允许为空</span> -->
+								<span class="emptyId" id = "emptyId"style="color: red;">用户工号不允许为空</span>
 								<span class="emptyRegister" id = "emptyRegister"style="color: red;display:none">用户已被注册</span>
 							</div>
 						</div>
@@ -160,6 +157,7 @@ function form_submit(){
 							<label class="col-sm-4 control-label" for="confirmPassword">确认密码</label>
 							<div class="col-sm-5">
 								<input type="password" class="form-control" onblur = "checkpasRe()"id="confirmPassword" name="confirmPassword" placeholder="确认密码" />
+								<span class="emptyConfirmPassword" id = "emptyConfirmPassword"style="color: red;display:none">请输入确认密码</span>
 								<span class="tip" id = "tip" style="color: red;display:none">两次输入的密码不一致</span><br>
 							</div>
 						</div>
@@ -182,6 +180,13 @@ function form_submit(){
 					</form>
 				</div>
 			</div>			
+		</div>
+	</div>
+	<div class="container_24"><!-- 用来撑开页面底部的空隙 -->
+		<div class="wrapper">
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
 		</div>
 	</div>
 </section>

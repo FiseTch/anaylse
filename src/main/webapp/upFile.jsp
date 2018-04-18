@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/view/common/header.jsp"%>
@@ -13,7 +15,11 @@
 <script type="text/javascript" src="${ctx}/js/jquery.flexslider-min.js"></script>
 <script type="text/javascript" src="${ctx}/js/FF-cash.js"></script>
 <title>文件上传&copyFise</title>  
-</head>   
+</head>
+<%	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String time = sdf.format(new Date());
+%>   
 <body>  
 <script type="text/javascript">
 function logOut() {  
@@ -32,8 +38,99 @@ function updatePassword(){
 			return;
 	}
 }
-if(${fail} != null ){
-	alert(${fail})
+function checkSubject(){
+    var subject = document.getElementById("subject").value;
+    if(subject != null  && subject != "" && subject != undefined){		
+		$("#emptySubject").hide();		
+	}else{		
+		$("#emptySubject").show();
+	} 
+}
+function checkScore(){
+    var score = document.getElementById("score").value;
+    if(score != null  && score != "" && score != undefined){		
+		$("#emptyScore").hide();		
+	}else{		
+		$("#emptyScore").show();
+	} 
+}
+function checkSubjectPerson(){
+    var subjectPerson = document.getElementById("subjectPerson").value;
+    if(subjectPerson != null  && subjectPerson != "" && subjectPerson != undefined){		
+		$("#emptySubjectPerson").hide();		
+	}else{		
+		$("#emptySubjectPerson").show();
+	} 
+}
+function checkTeacher(){
+    var teacher = document.getElementById("teacher").value;
+    if(teacher != null  && teacher != "" && teacher != undefined){		
+		$("#emptyTeacher").hide();		
+	}else{		
+		$("#emptyTeacher").show();
+	} 
+}
+function checkPaperTime(){
+    var paperTime = document.getElementById("paperTime").value;
+    if(paperTime != null  && paperTime != "" && paperTime != undefined){		
+		$("#emptyPaperTime").hide();		
+	}else{		
+		$("#emptyPaperTime").show();
+	} 
+}
+function checkNum(){
+    var num = document.getElementById("num").value;
+    if(num != null  && num != "" && num != undefined){		
+		$("#emptyNum").hide();		
+	}else{		
+		$("#emptyNum").show();
+	} 
+}
+function checkEmpty(){
+    var subject = document.getElementById("subject").value;    
+    var score = document.getElementById("score").value;
+    var subjectPerson = document.getElementById("subjectPerson").value;
+    var teacher = document.getElementById("teacher").value;
+    var paperTime = document.getElementById("paperTime").value;
+    var num = document.getElementById("num").value;
+	var fileName = document.getElementById("upload").value;
+    if(subject == null  || subject == "" || subject == undefined){
+		document.getElementById("subject").focus();
+		return false;
+    }
+    if(score == null  || score == "" || score == undefined){
+		document.getElementById("score").focus();
+		return false;
+	}
+    if(subjectPerson == null  || subjectPerson == "" || subjectPerson == undefined){
+		document.getElementById("subjectPerson").focus();	
+		return false;
+	}
+    if(teacher == null  || teacher == "" || teacher == undefined){
+		document.getElementById("teacher").focus();
+		return false;
+	}
+    if(paperTime == null  || paperTime == "" || paperTime == undefined){
+		document.getElementById("paperTime").focus();
+		return false;
+	}
+    if(num == null  || num == "" || num == undefined){
+		document.getElementById("num").focus();
+		return false;
+	}
+    if(fileName != null && fileName != "" && fileName != undefined){
+		var postfix = fileName.substring(fileName.lastIndexOf(".")+1);  
+		if("xls" == postfix || "xlsx"  == postfix){
+		    return true;
+		}else{
+		    alert("请输入.xls或者.xlsx格式的文件");
+		    return false;
+		}
+    }else{
+		alert("请选择文件");
+		return false;
+	
+    }
 }
 </script>
 <header>
@@ -74,18 +171,145 @@ if(${fail} != null ){
 	</div>
 </header>
 <section>
-	<div class="bg">
-		<div class="container_24">
-			<div class="wrapper">
-				<div class="grid_8 padtop3">
-				    <form id="upfile" action = "${ctx}/getExcel/upExcel.do" method = "post" enctype = "multipart/form-data">  
-				        	选择一个文件:  
-				      	<input type="file" name="file" id="upload" />  
-				        <br/><br/> 
-				        <input id="uploadFile" value="上传" type="submit"/>  
+	<div class="container_24">
+		<div class="wrapper">
+			<div class="panel panel-default">
+				<h4>文件上传</h4><br>
+				<%-- <h4>上传模板格式<a href="${ctx}/downTemple.jsp">（模板下载）</a></h4>
+				<img alt="" src="${ctx}/images/temple.png" width = "900px"> --%>
+				<div class="panel-body">
+				    <form id="upfile" action = "${ctx}/paper/upPaper.do" onsubmit = "return checkEmpty()" method = "post" enctype = "multipart/form-data">  
+				        <table>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">课程名称：</p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="text" placeholder="eg:C语言程序设计" onblur = "checkSubject()" autofocus = "autofocus" name = "subject" id = "subject">
+										<span class="emptySubject" id = "emptySubject"style="color: red;">*课程名称不允许为空</span>
+									</label>									
+								</td>
+							</tr>
+							<tr>	
+								<td class = "padbot2">
+									<p class="padbot2">试卷总分：</p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="text" placeholder="eg:100" onblur = "checkScore()"name = "score" id = "score">
+										<span class="emptyScore" id = "emptyScore"style="color: red;">*试卷总分不允许为空</span>
+									</label>
+								</td>
+							</tr>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">出题人：</p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="text" placeholder="eg:张三" onblur = "checkSubjectPerson()" name = "subjectPerson" id = "subjectPerson">
+										<span class="emptySubjectPerson" id = "emptySubjectPerson"style="color: red;">*出题人不允许为空</span>
+									</label>									
+								</td>
+							</tr>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">试卷审核人：</p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="text" placeholder="eg:李四" onblur = "checkTeacher()" name = "teacher" id = "teacher">
+										<span class="emptyTeacher" id = "emptyTeacher"style="color: red;">*试卷审核人不允许为空</span>
+									</label>									
+								</td>
+							</tr>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">考试时间：</p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="date" value="<%=time%>" name ="time" id = "time">
+									</label>									
+								</td>
+							</tr>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">考试用时（分钟）：</p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="text" placeholder = "eg:120" onblur = "checkPaperTime()" name = "paperTime" id = "paperTime">
+										<span class="emptyPaperTime" id = "emptyPaperTime" style="color: red;">*考试用时不允许为空</span>
+									</label>									
+								</td>
+							</tr>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">课程开设学期：</p>
+								</td>
+								<td>
+									<label class="name">
+										<select name = "term" id = "term">
+										  <option value="141" >141</option>
+										  <option value="142" >142</option>
+										  <option value="151" >151</option>
+										  <option value="152" >152</option>
+										  <option value="161" >161</option>
+										  <option value="162" >162</option>
+										  <option value="171" selected = "selected">171</option>
+										  <option value="172" >172</option>
+										  <option value="181" >181</option>
+										  <option value="182" >182</option>
+										</select>
+									</label>									
+								</td>
+							</tr>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">考试总人数：</p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="text" placeholder = "eg:100" onblur = "checkNum()" name = "num" id = "num">
+										<span class="emptyNum" id = "emptyNum"style="color: red;">*考试总人数不允许为空</span>
+									</label>									
+								</td>
+							</tr>
+							<tr>										
+								<td class = "padbot2">
+									<p class="padbot2">选择一个文件: </p>
+								</td>
+								<td>
+									<label class="name">
+										<input type="file" name="file" id="upload" /> 
+									</label>									
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="name">
+										<input type="submit" value="上传">
+									</label>									
+								</td>
+								<td>
+									<label class="name">
+										<input type="reset" value="恢复默认">
+									</label>									
+								</td>
+							</tr>
+						</table>
 				    </form>  
-				</div>				
-			</div>
+		    	</div>
+			</div>				
+		</div>
+	</div>
+	<div class="container_24"><!-- 用来撑开页面底部的空隙 -->
+		<div class="wrapper">
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
 		</div>
 	</div>
 </section>

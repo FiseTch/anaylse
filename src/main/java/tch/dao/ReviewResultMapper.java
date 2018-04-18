@@ -1,5 +1,7 @@
 package tch.dao;
 
+import java.util.List;
+
 import tch.model.ReviewResult;
 
 public interface ReviewResultMapper {
@@ -9,9 +11,9 @@ public interface ReviewResultMapper {
 
     int insertSelective(ReviewResult reviewResult);
 
-    ReviewResult getRevByPrimaryKey(String id);
+   ReviewResult getRevByPrimaryKey(String id);
     
-    ReviewResult getRevByAttr(ReviewResult reviewResult);
+    List<ReviewResult> getRevByAttr(ReviewResult reviewResult);
 
     int updateByPrimaryKeySelective(ReviewResult reviewResult);
 

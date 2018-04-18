@@ -2,15 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tch.dao.PaperMapper">
   <resultMap id="BaseResultMap" type="tch.model.Paper">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="paperId" jdbcType="VARCHAR" property="paperid" />
     <result column="subject" jdbcType="VARCHAR" property="subject" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="subjectPerson" jdbcType="VARCHAR" property="subjectperson" />
     <result column="teacher" jdbcType="VARCHAR" property="teacher" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
-    <result column="paperName" jdbcType="VARCHAR" property="papername" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="paperTime" jdbcType="VARCHAR" property="papertime" />
     <result column="term" jdbcType="VARCHAR" property="term" />
     <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="excelOrder" jdbcType="INTEGER" property="excelorder" />
     <result column="param1" jdbcType="VARCHAR" property="param1" />
     <result column="param2" jdbcType="VARCHAR" property="param2" />
     <result column="param3" jdbcType="VARCHAR" property="param3" />
@@ -38,52 +40,57 @@
     <result column="param25" jdbcType="VARCHAR" property="param25" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, subject, score, subjectPerson, teacher, time, paperName, term, num, param1, param2, 
-    param3, param4, param5, param6, param7, param8, param9, param10, param11, param12, 
-    param13, param14, param15, param16, param17, param18, param19, param20, param21, 
-    param22, param23, param24, param25
+    id, paperId, subject, score, subjectPerson, teacher, time, paperTime, term, num, 
+    excelOrder, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, 
+    param11, param12, param13, param14, param15, param16, param17, param18, param19, 
+    param20, param21, param22, param23, param24, param25
   </sql>
-  <select id="getPaperByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getPaperByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from paper
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from paper
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="tch.model.Paper">
-    insert into paper (id, subject, score, 
-      subjectPerson, teacher, time, 
-      paperName, term, num, 
-      param1, param2, param3, 
-      param4, param5, param6, 
-      param7, param8, param9, 
-      param10, param11, param12, 
-      param13, param14, param15, 
-      param16, param17, param18, 
-      param19, param20, param21, 
-      param22, param23, param24, 
-      param25)
-    values (#{id,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
-      #{subjectperson,jdbcType=VARCHAR}, #{teacher,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{papername,jdbcType=VARCHAR}, #{term,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
-      #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, 
-      #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, #{param6,jdbcType=VARCHAR}, 
-      #{param7,jdbcType=VARCHAR}, #{param8,jdbcType=VARCHAR}, #{param9,jdbcType=VARCHAR}, 
-      #{param10,jdbcType=VARCHAR}, #{param11,jdbcType=VARCHAR}, #{param12,jdbcType=VARCHAR}, 
-      #{param13,jdbcType=VARCHAR}, #{param14,jdbcType=VARCHAR}, #{param15,jdbcType=VARCHAR}, 
-      #{param16,jdbcType=VARCHAR}, #{param17,jdbcType=VARCHAR}, #{param18,jdbcType=VARCHAR}, 
-      #{param19,jdbcType=VARCHAR}, #{param20,jdbcType=VARCHAR}, #{param21,jdbcType=VARCHAR}, 
-      #{param22,jdbcType=VARCHAR}, #{param23,jdbcType=VARCHAR}, #{param24,jdbcType=VARCHAR}, 
-      #{param25,jdbcType=VARCHAR})
+    insert into paper (id, paperId, subject, 
+      score, subjectPerson, teacher, 
+      time, paperTime, term, 
+      num, excelOrder, param1, 
+      param2, param3, param4, 
+      param5, param6, param7, 
+      param8, param9, param10, 
+      param11, param12, param13, 
+      param14, param15, param16, 
+      param17, param18, param19, 
+      param20, param21, param22, 
+      param23, param24, param25
+      )
+    values (#{id,jdbcType=INTEGER}, #{paperid,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER}, #{subjectperson,jdbcType=VARCHAR}, #{teacher,jdbcType=VARCHAR}, 
+      #{time,jdbcType=DATE}, #{papertime,jdbcType=VARCHAR}, #{term,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{excelOrder,jdbcType=INTEGER}, #{param1,jdbcType=VARCHAR}, 
+      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR}, 
+      #{param5,jdbcType=VARCHAR}, #{param6,jdbcType=VARCHAR}, #{param7,jdbcType=VARCHAR}, 
+      #{param8,jdbcType=VARCHAR}, #{param9,jdbcType=VARCHAR}, #{param10,jdbcType=VARCHAR}, 
+      #{param11,jdbcType=VARCHAR}, #{param12,jdbcType=VARCHAR}, #{param13,jdbcType=VARCHAR}, 
+      #{param14,jdbcType=VARCHAR}, #{param15,jdbcType=VARCHAR}, #{param16,jdbcType=VARCHAR}, 
+      #{param17,jdbcType=VARCHAR}, #{param18,jdbcType=VARCHAR}, #{param19,jdbcType=VARCHAR}, 
+      #{param20,jdbcType=VARCHAR}, #{param21,jdbcType=VARCHAR}, #{param22,jdbcType=VARCHAR}, 
+      #{param23,jdbcType=VARCHAR}, #{param24,jdbcType=VARCHAR}, #{param25,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="tch.model.Paper">
     insert into paper
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="paperid != null">
+        paperId,
       </if>
       <if test="subject != null">
         subject,
@@ -100,14 +107,17 @@
       <if test="time != null">
         time,
       </if>
-      <if test="papername != null">
-        paperName,
+      <if test="papertime != null">
+        paperTime,
       </if>
       <if test="term != null">
         term,
       </if>
       <if test="num != null">
         num,
+      </if>
+      <if test="excelOrder != null">
+        excelOrder,
       </if>
       <if test="param1 != null">
         param1,
@@ -187,7 +197,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="paperid != null">
+        #{paperid,jdbcType=VARCHAR},
       </if>
       <if test="subject != null">
         #{subject,jdbcType=VARCHAR},
@@ -202,16 +215,19 @@
         #{teacher,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
+        #{time,jdbcType=DATE},
       </if>
-      <if test="papername != null">
-        #{papername,jdbcType=VARCHAR},
+      <if test="papertime != null">
+        #{papertime,jdbcType=VARCHAR},
       </if>
       <if test="term != null">
         #{term,jdbcType=VARCHAR},
       </if>
       <if test="num != null">
         #{num,jdbcType=INTEGER},
+      </if>
+      <if test="excelOrder != null">
+        #{excelOrder,jdbcType=INTEGER},
       </if>
       <if test="param1 != null">
         #{param1,jdbcType=VARCHAR},
@@ -293,6 +309,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="tch.model.Paper">
     update paper
     <set>
+      <if test="paperid != null">
+        paperId = #{paperid,jdbcType=VARCHAR},
+      </if>
       <if test="subject != null">
         subject = #{subject,jdbcType=VARCHAR},
       </if>
@@ -306,16 +325,19 @@
         teacher = #{teacher,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
+        time = #{time,jdbcType=DATE},
       </if>
-      <if test="papername != null">
-        paperName = #{papername,jdbcType=VARCHAR},
+      <if test="papertime != null">
+        paperTime = #{papertime,jdbcType=VARCHAR},
       </if>
       <if test="term != null">
         term = #{term,jdbcType=VARCHAR},
       </if>
       <if test="num != null">
         num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="excelOrder != null">
+        excelOrder = #{excelOrder,jdbcType=INTEGER},
       </if>
       <if test="param1 != null">
         param1 = #{param1,jdbcType=VARCHAR},
@@ -393,18 +415,20 @@
         param25 = #{param25,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="tch.model.Paper">
     update paper
-    set subject = #{subject,jdbcType=VARCHAR},
+    set paperId = #{paperid,jdbcType=VARCHAR},
+      subject = #{subject,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER},
       subjectPerson = #{subjectperson,jdbcType=VARCHAR},
       teacher = #{teacher,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      paperName = #{papername,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      paperTime = #{papertime,jdbcType=VARCHAR},
       term = #{term,jdbcType=VARCHAR},
       num = #{num,jdbcType=INTEGER},
+      excelOrder = #{excelOrder,jdbcType=INTEGER},
       param1 = #{param1,jdbcType=VARCHAR},
       param2 = #{param2,jdbcType=VARCHAR},
       param3 = #{param3,jdbcType=VARCHAR},
@@ -430,117 +454,120 @@
       param23 = #{param23,jdbcType=VARCHAR},
       param24 = #{param24,jdbcType=VARCHAR},
       param25 = #{param25,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   
-  
-<select id="getPaperByAttr" parameterType="tch.model.Paper" resultMap="BaseResultMap">
+    <select id="getPaperByAttr" parameterType="tch.model.Paper" resultMap="BaseResultMap">
   	select 
   	 <include refid="Base_Column_List" />
   	 from paper 
   	<where>
-	<if test="id != null">
-		id = #{id,jdbcType=VARCHAR}
-	</if>
-	<if test="subject != null">
-		and subject =  #{subject,jdbcType=VARCHAR}
-	</if>
-	<if test="score != null">
-		and score = #{score,jdbcType=INTEGER}
-	</if>
-	<if test="subjectperson != null">
-		and subjectperson = #{subjectperson,jdbcType=VARCHAR}
-	</if>
-	<if test="teacher != null">
-		and teacher = #{teacher,jdbcType=VARCHAR}
-	</if>
-	<if test="time != null">
-		and time = #{time,jdbcType=TIMESTAMP}
-	</if>
-	<if test="papername != null">
-		and papername = #{papername,jdbcType=VARCHAR}
-	</if>
-	<if test="term != null">
-		and term = #{term,jdbcType=VARCHAR}
-	</if>
-	<if test="num != null">
-		and num = #{num,jdbcType=INTEGER}
-	</if>
-	<if test="param1 != null">
-		and param1 = #{param1,jdbcType=VARCHAR}
-	</if>
-	<if test="param2 != null">
-		and param2 = #{param2,jdbcType=VARCHAR}
-	</if>
-	<if test="param3 != null">
-		and param3 = #{param3,jdbcType=VARCHAR}
-	</if>
-	<if test="param4 != null">
-		and param4 = #{param4,jdbcType=VARCHAR}
-	</if>
-	<if test="param5 != null">
-		and param5 = #{param5,jdbcType=VARCHAR}
-	</if>
-	<if test="param6 != null">
-		and param6 = #{param6,jdbcType=VARCHAR}
-	</if>
-	<if test="param7 != null">
-		and param7 = #{param7,jdbcType=VARCHAR}
-	</if>
-	<if test="param8 != null">
-		and param8 = #{param8,jdbcType=VARCHAR}
-	</if>
-	<if test="param9 != null">
-		and param9 = #{param9,jdbcType=VARCHAR}
-	</if>
-	<if test="param10 != null">
-		and param10 = #{param10,jdbcType=VARCHAR}
-	</if>
-	<if test="param11 != null">
-		and param11 = #{param11,jdbcType=VARCHAR}
-	</if>
-	<if test="param12 != null">
-		and param12 = #{param12,jdbcType=VARCHAR}
-	</if>
-	<if test="param13 != null">
-		and param13 = #{param13,jdbcType=VARCHAR}
-	</if>
-	<if test="param14 != null">
-		and param14 = #{param14,jdbcType=VARCHAR}
-	</if>
-	<if test="param15 != null">
-		and param15 = #{param15,jdbcType=VARCHAR}
-	</if>
-	<if test="param16 != null">
-		and param16 = #{param16,jdbcType=VARCHAR}
-	</if>
-	<if test="param17 != null">
-		and param17 = #{param17,jdbcType=VARCHAR}
-	</if>
-	<if test="param18 != null">
-		and param18 = #{param18,jdbcType=VARCHAR}
-	</if>
-	<if test="param19 != null">
-		and param19 = #{param19,jdbcType=VARCHAR}
-	</if>
-	<if test="param20 != null">
-		and param20 = #{param20,jdbcType=VARCHAR}
-	</if>
-	<if test="param21 != null">
-		and param21 = #{param21,jdbcType=VARCHAR}
-	</if>
-	<if test="param22 != null">
-		and param22 = #{param22,jdbcType=VARCHAR}
-	</if>
-	<if test="param23 != null">
-		and param23 = #{param23,jdbcType=VARCHAR}
-	</if>
-	<if test="param24 != null">
-		and param24 = #{param24,jdbcType=VARCHAR}
-	</if>
-	<if test="param25 != null">
-		and param25 = #{param25,jdbcType=VARCHAR}
-	</if>
-</where> 	
+	  	<if test="paperid != null">
+        	paperId = #{paperid,jdbcType=VARCHAR}
+      	</if>
+      	<if test="subject != null">
+        	and subject = #{subject,jdbcType=VARCHAR}
+      	</if>
+      	<if test="score != null">
+        	and score = #{score,jdbcType=INTEGER}
+      	</if>
+      	<if test="subjectperson != null">
+        	and subjectPerson = #{subjectperson,jdbcType=VARCHAR}
+      	</if>
+      	<if test="teacher != null">
+        	and teacher = #{teacher,jdbcType=VARCHAR}
+      	</if>
+      	<if test="time != null">
+       	 	and time = #{time,jdbcType=DATE}
+      	</if>
+      	<if test="papertime != null">
+        	and paperTime = #{papertime,jdbcType=VARCHAR}
+      	</if>
+      	<if test="term != null">
+       	 	and term = #{term,jdbcType=VARCHAR}
+     	 </if>
+      	<if test="num != null">
+       		and num = #{num,jdbcType=INTEGER}
+     	</if>
+      	<if test="excelOrder != null">
+        	and excelOrder = #{excelOrder,jdbcType=INTEGER}
+      	</if>
+		
+		<if test="param1 != null">
+			and param1 = #{param1,jdbcType=VARCHAR}
+		</if>
+		<if test="param2 != null">
+			and param2 = #{param2,jdbcType=VARCHAR}
+		</if>
+		<if test="param3 != null">
+			and param3 = #{param3,jdbcType=VARCHAR}
+		</if>
+		<if test="param4 != null">
+			and param4 = #{param4,jdbcType=VARCHAR}
+		</if>
+		<if test="param5 != null">
+			and param5 = #{param5,jdbcType=VARCHAR}
+		</if>
+		<if test="param6 != null">
+			and param6 = #{param6,jdbcType=VARCHAR}
+		</if>
+		<if test="param7 != null">
+			and param7 = #{param7,jdbcType=VARCHAR}
+		</if>
+		<if test="param8 != null">
+			and param8 = #{param8,jdbcType=VARCHAR}
+		</if>
+		<if test="param9 != null">
+			and param9 = #{param9,jdbcType=VARCHAR}
+		</if>
+		<if test="param10 != null">
+			and param10 = #{param10,jdbcType=VARCHAR}
+		</if>
+		<if test="param11 != null">
+			and param11 = #{param11,jdbcType=VARCHAR}
+		</if>
+		<if test="param12 != null">
+			and param12 = #{param12,jdbcType=VARCHAR}
+		</if>
+		<if test="param13 != null">
+			and param13 = #{param13,jdbcType=VARCHAR}
+		</if>
+		<if test="param14 != null">
+			and param14 = #{param14,jdbcType=VARCHAR}
+		</if>
+		<if test="param15 != null">
+			and param15 = #{param15,jdbcType=VARCHAR}
+		</if>
+		<if test="param16 != null">
+			and param16 = #{param16,jdbcType=VARCHAR}
+		</if>
+		<if test="param17 != null">
+			and param17 = #{param17,jdbcType=VARCHAR}
+		</if>
+		<if test="param18 != null">
+			and param18 = #{param18,jdbcType=VARCHAR}
+		</if>
+		<if test="param19 != null">
+			and param19 = #{param19,jdbcType=VARCHAR}
+		</if>
+		<if test="param20 != null">
+			and param20 = #{param20,jdbcType=VARCHAR}
+		</if>
+		<if test="param21 != null">
+			and param21 = #{param21,jdbcType=VARCHAR}
+		</if>
+		<if test="param22 != null">
+			and param22 = #{param22,jdbcType=VARCHAR}
+		</if>
+		<if test="param23 != null">
+			and param23 = #{param23,jdbcType=VARCHAR}
+		</if>
+		<if test="param24 != null">
+			and param24 = #{param24,jdbcType=VARCHAR}
+		</if>
+		<if test="param25 != null">
+			and param25 = #{param25,jdbcType=VARCHAR}
+		</if>
+	</where> 	
   </select>
 </mapper>

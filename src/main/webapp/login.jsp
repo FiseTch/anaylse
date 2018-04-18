@@ -28,9 +28,9 @@ function logOut() {
 
 function updatePassword(){
     if(confirm("是否修改密码?")){
-		return $("#changePassword").submit();
+		return true;
     }else{
-		return;
+		return false;
     }
 }
 </script>
@@ -44,14 +44,12 @@ function updatePassword(){
 				<li class="current"><a href="#">${sessionScope.teacher.name}<span class="arrow"></span></a><ul>
 					<li><a href="${ctx}/myInformation.jsp">我的&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 					<li>
-						<a href="${ctx}/changePassword.jsp" onclick="updatePassword()">
+						<a href="${ctx}/changePassword.jsp" onclick="return updatePassword();">
 						修改密码&nbsp;&nbsp;&nbsp;&nbsp;</a>
 					</li>
-					<li><a href="#">Profile</a><ul>
-								<li><a href="#">Mission</a></li>
-								<li><a href="#">Capabilities</a></li>
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Partnership</a></li>
+					<li><a href="#">我的试卷</a><ul>
+								<li><a href="#">上传记录</a></li>
+								<li><a href="#">分析结果</a></li>
 						</ul>
 					</li>
 					<li>
@@ -87,6 +85,13 @@ function updatePassword(){
 				</p>
 				<a href="https://github.com/FiseTch" target="_blank" title="作者" class="button1">了解更多</a>
 			</div>
+		</div>
+	</div>
+	<div class="container_24"><!-- 用来撑开页面底部的空隙 -->
+		<div class="wrapper">
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
 		</div>
 	</div>
 </section>

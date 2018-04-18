@@ -89,137 +89,145 @@ function check(){
 </header>
 <section>
 
-		<div class="container_24">
-			<div class="wrapper">
-				<div class="grid_16 padtop2">
-					<form action ="${ctx}/teacher/update.do"method = "post" onsubmit="return check()">				
-						<table>
-							<tr>										
-								<td class = "padbot2">
-									<p class="padbot2">用户名：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="text" value="${sessionScope.teacher.name}" name = "name">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							<tr>	
-								<td class = "padbot2">
-									<p class="padbot2">性别：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="text" value="${sessionScope.teacher.sex}" name = "sex">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>
-								</td>
-							</tr>
-							<tr>										
-								<td class = "padbot2">
-									<p class="padbot2">生日：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="date" value="${requestScope.birthday}" name = "birthday">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							<tr>										
-								<td class = "padbot2">
-									<p class="padbot2">电话：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="text" value="${sessionScope.teacher.tel}" name ="tel">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							<tr>										
-								<td class = "padbot2">
-									<p class="padbot2">职称：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="text" value="${sessionScope.teacher.prof}" name = "prof">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							<tr>										
-								<td class = "padbot2">
-									<p class="padbot2">入职日期：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="date" value="${requestScope.hiredate}" name = "hiredate">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							<tr>										
-								<td class = "padbot2">
-									<p class="padbot2">院系：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="text" value="${sessionScope.teacher.depart}" name = "depart">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							<tr>										
-								<td class = "padbot2">
-									<p class="padbot2">专业科目：</p>
-								</td>
-								<td>
-									<label class="name">
-										<input type="text" value="${sessionScope.teacher.subject}" name = "subject">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label class="name">
-										<input type="submit" value="修改">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-								<td>
-									<label class="name">
-										<input type="reset" value="恢复默认">
-										<span class="empty">*This field is required.</span>
-										<span class="clear"></span>
-									</label>									
-								</td>
-							</tr>
-							
-						</table>
-					</form>
-				</div>
-				<div class="grid_8 padtop2">
-					<h4 class="padbot2">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						用户&nbsp;${sessionScope.teacher.id}
-					</h4>
-				</div>				
+	<div class="container_24">
+		<div class="wrapper">
+			<div class="grid_16 padtop2">
+				<form action ="${ctx}/teacher/update.do"method = "post" onsubmit="return check()">				
+					<table>
+						<tr>										
+							<td class = "padbot2">
+								<p class="padbot2">用户名：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="text" value="${sessionScope.teacher.name}" name = "name">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						<tr>	
+							<td class = "padbot2">
+								<p class="padbot2">性别：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="text" value="${sessionScope.teacher.sex}" name = "sex">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>										
+							<td class = "padbot2">
+								<p class="padbot2">生日：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="date" value="${requestScope.birthday}" name = "birthday">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						<tr>										
+							<td class = "padbot2">
+								<p class="padbot2">电话：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="text" value="${sessionScope.teacher.tel}" name ="tel">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						<tr>										
+							<td class = "padbot2">
+								<p class="padbot2">职称：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="text" value="${sessionScope.teacher.prof}" name = "prof">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						<tr>										
+							<td class = "padbot2">
+								<p class="padbot2">入职日期：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="date" value="${requestScope.hiredate}" name = "hiredate">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						<tr>										
+							<td class = "padbot2">
+								<p class="padbot2">院系：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="text" value="${sessionScope.teacher.depart}" name = "depart">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						<tr>										
+							<td class = "padbot2">
+								<p class="padbot2">专业科目：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="text" value="${sessionScope.teacher.subject}" name = "subject">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="name">
+									<input type="submit" value="修改">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+							<td>
+								<label class="name">
+									<input type="reset" value="恢复默认">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>									
+							</td>
+						</tr>
+						
+					</table>
+				</form>
 			</div>
+			<div class="grid_8 padtop2">
+				<h4 class="padbot2">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					用户&nbsp;${sessionScope.teacher.id}
+				</h4>
+			</div>				
 		</div>
+	</div>
+	
+	<div class="container_24"><!-- 用来撑开页面底部的空隙 -->
+		<div class="wrapper">
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
+			<div class="grid_7 suffix_1 padtop33"></div>
+		</div>
+	</div>
 
 </section>
 

@@ -1,6 +1,8 @@
 package tch.service;
 
 
+import java.util.List;
+
 import tch.model.ReviewResult;
 
 public interface IReviewResultService {
@@ -25,7 +27,7 @@ public interface IReviewResultService {
 	 * @return
 	 * @return: ReviewResult
 	 */
-	public ReviewResult getRevByAttr(ReviewResult reviewResult);
+	public List<ReviewResult> getRevByAttr(ReviewResult reviewResult);
 
     /**
      * 

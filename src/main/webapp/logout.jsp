@@ -46,34 +46,40 @@
 	</div>
 </header>
 <div class="main-slider">
-<div class="bg-slider">
-	<div class="slider">
-		<div class="flexslider">
-			<ul class="slides">
-				<li>
-					<img src="${ctx}/images/slide1.jpg" alt="" width = "946px" height = "538px">
-						<div class=" flex-caption">
-							<span>信息管理学院</span>
+	<div class="bg-slider">
+		<div class="slider">
+			<div class="flexslider">
+				<ul class="slides">
+					<li>
+						<img src="${ctx}/images/slide1.jpg" alt="" width = "946px" height = "538px">
+							<div class=" flex-caption">
+								<span>信息管理学院</span>
+							</div>
+					</li>
+					<li>
+						<img src="${ctx}/images/slide2.jpg" alt="" width = "946px" height = "538px">
+							<div class=" flex-caption">
+								<span>麦园风光</span>
+							</div>
+					</li>
+					<li>
+						<img src="${ctx}/images/slide3.jpg" alt="" width = "946px" height = "538px">
+							<div class=" flex-caption">
+								<span>江西财经大学</span>
 						</div>
-				</li>
-				<li>
-					<img src="${ctx}/images/slide2.jpg" alt="" width = "946px" height = "538px">
-						<div class=" flex-caption">
-							<span>麦园风光</span>
-						</div>
-				</li>
-				<li>
-					<img src="${ctx}/images/slide3.jpg" alt="" width = "946px" height = "538px">
-						<div class=" flex-caption">
-							<span>江西财经大学</span>
-					</div>
-				</li>
-			</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
 </div>	
-	
+<div class="container_24"><!-- 用来撑开页面底部的空隙 -->
+	<div class="wrapper">
+		<div class="grid_7 suffix_1 padtop33"></div>
+		<div class="grid_7 suffix_1 padtop33"></div>
+		<div class="grid_7 suffix_1 padtop33"></div>
+	</div>
+</div>
 <footer>
 	<div class="container_24">
 		<div class="wrapper">
