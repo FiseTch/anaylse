@@ -1,5 +1,4 @@
-[![jxufe]](http://www.jxufe.edu.cn/) 
-[jxufe](https://github.com/FiseTch/anaylse/raw/master/src/main/webapp/images/logo.png) 
+![jxufe](https://github.com/FiseTch/anaylse/raw/master/src/main/webapp/images/logo.png) 
 #### 项目名称 ： anaylse
 #### 系统框架 ：ssm(spring,springMvc,mybatis)+ maven 
 #### 系统结构 : 标准的mvc模式，将整个系统划分为表现层，controller层，service层，DAO层四层
