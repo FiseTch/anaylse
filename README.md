@@ -1,5 +1,5 @@
-#### anaylse
-#### ssm(spring,springMvc,mybatis)+ maven 
+#### 项目名称 ： anaylse
+#### 系统框架 ：ssm(spring,springMvc,mybatis)+ maven 
 #### 系统结构 : 标准的mvc模式，将整个系统划分为表现层，controller层，service层，DAO层四层
   ##### 使用spring MVC负责请求的转发和视图管理 ，spring实现业务对象管理，mybatis作为数据对象的持久化引擎
   ##### 系统说明 ：2018毕设 
