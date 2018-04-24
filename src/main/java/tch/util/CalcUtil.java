@@ -34,7 +34,7 @@ public class CalcUtil {
 	 */
 	public static double calcAvg(List<Integer> tch) {
 		if (null != tch && tch.size() > 0) {
-			int sum = 0;
+			double sum = 0;
 			for (Integer elem : tch) {
 				sum += elem;
 			}
@@ -44,29 +44,25 @@ public class CalcUtil {
 		}
 		
 	}
+	
 	/**
 	 * 
 	 * @user: tongchaohua
 	 * @Title: calcVariance
-	 * @Description: 计算方差
+	 * @Description: 计算方差(x-x_)2/m-1
 	 * @param tch
 	 * @return
 	 * @return: double
 	 */
-	public static double calcVariance(List<Integer> tch){
+	public static double calcVariance(List<Integer> tch,int num){
 		if (null != tch && tch.size() > 0) {
-			int sum = 0;
 			double temp = 0;
-			double avg = 0;
-			
-			for (Integer elem : tch) {
-				sum += elem;
-			}
-			avg = sum/tch.size();//得到平均值
+			double avg = 0;			
+			avg = calcAvg(tch);
 			for (int i = 0; i < tch.size(); i++) {
 				temp += Math.pow((tch.get(i)-avg), 2);
 			}
-			return temp/tch.size();
+			return temp/num;
 		}else{
 			return -1;
 		}		
@@ -80,8 +76,8 @@ public class CalcUtil {
 	 * @return
 	 * @return: double
 	 */
-	public static double calcStandard(List<Integer> tch){
-		double value = calcVariance(tch);		
+	public static double calcStandard(List<Integer> tch,int num){
+		double value = calcVariance(tch, num);		
 		return (value == -1) ? -1 : Math.sqrt(value);
 		
 	}
@@ -119,10 +115,10 @@ public class CalcUtil {
 	 * @Description: TODO
 	 * @param grade
 	 * @return 计算每道题的总分
-	 * @return: int
+	 * @return: double
 	 */
-	public static int calcSum(List<Integer> grade) {
-		int sum = 0;
+	public static double calcSum(List<Integer> grade) {
+		double sum = 0;
 		if (grade != null && grade.size() >0 ) {
 			for (int i = 0; i < grade.size(); i++) {
 				sum += grade.get(i);
@@ -155,7 +151,7 @@ public class CalcUtil {
 	//Validity 信度计算 Difficulty 难度计算 Distinction 区分度计算 Reliability 效度计算 ,--校标相关效度
 	
 	
-	/**
+/*	*//**
 	 * 
 	 * @user: tongchaohua
 	 * @Title: calcValidity
@@ -165,7 +161,7 @@ public class CalcUtil {
 	 * @return: double
 	 * @throws Exception 
 	 * 
-	 */
+	 *//*
 	public static double calcValidity(List<Integer> oddList,List<Integer> evenList) throws Exception{
 		
 		double calcDeviation = calcDeviation(oddList, evenList);
@@ -182,7 +178,7 @@ public class CalcUtil {
 				return 0;
 			}
 		}		
-	}
+	}*/
 	/**
 	 * 
 	 * @user: tongchaohua
@@ -196,17 +192,17 @@ public class CalcUtil {
 	 * @throws Exception 
 	 */
 	public static double calcValidity2(int totalNum,int totalNo, Map<Integer,List<Integer>> tch2) throws Exception{
-		int sum = 0 ;
+		double sum = 0 ;
 		for (int i = 0; i < totalNum; i++) {
 			List<Integer> tch3 = new ArrayList<Integer>();
 			tch3 = tch2.get(i);
-			double calcStandard4One = calcVariance(tch3);//计算每一道题目的标准差
+			double calcStandard4One = calcVariance(tch3,totalNo-1);//计算每一道题目的方差相加
 			if (calcStandard4One == -1) {
 				throw new Exception("计算第"+i+"位同学的标准差出错！！！");
 			}
 			sum += calcStandard4One;	
 		}
-		double calcStandard4All = calcVariance(tch2.get(totalNum));//计算试卷的方差
+		double calcStandard4All = calcVariance(tch2.get(totalNum),totalNo-1);//计算试卷的方差
 		if (calcStandard4All == -1) {
 			throw new Exception("计算试卷方差出错！！！");
 		}		
@@ -261,7 +257,7 @@ public class CalcUtil {
 	 * 
 	 * @user: tongchaohua
 	 * @Title: calcDifficulty
-	 * @Description: TODO
+	 * @Description: 计算难度
 	 * @param totalNum 全卷的总题目数
 	 * @param totalGrade 试卷总分
 	 * @param grade 全体学生每道题目的得分，两维数组 ,以题目为key
@@ -270,9 +266,11 @@ public class CalcUtil {
 	 */
 	public static double calcDifficulty(int totalNum, int totalGrade,Map<Integer,List<Integer>> grade ){
 		double sum  = 0;
-		for (int i = 0; i < totalNum; i++) {
+		for (int i = 0; i < totalNum; i++) {//不包含总分
+			List<Integer> tch = new ArrayList<Integer>();
+			tch = grade.get(i);			
 			//calcSingleDifficulty(grade.get(i));//计算每道题目的pi*yi = 计算每道题目的平均分相加即可
-			sum += CalcUtil.calcAvg(grade.get(i));
+			sum += CalcUtil.calcAvg(tch);
 		}
 		return (sum != 0) ? (sum/totalGrade) : 0;
 		
@@ -299,19 +297,19 @@ public class CalcUtil {
 	 * 
 	 * @user: tongchaohua
 	 * @Title: calcReliability
-	 * @Description: TODO
+	 * @Description: 效度计算
 	 * @param factList 实际的总分
 	 * @param standardList  校准的分数列表r_xy=(∑▒(x-x ̅ )(y-y ̅ ) )/(NS_X S_Y )
 	 * @return: void
 	 * @throws Exception 
 	 */
-	public static double calcReliability(List<Integer> factList, List<Integer> standardList) throws Exception{
+	public static double calcReliability(List<Integer> factList, List<Integer> standardList,int totalNo) throws Exception{
 		double factAvg = CalcUtil.calcDeviation(factList, standardList);
 		
-		double factVariance =  CalcUtil.calcVariance(factList);		
-		double standardVariance = CalcUtil.calcStandard(standardList);
+		double factVariance =  CalcUtil.calcStandard(factList,factList.size()-1);		
+		double standardVariance = CalcUtil.calcStandard(standardList,factList.size()-1);
 		
-		return factAvg/(factList.size()*factVariance*standardVariance);
+		return factAvg/(totalNo*factVariance*standardVariance);
 		
 		
 		
@@ -356,9 +354,15 @@ public class CalcUtil {
 		list = sortList(grade);//将测验成绩从高到底排序
 		if (null != list && list.size() > 0) {
 			int n = (int) (list.size() * 0.27);
-			double firstAvg = calcAvg(list.subList(0, n));//截取前27%作为高分组
-			double lastAvg = calcAvg(list.subList((list.size() - n),list.size()));//截取后27%作为低分组
-			return (totalGrade != 0) ? (firstAvg - lastAvg)/totalGrade : 0;
+			List<Integer> tch1 = new ArrayList<Integer>();
+			List<Integer> tch2 = new ArrayList<Integer>();
+			for(int i = 0;i < n;i++){
+				tch1.add(list.get(i));
+				tch2.add(list.get((list.size()-1)-i));//从list的最后一个元素开始取
+			}
+			double firstAvg = calcAvg(tch1);//截取前27%作为高分组
+			double lastAvg = calcAvg(tch2);//截取后27%作为低分组
+			return (firstAvg - lastAvg)/totalGrade;
 		}
 		return 0;		
 	}

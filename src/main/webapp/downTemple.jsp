@@ -31,6 +31,53 @@ function updatePassword(){
 		return;
     }
 }
+function checkNum(){
+    var num = document.getElementById("num").value;
+    if(null != num && num != "" && num != undefined){
+		$("#emptyNum").hide();
+		var num1 = num.replace(/[^\d]/g,'');
+		if(num1 == num){
+		    $("#replaceNum").hide();
+			if(num > 23){
+			    $("#emptyMaxNum").show();
+			}else{
+			    $("#emptyMaxNum").hide();
+			}
+		}else{
+		    $("#replaceNum").show();
+		    $("#emptyMaxNum").hide();
+		}
+    }else{
+		$("#emptyNum").show();
+		$("#replaceNum").hide();
+		$("#emptyMaxNum").hide();
+    }
+    
+}
+function checkForm(){
+    var num = document.getElementById("num").value;
+    if(null != num && num != "" && num != undefined){
+		var num1 = num.replace(/[^\d]/g,'');
+		if( num1 == num){		    
+			if(num > 23){
+			    document.getElementById("num").value = "";
+			 	document.getElementById("num").focus();
+			 	return false;
+			}else{
+			    return true;
+			}		
+		}else{
+		    document.getElementById("num").value = "";
+		 	document.getElementById("num").focus();
+		 	return false;
+		}
+    }else{
+		document.getElementById("num").value = "";
+	 	document.getElementById("num").focus();
+	 	return false;
+    }
+    
+}
 </script>  
 <body>  
 <header>
@@ -46,11 +93,9 @@ function updatePassword(){
 						<a href="${ctx}/changePassword.jsp" onclick="updatePassword()">
 						修改密码&nbsp;&nbsp;&nbsp;&nbsp;</a>
 					</li>
-					<li><a href="#">Profile</a><ul>
-								<li><a href="#">Mission</a></li>
-								<li><a href="#">Capabilities</a></li>
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Partnership</a></li>
+					<li><a href="#">我的试卷</a><ul>
+								<li><a href="${ctx}/paper/getPaperRecord.do">上传记录</a></li>
+								<li><a href="${ctx}/reviewResult/getReviewResult.do">分析结果</a></li>
 						</ul>
 					</li>
 					<li>
@@ -74,12 +119,17 @@ function updatePassword(){
 	<div class="bg">
 		<div class="container_24">
 			<div class="wrapper">
-				<div class="grid_8 padtop3">
-					<form id = "downExcel"action="${ctx}/excelTempleDown/downloadExcel.do" method = "post">
-						请输入题目数量（最多不超过25道题）<input id = "num"type = "text" name = "num">
-						<input id = "down" value = "下载" type = "submit">
-					</form>
-				</div>				
+				<form id = "downExcel"action="${ctx}/excelTempleDown/downloadExcel.do"onsubmit = "return checkForm();" method = "post">
+					<br>请输入题目数量（最多不超过23道题）<br><br>
+					<input id = "num" type = "text" onblur = "checkNum()"placeholder = "请输入数字" name = "num" autofocus="autofocus"style ="width:190px;height:5px">
+					<input id = "down" value = "下载" type = "submit"><br>
+					<span class="emptyNum" id = "emptyNum"style="color: red;display:none">*请输入题目数量</span>
+					<span class="replaceNum" id = "replaceNum"style="color: red;display:none">*当前输入含有非法字符，请输入数字</span>
+					<span class="emptyMaxNum" id = "emptyMaxNum"style="color: red;display:none">*题目数量不允许超过23</span>
+				</form>
+								
+				<br><h4>下载模板模板样式</h4>
+				<img alt="" src="${ctx}/images/temple.png" width = "900px"><br>
 			</div>
 		</div>
 		<div class="container_24"><!-- 用来撑开页面底部的空隙 -->

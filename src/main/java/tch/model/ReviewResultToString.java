@@ -1,15 +1,14 @@
 package tch.model;
 
-import java.util.Date;
 
-public class ReviewResult {
+public class ReviewResultToString {
     private String id;
 
     private String pId;
 
     private String tId;
 
-    private Date time;
+    private String time;
 
     private Double validityA;
 
@@ -45,11 +44,11 @@ public class ReviewResult {
         this.tId = tId == null ? null : tId.trim();
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

@@ -26,7 +26,7 @@ public class ConstantTch {
 	public static final String QUESTION = "题得分"; 
 	
 	//试卷总分、
-	public static final int TOTALGRADE = 100;
+//	public static final int TOTALGRADE = 100;
 	//设置一个标准的list
 	public static List<Integer> list = null;
 	

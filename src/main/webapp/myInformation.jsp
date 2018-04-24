@@ -63,12 +63,10 @@ function check(){
 							<a href="${ctx}/changePassword.jsp" onclick="updatePassword()">
 							修改密码&nbsp;&nbsp;&nbsp;&nbsp;</a>
 						</li>
-						<li><a href="#">Profile</a><ul>
-								<li><a href="#">Mission</a></li>
-								<li><a href="#">Capabilities</a></li>
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Partnership</a></li>
-							</ul>
+						<li><a href="#">我的试卷</a><ul>
+								<li><a href="${ctx}/paper/getPaperRecord.do">上传记录</a></li>
+								<li><a href="${ctx}/reviewResult/getReviewResult.do">分析结果</a></li>
+						</ul>
 						</li>
 						<li>
 							<form action="${ctx}/teacher/logout.do"method = "post" name= "logout" id = "logout">	

@@ -1,22 +1,16 @@
 package tch.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -29,7 +23,6 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +31,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import tch.model.Paper;
+import tch.model.PaperDetail;
+import tch.model.PaperDetailToString;
+import tch.model.ReviewResult;
+import tch.service.IPaperDetailService;
 import tch.service.IPaperService;
+import tch.service.IReviewResultService;
 import tch.util.ExcelUpUtil;
 import tch.util.MyCommonUtil;
 
@@ -67,6 +65,12 @@ public class PaperAction {
 	
 	@Resource
 	private IPaperService paperService;
+	
+	@Resource
+	private IPaperDetailService paperDetailService;
+	
+	@Resource
+	private IReviewResultService reviewResultService;
 /*	private static int totalRows; //sheet中总行数  
 	private static int totalCells; //每一行总单元格数  
 */	
@@ -95,6 +99,7 @@ public class PaperAction {
 			@RequestParam("term")String term,@RequestParam("num")String num,@RequestParam("file")MultipartFile file,HttpSession session){
 		ModelAndView model = new ModelAndView();
 		Paper paper = new Paper();
+		PaperDetail paperDetail = new PaperDetail();
 		String paperId = "";
 		if (!file.isEmpty()) {			
 	        String strToday =  MyCommonUtil.getDateFormat(new Date());// 获取当前时间
@@ -130,7 +135,16 @@ public class PaperAction {
 				session.setAttribute("data", data.get(0));
 				
 				if (paperId != null) {
+					paperDetail = setPaperDetailAttr(subject, score, subjectPerson, teacher, time, paperTime, term, num);
+					paperDetail.setPaperid(paperId);
+					int i = paperDetailService.insertPaperDetailSelective(paperDetail);
+					if(i == 1){
+						model.addObject("flag", "插入到表paperDetail成功");
+					}else{
+						model.addObject("flag", "插入到表paperDetail失败");
+					}
 					model.addObject("paperId", paperId);
+					session.setAttribute("score", score);//试卷总分
 					session.setAttribute("paperId", paperId);
 				}
 				model.addObject("data", data.get(0));//存取第一页的数据
@@ -149,7 +163,59 @@ public class PaperAction {
 		return model;
 	}
 	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getPaperRecord
+	 * @Description: 查询paper表获得所有上传试卷记录
+	 * @param session
+	 * @return
+	 * @return: ModelAndView
+	 */
+	@RequestMapping("/getPaperRecord")
+	public ModelAndView getPaperRecord(HttpSession session){
+		ModelAndView model = new ModelAndView();
+		List<PaperDetailToString> paperDetailToString = new ArrayList<PaperDetailToString>();
+		List<PaperDetail> paperDetailList = new ArrayList<PaperDetail>();
+		String userId = (String) session.getAttribute("userId");
+		if(null != userId){
+			List<String> paperIdList = getPaperIdByUserId(userId);
+			if(null != paperIdList && paperIdList.size() > 0){//通过试卷Id去查试卷详细
+				for (int i = 0; i < paperIdList.size(); i++) {					
+					PaperDetail paperDetail = paperDetailService.getPaperDetailById(paperIdList.get(i));
+					if(null != paperDetail ){
+						paperDetailList.add(paperDetail);//每一个paperId取得的paper记录中取一条
+					}
+				}
+			}
+			paperDetailToString = convertReview(paperDetailList);
+			if(null != paperDetailToString && paperDetailToString.size() > 0){
+				model.addObject("flag",true);
+				model.addObject("paperList", paperDetailToString);
+			}else{
+				model.addObject("flag", false);
+			}
+			model.setViewName("upRecord");
+		}else{
+			model.addObject("errorMsg","用户id为空");
+			model.setViewName("view/result/uploadFailure");
+		}
+		return model;
+	}
 
+	private PaperDetail setPaperDetailAttr(String subject,String score,String subjectPerson,String teacher,String time,String paperTime,
+			String term,String num) throws UnsupportedEncodingException{
+		PaperDetail paperDetail = new PaperDetail();		
+		paperDetail.setSubject(MyCommonUtil.changeEncode(subject));
+		paperDetail.setScore((MyCommonUtil.changeEncode(score) == null) ? 100: Integer.parseInt(MyCommonUtil.changeEncode(score)));//如果分数为空的话默认设置100分
+		paperDetail.setSubjectperson(MyCommonUtil.changeEncode(subjectPerson));
+		paperDetail.setTeacher(MyCommonUtil.changeEncode(teacher));
+		paperDetail.setTime(MyCommonUtil.getDateFormatToDatabase(time));
+		paperDetail.setPapertime(MyCommonUtil.changeEncode(paperTime));
+		paperDetail.setTerm(MyCommonUtil.changeEncode(term));
+		paperDetail.setNum((MyCommonUtil.changeEncode(num) == null)?50:Integer.parseInt(MyCommonUtil.changeEncode(num)));//设置默认人数为50人		
+		return paperDetail;
+	}
 	/**
 	 * 
 	 * @user: tongchaohua
@@ -340,4 +406,61 @@ public class PaperAction {
         }
 		return (totalNum == totalRows + 1)?paper.getPaperid():null;  
 	}
-}
+	
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getPaperIdByUserId
+	 * @Description: 查询结果表·，找出所有的试卷id不包含重复
+	 * @param userId
+	 * @return
+	 * @return: List<String>
+	 */
+	private List<String> getPaperIdByUserId(String userId){
+		ReviewResult review = new ReviewResult();
+		review.settId(userId);
+		List<String> paperIdList = new ArrayList<String>();
+		List<ReviewResult> reviewList= reviewResultService.getRevByAttr(review);//通过tid查询所有的试卷Id
+		if(null != reviewList && reviewList.size() > 0){
+			for(int i = 0;i < reviewList.size();i++){//将查询到的试卷Id赋给paperidList，不包含重复的
+				if(null != paperIdList && paperIdList.size() > 0){
+					if(!paperIdList.contains(reviewList.get(i).getpId())){
+						paperIdList.add(reviewList.get(i).getpId());
+					}
+				}else{
+					paperIdList.add(reviewList.get(i).getpId());
+				}
+			}
+		}
+		return ( null != paperIdList && paperIdList.size() > 0)? paperIdList : null;		
+	}
+
+	
+	private List<PaperDetailToString> convertReview(List<PaperDetail> reviewList){
+		List<PaperDetailToString> reviewListToString = new ArrayList<PaperDetailToString>();
+		if(null != reviewList && reviewList.size() > 0 ){
+			for (int i = 0; i < reviewList.size(); i++) {
+				PaperDetailToString reviewToString = new PaperDetailToString();
+				
+				//将Date换成String
+				reviewToString.setTime(
+						 MyCommonUtil.formatDate(reviewList.get(i).getTime(),"yy-MM-dd HH:mm:ss"));
+				reviewToString.setUptime(
+				MyCommonUtil.formatDate(reviewList.get(i).getUptime(),"yy-MM-dd HH:mm:ss"));
+				
+				reviewToString.setPapertime(reviewList.get(i).getPapertime());
+				
+				reviewToString.setNum(reviewList.get(i).getNum());
+				reviewToString.setPaperid(reviewList.get(i).getPaperid());
+				reviewToString.setScore(reviewList.get(i).getScore());
+				reviewToString.setSubject(reviewList.get(i).getSubject());
+				reviewToString.setSubjectperson(reviewList.get(i).getSubjectperson());
+				reviewToString.setTeacher(reviewList.get(i).getTeacher());
+				reviewToString.setTerm(reviewList.get(i).getTerm());
+			}
+			
+		}
+		return (null != reviewListToString && reviewListToString.size() > 0) ? reviewListToString : null;		
+	}
+ }

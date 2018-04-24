@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tch.dao.PaperDetailMapper">
+  <resultMap id="BaseResultMap" type="tch.model.PaperDetail">
+    <id column="paperId" jdbcType="VARCHAR" property="paperid" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="subjectPerson" jdbcType="VARCHAR" property="subjectperson" />
+    <result column="upTime" jdbcType="TIMESTAMP" property="uptime" />
+    <result column="teacher" jdbcType="VARCHAR" property="teacher" />
+    <result column="papertime" jdbcType="VARCHAR" property="papertime" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="term" jdbcType="VARCHAR" property="term" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    paperId, subject, score, time, subjectPerson, upTime, teacher, papertime, num, term
+  </sql>
+  <select id="getPaperDetailByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from paper_detail
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from paper_detail
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="tch.model.PaperDetail">
+    insert into paper_detail (paperId, subject, score, 
+      time, subjectPerson, 
+      teacher, papertime, num, 
+      term)
+    values (#{paperid,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+      #{time,jdbcType=DATE}, #{subjectperson,jdbcType=VARCHAR}, 
+      #{teacher,jdbcType=VARCHAR}, #{papertime,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
+      #{term,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="tch.model.PaperDetail">
+    insert into paper_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="paperid != null">
+        paperId,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="subjectperson != null">
+        subjectPerson,
+      </if>
+<!--       <if test="uptime != null">
+        upTime,
+      </if> -->
+      <if test="teacher != null">
+        teacher,
+      </if>
+      <if test="papertime != null">
+        papertime,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="term != null">
+        term,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="paperid != null">
+        #{paperid,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="subjectperson != null">
+        #{subjectperson,jdbcType=VARCHAR},
+      </if>
+<!--       <if test="uptime != null">
+        #{uptime,jdbcType=TIMESTAMP},
+      </if> -->
+      <if test="teacher != null">
+        #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="papertime != null">
+        #{papertime,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        #{term,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="tch.model.PaperDetail">
+    update paper_detail
+    <set>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="subjectperson != null">
+        subjectPerson = #{subjectperson,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null">
+        upTime = #{uptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="teacher != null">
+        teacher = #{teacher,jdbcType=VARCHAR},
+      </if>
+      <if test="papertime != null">
+        papertime = #{papertime,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        term = #{term,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="tch.model.PaperDetail">
+    update paper_detail
+    set subject = #{subject,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      time = #{time,jdbcType=DATE},
+      subjectPerson = #{subjectperson,jdbcType=VARCHAR},
+      upTime = #{uptime,jdbcType=TIMESTAMP},
+      teacher = #{teacher,jdbcType=VARCHAR},
+      papertime = #{papertime,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      term = #{term,jdbcType=VARCHAR}
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getPaperDetailByAttr" parameterType="tch.model.PaperDetail" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from paper_detail
+  	<where>
+  		<if test="paperid != null">
+          	paperid =  #{paperid,jdbcType=VARCHAR}
+	      </if>
+	      <if test="subject != null">
+	         and subject =  #{subject,jdbcType=VARCHAR}
+	      </if>
+	      <if test="score != null">
+	         and score = #{score,jdbcType=INTEGER}
+	      </if>
+	      <if test="time != null">
+	        and time = #{time,jdbcType=DATE}
+	      </if>
+	      <if test="subjectperson != null">
+	        and subjectperson = #{subjectperson,jdbcType=VARCHAR}
+	      </if>
+	      <if test="teacher != null">
+	       and teacher = #{teacher,jdbcType=VARCHAR}
+	      </if>
+	      <if test="uptime != null">
+       		and  upTime = #{uptime,jdbcType=TIMESTAMP}
+      	  </if>
+	      <if test="papertime != null">
+	        and papertime = #{papertime,jdbcType=VARCHAR}
+	      </if>
+	      <if test="num != null">
+	       	and num =  #{num,jdbcType=INTEGER}
+	      </if>
+	      <if test="term != null">
+	       	and term =  #{term,jdbcType=VARCHAR}
+	      </if>
+  	</where> 
+  	order  by	upTime desc
+  </select>
+</mapper>

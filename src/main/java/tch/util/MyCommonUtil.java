@@ -123,7 +123,7 @@ public class MyCommonUtil extends DateUtil{
 	 * @return: String
 	 */
     public static String formatDate(Date date,String format){  
-        String result="";  
+        String result = null;  
         SimpleDateFormat sdf=new SimpleDateFormat(format);  
         if(date!=null){  
             result=sdf.format(date);  
@@ -229,7 +229,8 @@ public class MyCommonUtil extends DateUtil{
      * 
      * @user: tongchaohua
      * @Title: getTimeString
-     * @Description: 如果不传参，则获取当前默认格式的时间，并将其转换成一串字符串输出
+     * @Description: 通过时间生成唯一Id
+     * 如果不传参，则获取当前默认格式的时间，并将其转换成一串字符串输出
      * @return
      * @return: String
      */

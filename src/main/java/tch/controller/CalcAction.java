@@ -21,6 +21,7 @@ import tch.model.ReviewResult;
 import tch.service.IReviewResultService;
 import tch.util.CalcUtil;
 import tch.util.ConstantTch;
+import tch.util.MyCommonUtil;
 
 @Controller
 @RequestMapping(value = "/calc")
@@ -36,6 +37,7 @@ public class CalcAction {
 	public  ModelAndView dealData(Map<Integer,List<String>> data,HttpServletRequest request,
 			HttpServletResponse response,HttpSession session){
 		ModelAndView model = new ModelAndView();
+		String score = (String) session.getAttribute("score");
 		data = (Map<Integer, List<String>>) session.getAttribute("data");
 		Map<Integer,List<Integer>> map = new HashMap<Integer, List<Integer>>();//
 		//List<String> totalGrade = new ArrayList<String>();//试卷总分list
@@ -49,10 +51,14 @@ public class CalcAction {
 			map.put(i -1, totalGrade);
 		}
 		try {
+			//信度计算
 			double validity = CalcUtil.calcValidity2(totalNum-2, totalNo-1, map);
-			double difficulty = CalcUtil.calcDifficulty(totalNum-2, ConstantTch.TOTALGRADE, map);//试卷总分？
-			double reliability = CalcUtil.calcReliability(map.get(totalNum-2), ConstantTch.setStandardList(totalNum-2));
-			double distinction = CalcUtil.calcDistinction(map.get(totalNum-2), ConstantTch.TOTALGRADE);
+			//难度计算
+			double difficulty = CalcUtil.calcDifficulty(totalNum-2, Integer.parseInt(score), map);//试卷总分？
+			//效度计算.设置一个标准校测的list（分数控制到75）
+			double reliability = CalcUtil.calcReliability(map.get(totalNum-2), ConstantTch.setStandardList(totalNo-1),totalNo-1);
+			//区分度计算
+			double distinction = CalcUtil.calcDistinction(map.get(totalNum-2), Integer.parseInt(score));
 			Map<String,Double> resultMap = new HashMap<String, Double>();
 			resultMap.put(ConstantTch.VALIDITY, validity);
 			resultMap.put(ConstantTch.DIFFICULTY, difficulty);
@@ -61,12 +67,15 @@ public class CalcAction {
 			boolean b = saveDataToRev(resultMap,session);
 			if(b){
 				model.addObject("saveMsg","存入数据库成功");
+				model.addObject("flag", true);//存放到数据库成功
+				model.addObject("result",resultMap);
+				/*			session.setAttribute("resultMap", resultMap);*/
+				model.setViewName("calcResult");
 			}else{
 				model.addObject("saveMsg","存入数据库失败");
+				model.addObject("flag", false);
+				model.setViewName("/view/result/uploadFailure");
 			}
-			model.addObject("result",resultMap);
-/*			session.setAttribute("resultMap", resultMap);*/
-			model.setViewName("/view/result/showResult");
 		} catch (Exception e) {	
 			log.error(e);
 			model.setViewName("/view/result/uploadFailure");
@@ -92,9 +101,10 @@ public class CalcAction {
 		ReviewResult rev = new ReviewResult();
 		String teacherId = (String) session.getAttribute("userId");
 		String paperId = (String) session.getAttribute("paperId");
-		if (null != teacherId && null != paperId) {			
-			rev.setpId(teacherId);
-			rev.settId(paperId);
+		if (null != teacherId && null != paperId) {	
+			rev.setId(MyCommonUtil.getTimeString());//得到唯一id
+			rev.setpId(paperId);
+			rev.settId(teacherId);
 			rev.setValidityB(resultMap.get(ConstantTch.VALIDITY));
 			rev.setDifficulty(resultMap.get(ConstantTch.DIFFICULTY));
 			rev.setReliability(resultMap.get(ConstantTch.RELIABILITY));

@@ -29,7 +29,7 @@ public class DownResultAction {
 	 * 
 	 * @user: tongchaohua
 	 * @Title: downResult
-	 * @Description: TODO
+	 * @Description:	将解析结果导出到excel
 	 * @param request
 	 * @param response
 	 * @return

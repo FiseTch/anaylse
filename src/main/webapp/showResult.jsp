@@ -45,9 +45,18 @@
 	<div class="bg">
 		<div class="container_24">
 			<div class="wrapper">
-				<div class="grid_8 padtop3">
+				<table border="1" style ="color:red">
+					<c:forEach var = "map" items = "${result}">
+						<tr>
+							<td> ${map.key}</td>
+							<td> ${map.value}</td>				
+						</tr>			
+					</c:forEach>		
+				</table>
 					
-				</div>				
+				<form action="${ctx}/downResult/downResult.do" method = "post">
+					<input id = "down" value = "导出到excel" type = "submit">
+				</form>			
 			</div>
 		</div>
 		<div class="container_24"><!-- 用来撑开页面底部的空隙 -->

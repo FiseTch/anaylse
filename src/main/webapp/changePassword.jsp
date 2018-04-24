@@ -108,12 +108,10 @@ function checkUpdate(){//点击提交按钮时，触发checkpas2事件，会进�
 				 <li class="current"><a href="${ctx}/login.jsp">返回首页</a></li>	
 				 <li><a href="#">${sessionScope.teacher.name}<span class="arrow"></span></a><ul>
 						<li><a href="${ctx}/myInformation.jsp">我的&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-						<li><a href="#">Profile</a><ul>
-								<li><a href="#">Mission</a></li>
-								<li><a href="#">Capabilities</a></li>
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Partnership</a></li>
-							</ul>
+						<li><a href="#">我的试卷</a><ul>
+								<li><a href="${ctx}/paper/getPaperRecord.do">上传记录</a></li>
+								<li><a href="${ctx}/reviewResult/getReviewResult.do">分析结果</a></li>
+						</ul>
 						</li>
 						<li>
 							<form action="${ctx}/teacher/logout.do"method = "post" name= "logout" id = "logout">	
