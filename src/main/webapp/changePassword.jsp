@@ -38,20 +38,33 @@ function checkOldPwd(){
 		    $("#errorMsg").hide();
 		}else{
 		    /* document.getElementById("error").style.visibility = "visible"; */
+		    document.getElementById("oldPassword").value = null;
+		    document.getElementById("oldPassword").focus();
 		    $("#errorMsg").show(); 
 		}		
     }else{
 		/* document.getElementById("emptyPwd").style.visibility = "visible"; */
 		$("#errorMsg").hide();
 		$("#emptyPwd").show();
+		document.getElementById("oldPassword").value = null;
+		document.getElementById("oldPassword").focus();
     }   
 }
 function checkpas(){
     var newPassword = document.getElementById("newPassword").value;
     if(newPassword != null  && newPassword != "" && newPassword != undefined){
-		$("#emptyNewPassword").hide();
+		var oldPwd = ${sessionScope.teacher.password}; 
+		if(newPassword == oldPwd){
+		    document.getElementById("newPassword").value = null;
+			document.getElementById("newPassword").focus();
+		    alert("当前密码与原密码一致。请重新填写密码");
+		}else{		    
+			$("#emptyNewPassword").hide();
+		}
     }else{
 		$("#emptyNewPassword").show();
+		document.getElementById("newPassword").value = null;
+		document.getElementById("newPassword").focus();
     }
 }
 function checkpasRe(){//当第二个密码框失去焦点时，触发checkpasRe时事件
@@ -62,11 +75,15 @@ function checkpasRe(){//当第二个密码框失去焦点时，触发checkpasRe�
     	$("#tip").hide();
 	    if(pas1 != pas2){
 	    	$("#tip").show();//当两个密码不相等时则显示错误信息
+			document.getElementById("newPasswordRepeat").value = null;
+			document.getElementById("newPasswordRepeat").focus();	
 	    }else{
 			$("#tip").hide();
 		}
   	}else{
 		$("#tip").hide();
+		document.getElementById("newPasswordRepeat").value = null;
+		document.getElementById("newPasswordRepeat").focus();		
 	}
 }
 function checkUpdate(){//点击提交按钮时，触发checkpas2事件，会进行弹框提醒以防无视错误信息提交
@@ -79,24 +96,28 @@ function checkUpdate(){//点击提交按钮时，触发checkpas2事件，会进�
 			alert("原密码输入错误,请重新输入");
 			document.getElementById("oldPassword").value = "";
 			document.getElementById("oldPassword").focus();
-			return;
+			return false;
 	    }else{//如果输入正确,对新密码进行比对，若两次输入密码相同则提交
 			if(pas3 != null && pas3 != "" && pas3 != undefined && 
 			pas4 != null && pas4 != "" && pas4 != undefined ){//若两者都不为空，则进行比对
 				if(pas3 == pas4){
 				    if(confirm("确认修改密码？")){
 					    alert("密码修改成功！！！页面刷新中...");
+					    return true;
 					}else{
-					    return;
+					    return false;
 					}
 				}else{
 					alert("两次输入的密码不一致！请重新输入");
 					document.getElementById("newPasswordRepeat").value = "";
 					document.getElementById("newPasswordRepeat").focus();
-					return;
+					return false;
 				}
 			}
 	    }	    
+	}else{	   
+		document.getElementById("oldPassword").focus();
+	    return false;
 	}
 }
 </script>
@@ -136,7 +157,7 @@ function checkUpdate(){//点击提交按钮时，触发checkpas2事件，会进�
 			<div class="wrapper">
 				<div class="grid_24 padtop33">
 					<h4>用户 ${sessionScope.teacher.id}</h4>
-					<form id="contact-form" onsubmit = "checkUpdate()"action = "${ctx}/teacher/changePassword.do" method = "post">
+					<form id="contact-form" onsubmit = "return checkUpdate()"action = "${ctx}/teacher/changePassword.do" method = "post">
 						<fieldset>
 							<div class="wrapper">
 								<div class="grid_8 suffix_1 alpha">

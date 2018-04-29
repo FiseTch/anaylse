@@ -64,13 +64,12 @@ public class CalcAction {
 			resultMap.put(ConstantTch.DIFFICULTY, difficulty);
 			resultMap.put(ConstantTch.RELIABILITY, reliability);
 			resultMap.put(ConstantTch.DISTINCTION, distinction);
-			boolean b = saveDataToRev(resultMap,session);
-			if(b){
+			String paperId = saveDataToRev(resultMap,session);
+			if(paperId != null){
 				model.addObject("saveMsg","存入数据库成功");
-				model.addObject("flag", true);//存放到数据库成功
-				model.addObject("result",resultMap);
-				/*			session.setAttribute("resultMap", resultMap);*/
-				model.setViewName("calcResult");
+				ReviewResultAction reviewResultAction = new ReviewResultAction();
+				model = reviewResultAction.selectReviewResult(paperId,session);
+				/*			session.setAttribute("resultMap", resultMap);*/								
 			}else{
 				model.addObject("saveMsg","存入数据库失败");
 				model.addObject("flag", false);
@@ -96,10 +95,10 @@ public class CalcAction {
 	 * @throws Exception
 	 * @return: boolean
 	 */
-	private boolean saveDataToRev(Map<String,Double> resultMap,HttpSession session) throws Exception{
+	private String saveDataToRev(Map<String,Double> resultMap,HttpSession session) throws Exception{
 		int i = 0;
 		ReviewResult rev = new ReviewResult();
-		String teacherId = (String) session.getAttribute("userId");
+		String teacherId = MyCommonUtil.getUserId(session);
 		String paperId = (String) session.getAttribute("paperId");
 		if (null != teacherId && null != paperId) {	
 			rev.setId(MyCommonUtil.getTimeString());//得到唯一id
@@ -113,7 +112,7 @@ public class CalcAction {
 		}else{
 			throw new Exception("用户id或者试卷id为空");
 		}
-		return (i == 1)?true:false;
+		return (i == 1)?rev.getpId():null;
 		
 	}
 }

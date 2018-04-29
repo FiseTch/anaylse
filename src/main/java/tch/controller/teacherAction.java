@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import tch.model.Teacher;
 import tch.service.ITeacherService;
+import tch.util.ConstantTch;
 import tch.util.MyCommonUtil;
 
 @Controller
@@ -45,7 +46,7 @@ public class TeacherAction {
 			Teacher t = teacherService.getTeacById(username);
 			if (null != t) {
 				if(MyCommonUtil.changeEncode(pwd).equals(t.getPassword())){
-					session.setAttribute("userId", t.getId());
+					session.setAttribute(ConstantTch.USERID, t.getId());
 					session.setAttribute("teacher", t);
 					model.addObject("teacher",t);
 					model.setViewName("login");
@@ -84,15 +85,16 @@ public class TeacherAction {
 	 * @return: ModelAndView
 	 */
 	@RequestMapping(value = "/update")
-	public ModelAndView update(@RequestParam("name")String name,@RequestParam("sex")String sex,
+	public ModelAndView update(@RequestParam("name")String name,@RequestParam("sex")String sex,@RequestParam("idcard") String idcard,
 			@RequestParam("birthday")String birthday,@RequestParam("tel")String tel,@RequestParam("prof")String prof,
 			@RequestParam("hiredate")String hiredate,@RequestParam("depart")String depart,
 			@RequestParam("subject")String subject,HttpSession session) throws UnsupportedEncodingException{
 				ModelAndView model = new ModelAndView();
 				Teacher teacher = new Teacher();
-				teacher.setId((String)session.getAttribute("userId"));
+				teacher.setId(MyCommonUtil.getUserId(session));
 				teacher.setName(MyCommonUtil.changeEncode(name));
 				teacher.setSex(MyCommonUtil.changeEncode(sex));
+				teacher.setIdcard(MyCommonUtil.changeEncode(idcard));
 				teacher.setTel(MyCommonUtil.changeEncode(tel));
 				teacher.setBirthday(MyCommonUtil.getDateFormatToDatabase(birthday));
 				teacher.setProf(MyCommonUtil.changeEncode(prof));
@@ -101,7 +103,7 @@ public class TeacherAction {
 				teacher.setSubject(MyCommonUtil.changeEncode(subject));
 				int i = teacherService.updateByIdSelective(teacher);//进行更新操作
 				if (i == 1) {
-					teacher = teacherService.getTeacById((String)session.getAttribute("userId"));
+					teacher = teacherService.getTeacById(MyCommonUtil.getUserId(session));
 					if (teacher != null) {
 						session.removeAttribute("teacher");
 						session.setAttribute("teacher", teacher);
@@ -187,15 +189,15 @@ public class TeacherAction {
 		ModelAndView model = new ModelAndView();
 		Teacher teacher = new Teacher();
 		if (newPassword.equals(newPasswordRepeat)) {
-			teacher.setId((String)session.getAttribute("userId"));
+			teacher.setId(MyCommonUtil.getUserId(session));
 			teacher.setPassword(MyCommonUtil.changeEncode(newPasswordRepeat));
 			int i = teacherService.updateByIdSelective(teacher);//进行更新操作
 			if (i == 1) {
-				teacher = teacherService.getTeacById((String)session.getAttribute("userId"));
+				teacher = teacherService.getTeacById(MyCommonUtil.getUserId(session));
 				if (teacher != null) {
 					session.removeAttribute("teacher");
 					session.setAttribute("teacher", teacher);
-					model.setViewName("changePassword");
+					model.setViewName("login");
 				}else{
 					model.addObject("errorMsg", "修改密码成功，查询用户个人数据失败！！！");
 					model.addObject("logMsg", "数据库插入数据失败"+Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -223,13 +225,13 @@ public class TeacherAction {
 	 * @return: ModelAndView
 	 */
 	@RequestMapping(value = "/checkUser",method = RequestMethod.GET)
-	public ModelAndView checkUser(@RequestParam("userId")String userId){
+	public ModelAndView checkUser(){
 		ModelAndView model = new ModelAndView();
-		if (!isRegisterUser(userId)) {//如没被注册，返回真
-			model.addObject("isRegister", true);
+		List<String> userIdList = teacherService.getAllTeacId();
+		if (userIdList != null && userIdList.size() > 0) {//如没被注册，返回真
+			model.addObject("userIdList", userIdList);
 			model.setViewName("register");
-		}else{
-			model.addObject("isRegister", false);
+		}else{			
 			model.setViewName("register");
 		}
 		return model;

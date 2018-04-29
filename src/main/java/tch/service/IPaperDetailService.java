@@ -27,6 +27,17 @@ public interface IPaperDetailService {
 	 * @return: PaperDetail
 	 */
 	public List<PaperDetail> getPaperDetailByAttr(PaperDetail paperDetail);
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getGeneralPaperDetailByAttr
+	 * @Description: 通过五个属性进行模糊查询
+	 * @param paperDetail
+	 * @return
+	 * @return: List<PaperDetail>
+	 */
+	public List<PaperDetail> getGeneralPaperDetailByAttr(PaperDetail paperDetail);
 
     /**
      * 

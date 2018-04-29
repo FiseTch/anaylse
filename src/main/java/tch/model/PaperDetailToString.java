@@ -3,6 +3,8 @@ package tch.model;
 
 public class PaperDetailToString {
     private String paperid;
+    
+    private String tId;
 
     private String subject;
 
@@ -30,7 +32,15 @@ public class PaperDetailToString {
         this.paperid = paperid == null ? null : paperid.trim();
     }
 
-    public String getSubject() {
+    public String gettId() {
+		return tId;
+	}
+
+	public void settId(String tId) {
+		this.tId = tId;
+	}
+
+	public String getSubject() {
         return subject;
     }
 

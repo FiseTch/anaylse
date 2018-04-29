@@ -14,6 +14,8 @@ public interface PaperDetailMapper {
     PaperDetail getPaperDetailByPrimaryKey(String paperid);
     
     List<PaperDetail> getPaperDetailByAttr(PaperDetail paperDetail);
+    
+    List<PaperDetail> getGeneralPaperDetailByAttr(PaperDetail paperDetail);
 
     int updateByPrimaryKeySelective(PaperDetail paperDetail);
 

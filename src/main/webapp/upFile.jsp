@@ -49,9 +49,17 @@ function checkSubject(){
 function checkScore(){
     var score = document.getElementById("score").value;
     if(score != null  && score != "" && score != undefined){		
-		$("#emptyScore").hide();		
+	    var num1 = score.replace(/[^\d]/g,'');
+	    if(num1 == score){
+		    $("#replaceScore").hide();
+		    $("#emptyScore").hide();
+	    }else{
+			$("#replaceScore").show();
+			$("#emptyScore").hide();		
+	    }						
 	}else{		
 		$("#emptyScore").show();
+		$("#replaceScore").hide();
 	} 
 }
 function checkSubjectPerson(){
@@ -72,33 +80,52 @@ function checkTeacher(){
 }
 function checkPaperTime(){
     var paperTime = document.getElementById("paperTime").value;
-    if(paperTime != null  && paperTime != "" && paperTime != undefined){		
-		$("#emptyPaperTime").hide();		
+    if(paperTime != null  && paperTime != "" && paperTime != undefined){	
+		var num1 = paperTime.replace(/[^\d]/g,'');
+	    if(num1 == paperTime){
+		    $("#replacePaperTime").hide();
+		    $("#emptyPaperTime").hide();
+	    }else{
+			$("#replacePaperTime").show();
+			$("#emptyPaperTime").hide();		
+	    }		
 	}else{		
 		$("#emptyPaperTime").show();
+		$("#replacePaperTime").hide();
 	} 
 }
 function checkNum(){
     var num = document.getElementById("num").value;
-    if(num != null  && num != "" && num != undefined){		
-		$("#emptyNum").hide();		
+    if(num != null  && num != "" && num != undefined){	
+		var num1 = num.replace(/[^\d]/g,'');
+		if(num1 == num){
+		    $("#replaceNum").hide();
+		    $("#emptyNum").hide();
+		}else{
+		    $("#replaceNum").show();
+			$("#emptyNum").hide();		
+		}
 	}else{		
 		$("#emptyNum").show();
+		$("#replaceNum").hide();
 	} 
 }
 function checkEmpty(){
     var subject = document.getElementById("subject").value;    
     var score = document.getElementById("score").value;
+    var score1 = score.replace(/[^\d]/g,'');
     var subjectPerson = document.getElementById("subjectPerson").value;
     var teacher = document.getElementById("teacher").value;
     var paperTime = document.getElementById("paperTime").value;
+    var paperTime1 = paperTime.replace(/[^\d]/g,'');
     var num = document.getElementById("num").value;
+    var num1 = num.replace(/[^\d]/g,'');
 	var fileName = document.getElementById("upload").value;
     if(subject == null  || subject == "" || subject == undefined){
 		document.getElementById("subject").focus();
 		return false;
     }
-    if(score == null  || score == "" || score == undefined){
+    if(score == null  || score == "" || score == undefined || score != score1){
 		document.getElementById("score").focus();
 		return false;
 	}
@@ -110,11 +137,11 @@ function checkEmpty(){
 		document.getElementById("teacher").focus();
 		return false;
 	}
-    if(paperTime == null  || paperTime == "" || paperTime == undefined){
+    if(paperTime == null  || paperTime == "" || paperTime == undefined || paperTime != paperTime1){
 		document.getElementById("paperTime").focus();
 		return false;
 	}
-    if(num == null  || num == "" || num == undefined){
+    if(num == null  || num == "" || num == undefined || num != num1){
 		document.getElementById("num").focus();
 		return false;
 	}
@@ -176,7 +203,7 @@ function checkEmpty(){
 				<%-- <h4>上传模板格式<a href="${ctx}/downTemple.jsp">（模板下载）</a></h4>
 				<img alt="" src="${ctx}/images/temple.png" width = "900px"> --%>
 				<div class="panel-body">
-				    <form id="upfile" action = "${ctx}/paper/upPaper.do" onsubmit = "return checkEmpty()" method = "post" enctype = "multipart/form-data">  
+				    <form id="upfile" action = "${ctx}/paper/upPaper.do" onsubmit = "return checkEmpty()" method = "post" enctype="multipart/form-data">  
 				        <table>
 							<tr>										
 								<td class = "padbot2">
@@ -196,6 +223,7 @@ function checkEmpty(){
 								<td>
 									<label class="name">
 										<input type="text" placeholder="eg:100" onblur = "checkScore()"name = "score" id = "score">
+										<span class="replaceScore" id = "replaceScore"style="color: red;display:none">*当前输入含有非法字符，请输入数字</span>
 										<span class="emptyScore" id = "emptyScore"style="color: red;">*试卷总分不允许为空</span>
 									</label>
 								</td>
@@ -239,6 +267,7 @@ function checkEmpty(){
 								<td>
 									<label class="name">
 										<input type="text" placeholder = "eg:120" onblur = "checkPaperTime()" name = "paperTime" id = "paperTime">
+										<span class="replacePaperTime" id = "replacePaperTime"style="color: red;display:none">*当前输入含有非法字符，请输入数字</span>
 										<span class="emptyPaperTime" id = "emptyPaperTime" style="color: red;">*考试用时不允许为空</span>
 									</label>									
 								</td>
@@ -271,6 +300,7 @@ function checkEmpty(){
 								<td>
 									<label class="name">
 										<input type="text" placeholder = "eg:100" onblur = "checkNum()" name = "num" id = "num">
+										<span class="replaceNum" id = "replaceNum"style="color: red;display:none">*当前输入含有非法字符，请输入数字</span>									
 										<span class="emptyNum" id = "emptyNum"style="color: red;">*考试总人数不允许为空</span>
 									</label>									
 								</td>

@@ -3,8 +3,10 @@
 <mapper namespace="tch.dao.PaperDetailMapper">
   <resultMap id="BaseResultMap" type="tch.model.PaperDetail">
     <id column="paperId" jdbcType="VARCHAR" property="paperid" />
+    <result column="t_id" jdbcType="VARCHAR" property="tId" />
     <result column="subject" jdbcType="VARCHAR" property="subject" />
     <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="totaltitle" jdbcType="INTEGER" property="totaltitle" />
     <result column="time" jdbcType="DATE" property="time" />
     <result column="subjectPerson" jdbcType="VARCHAR" property="subjectperson" />
     <result column="upTime" jdbcType="TIMESTAMP" property="uptime" />
@@ -14,7 +16,8 @@
     <result column="term" jdbcType="VARCHAR" property="term" />
   </resultMap>
   <sql id="Base_Column_List">
-    paperId, subject, score, time, subjectPerson, upTime, teacher, papertime, num, term
+    paperId, t_id, subject, score, totaltitle, time, subjectPerson, upTime, teacher, 
+    papertime, num, term
   </sql>
   <select id="getPaperDetailByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -27,14 +30,16 @@
     where paperId = #{paperid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="tch.model.PaperDetail">
-    insert into paper_detail (paperId, subject, score, 
-      time, subjectPerson, 
-      teacher, papertime, num, 
-      term)
-    values (#{paperid,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
-      #{time,jdbcType=DATE}, #{subjectperson,jdbcType=VARCHAR}, 
-      #{teacher,jdbcType=VARCHAR}, #{papertime,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
-      #{term,jdbcType=VARCHAR})
+    insert into paper_detail (paperId, t_id, subject, 
+      score, totaltitle, time, 
+      subjectPerson, upTime, teacher, 
+      papertime, num, term
+      )
+    values (#{paperid,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER}, #{totaltitle,jdbcType=INTEGER}, #{time,jdbcType=DATE}, 
+      #{subjectperson,jdbcType=VARCHAR}, #{uptime,jdbcType=TIMESTAMP}, #{teacher,jdbcType=VARCHAR}, 
+      #{papertime,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{term,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="tch.model.PaperDetail">
     insert into paper_detail
@@ -42,11 +47,17 @@
       <if test="paperid != null">
         paperId,
       </if>
+      <if test="tId != null">
+        t_id,
+      </if>
       <if test="subject != null">
         subject,
       </if>
       <if test="score != null">
         score,
+      </if>
+      <if test="totaltitle != null">
+        totaltitle,
       </if>
       <if test="time != null">
         time,
@@ -54,7 +65,7 @@
       <if test="subjectperson != null">
         subjectPerson,
       </if>
-<!--       <if test="uptime != null">
+      <!-- <if test="uptime != null">
         upTime,
       </if> -->
       <if test="teacher != null">
@@ -74,11 +85,17 @@
       <if test="paperid != null">
         #{paperid,jdbcType=VARCHAR},
       </if>
+      <if test="tId != null">
+        #{tId,jdbcType=VARCHAR},
+      </if>
       <if test="subject != null">
         #{subject,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
         #{score,jdbcType=INTEGER},
+      </if>
+      <if test="totaltitle != null">
+        #{totaltitle,jdbcType=INTEGER},
       </if>
       <if test="time != null">
         #{time,jdbcType=DATE},
@@ -86,7 +103,7 @@
       <if test="subjectperson != null">
         #{subjectperson,jdbcType=VARCHAR},
       </if>
-<!--       <if test="uptime != null">
+     <!--  <if test="uptime != null">
         #{uptime,jdbcType=TIMESTAMP},
       </if> -->
       <if test="teacher != null">
@@ -106,11 +123,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="tch.model.PaperDetail">
     update paper_detail
     <set>
+      <if test="tId != null">
+        t_id = #{tId,jdbcType=VARCHAR},
+      </if>
       <if test="subject != null">
         subject = #{subject,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
         score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="totaltitle != null">
+        totaltitle = #{totaltitle,jdbcType=INTEGER},
       </if>
       <if test="time != null">
         time = #{time,jdbcType=DATE},
@@ -118,9 +141,9 @@
       <if test="subjectperson != null">
         subjectPerson = #{subjectperson,jdbcType=VARCHAR},
       </if>
-      <if test="uptime != null">
+     <!--  <if test="uptime != null">
         upTime = #{uptime,jdbcType=TIMESTAMP},
-      </if>
+      </if> -->
       <if test="teacher != null">
         teacher = #{teacher,jdbcType=VARCHAR},
       </if>
@@ -138,8 +161,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="tch.model.PaperDetail">
     update paper_detail
-    set subject = #{subject,jdbcType=VARCHAR},
+    set t_id = #{tId,jdbcType=VARCHAR},
+      subject = #{subject,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER},
+      totaltitle = #{totaltitle,jdbcType=INTEGER},
       time = #{time,jdbcType=DATE},
       subjectPerson = #{subjectperson,jdbcType=VARCHAR},
       upTime = #{uptime,jdbcType=TIMESTAMP},
@@ -150,13 +175,16 @@
     where paperId = #{paperid,jdbcType=VARCHAR}
   </update>
   
-  <select id="getPaperDetailByAttr" parameterType="tch.model.PaperDetail" resultMap="BaseResultMap">
+    <select id="getPaperDetailByAttr" parameterType="tch.model.PaperDetail" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
   	from paper_detail
   	<where>
   		<if test="paperid != null">
           	paperid =  #{paperid,jdbcType=VARCHAR}
+	      </if>
+	      <if test="tId != null">
+	       	and t_id = #{tId,jdbcType=VARCHAR}
 	      </if>
 	      <if test="subject != null">
 	         and subject =  #{subject,jdbcType=VARCHAR}
@@ -184,6 +212,34 @@
 	      </if>
 	      <if test="term != null">
 	       	and term =  #{term,jdbcType=VARCHAR}
+	      </if>
+  	</where> 
+  	order  by	upTime desc
+  </select>
+  
+  <select id="getGeneralPaperDetailByAttr" parameterType="tch.model.PaperDetail" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from paper_detail 
+  	<where>
+	      <if test="tId != null">
+	       and	t_id = #{tId,jdbcType=VARCHAR}
+	      </if>
+  		  <if test="paperid != null">
+	  		<bind name="pattern1" value="'%' + _parameter.getPaperid() + '%'" />
+          	and paperid LIKE  #{pattern1}
+	      </if>
+	      <if test="subject != null">
+		  	<bind name="pattern2" value="'%' + _parameter.getSubject() + '%'" />
+	         and subject LIKE  #{pattern2}
+	      </if>
+	      <if test="subjectperson != null">
+		  	<bind name="pattern3" value="'%' + _parameter.getSubjectperson() + '%'" />
+	        and subjectperson LIKE #{pattern3}
+	      </if>
+	      <if test="term != null">
+		  	<bind name="pattern4" value="'%' + _parameter.getTerm() + '%'" />
+	       	and term LIKE  #{pattern4}
 	      </if>
   	</where> 
   	order  by	upTime desc

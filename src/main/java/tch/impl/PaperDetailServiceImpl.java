@@ -46,6 +46,14 @@ public class PaperDetailServiceImpl implements IPaperDetailService {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return paperDetailMapper.getPaperDetailByAttr(paperDetail);
 	}
+	
+	/**
+	 * 通过属性（只能传递五个）模糊查询
+	 */
+	public List<PaperDetail> getGeneralPaperDetailByAttr(PaperDetail paperDetail) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return paperDetailMapper.getGeneralPaperDetailByAttr(paperDetail);
+	}
 
 	public int insertPaperDetail(PaperDetail paperDetail) {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -71,5 +79,6 @@ public class PaperDetailServiceImpl implements IPaperDetailService {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return paperDetailMapper.deleteByPrimaryKey(paperid);
 	}
+
 
 }

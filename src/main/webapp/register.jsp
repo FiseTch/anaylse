@@ -17,21 +17,24 @@
 </head>
 <script type="text/javascript">
 function checkId(){   
-    var id = document.getElementById("id").value;
+    var id = document.getElementById("id").value.trim();
     if(id != null  && id != "" && id != undefined){	
-		/* window.location.href = "${ctx}/teacher/checkUser.do&userId="+id;
-		if(!${isReigster}){//为真，表示没被注册
-		    $("#emptyRegister").show();
-		}else{
-		    $("#emptyRegister").show();
-		} */
 		$("#emptyId").hide();		
-	}else{		
+		<c:forEach items="${userIdList}" var="userId"> 
+			if(id == "${userId}"){			   
+			    $("#emptyRegister").show();
+			    document.getElementById("id").value = null;
+			    document.getElementById("id").focus();
+				alert("该用户已被注册！");			    
+			}		
+		</c:forEach>   
+	}else{
+	    $("#emptyRegister").hide();
 		$("#emptyId").show();
 	} 
 }
 function checkUsername(){   
-    var username = document.getElementById("username").value;
+    var username = document.getElementById("username").value.trim();
     if(username != null  && username != "" && username != undefined){		
 		$("#emptyUsername").hide();		
 	}else{		
@@ -39,7 +42,7 @@ function checkUsername(){
 	} 
 }
 function checkPassword(){   
-    var password = document.getElementById("password").value;
+    var password = document.getElementById("password").value.trim();
     if(password != null  && password != "" && password != undefined){		
 		$("#emptyPassword").hide();		
 	}else{		
@@ -47,7 +50,7 @@ function checkPassword(){
 	} 
 }
 function checkpasRe(){//当第二个密码框失去焦点时，触发checkpasRe时事件
-	var pas1=document.getElementById("password").value;
+	var pas1=document.getElementById("password").value.trim();
 	var pas2=document.getElementById("confirmPassword").value;//获取两个密码框的值
 	if(pas1 != null && pas1 != "" && pas1 != undefined){
 		if(pas2 != null && pas2 != "" && pas2 != undefined){
@@ -64,10 +67,10 @@ function checkpasRe(){//当第二个密码框失去焦点时，触发checkpasRe�
 	}
 }
 function form_submit(){   
-	var id = document.getElementById("id").value;
-	var username = document.getElementById("username").value;
-	var pas1 = document.getElementById("password").value;
-	var pas2 = document.getElementById("confirmPassword").value;
+	var id = document.getElementById("id").value.trim();
+	var username = document.getElementById("username").value.trim();
+	var pas1 = document.getElementById("password").value.trim();
+	var pas2 = document.getElementById("confirmPassword").value.trim();
 	if(id == null || id == "" || id == undefined){
 	    document.getElementById("id").focus();
 	    return false;
@@ -174,7 +177,7 @@ function form_submit(){
 
 						<div class="form-group">
 							<div class="col-sm-9 col-sm-offset-4">
-								<button type="submit" class="btn btn-primary" name="signup" id = "signup" value="Sign up">注册</button>
+								<input type="submit" class="btn btn-primary" name="signup" id = "signup" value="Sign up">
 							</div>
 						</div>
 					</form>

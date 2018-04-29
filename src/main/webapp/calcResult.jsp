@@ -70,40 +70,59 @@ function updatePassword(){
 <section>
 <div class="bg">
 	<c:choose>
-		<c:when test="${flag}">
+		<c:when test="${flag && flag1}">
 			<div id="container"> 
-			<table class="zebra">
-			<caption>我的试卷分析结果记录</caption>
-				<thead>				
-					<tr>					
-						<th>试卷id</th>	
-						<th>上传时间</th>	
-						<th>信度</th>	
-						<th>难度</th>	
-						<th>区分度</th>	
-						<th>校标度</th>							
-					</tr>					
-				</thead>
-				
-				<tbody>
-				<c:forEach var = "reviewResultList" items = "${reviewResultList}" varStatus = "status">
-					<tr>
-						<td>${reviewResultList.pId}</td>
-						<td>${reviewResultList.time}</td>
-						<td>${reviewResultList.validityB}</td>
-						<td>${reviewResultList.difficulty}</td>
-						<td>${reviewResultList.distinction}</td>
-						<td>${reviewResultList.reliability}</td>						
-						
-					</tr>			
-				</c:forEach>
-				</tbody>
-			</table>	
-		</div>
+				<div align="center">
+					<form action="${ctx}/reviewResult/selectReviewResult.do" method = "post">
+						<input type = "text" id = "keyWord" name = "keyWord" placeholder="请输入试卷编号(支持模糊查询）" 
+						style = "width:200px;height:15px" autofocus="autofocus">&nbsp;&nbsp;
+						<input type = "submit" value = "搜索" name ="submit" id = "submit"style = "width:80px;height:40px" > &nbsp;&nbsp;
+					</form>			
+				</div>
+				<br><br>
+				<table class="zebra">
+				<caption>我的试卷分析结果记录</caption>
+					<thead>				
+						<tr>					
+							<th>试卷id</th>	
+							<th>上传时间</th>	
+							<th>信度</th>	
+							<th>难度</th>	
+							<th>区分度</th>	
+							<th>校标度</th>							
+						</tr>					
+					</thead>				
+					<tbody>
+					<c:forEach var = "reviewResultList" items = "${reviewResultList}" varStatus = "status">
+						<tr>
+							<td>${reviewResultList.pId}</td>
+							<td>${reviewResultList.time}</td>
+							<td>${reviewResultList.validityB}</td>
+							<td>${reviewResultList.difficulty}</td>
+							<td>${reviewResultList.distinction}</td>
+							<td>${reviewResultList.reliability}</td>												
+						</tr>			
+					</c:forEach>
+					</tbody>
+				</table>				
+			</div>
+		</c:when>
+		<c:when test="${flag && !flag1}">
+			<div id="container"> 
+				<div align="center">
+					<form action="${ctx}/reviewResult/selectReviewResult.do" method = "post">
+						<input type = "text" id = "keyWord" name = "keyWord" placeholder="请输入试卷编号(支持模糊查询）" 
+						style = "width:200px;height:15px" autofocus="autofocus">&nbsp;&nbsp;
+						<input type = "submit" value = "搜索" name ="submit" id = "submit"style = "width:80px;height:40px" > &nbsp;&nbsp;
+					</form>			
+				</div>
+				<br><br><br>
+				<h4>查询结果为空 </h4>
+			</div>
 		</c:when>
 		<c:otherwise>
 			<div id="container"> 
-				<h4>当前用户暂无数据     <a href="${ctx}/upFile.jsp">上传文档</a></h4>
+				<h4>当前用户暂未分析任何试卷，无分析结果    <%-- <a href="${ctx}/upFile.jsp">上传文档</a> --%></h4>
 			</div>
 		</c:otherwise>
 	</c:choose>

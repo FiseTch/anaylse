@@ -5,9 +5,13 @@ import java.util.Date;
 public class PaperDetail {
     private String paperid;
 
+    private String tId;
+
     private String subject;
 
     private Integer score;
+
+    private Integer totaltitle;
 
     private Date time;
 
@@ -31,6 +35,14 @@ public class PaperDetail {
         this.paperid = paperid == null ? null : paperid.trim();
     }
 
+    public String gettId() {
+        return tId;
+    }
+
+    public void settId(String tId) {
+        this.tId = tId == null ? null : tId.trim();
+    }
+
     public String getSubject() {
         return subject;
     }
@@ -45,6 +57,14 @@ public class PaperDetail {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Integer getTotaltitle() {
+        return totaltitle;
+    }
+
+    public void setTotaltitle(Integer totaltitle) {
+        this.totaltitle = totaltitle;
     }
 
     public Date getTime() {

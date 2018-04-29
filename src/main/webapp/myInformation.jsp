@@ -33,12 +33,29 @@ function updatePassword(){
     }
 }
 function check(){
-    if(confirm("确认修改吗？")){
-		alert("信息已更新成功！页面刷新中...")
-		return true;
+    var name = document.getElementById("name").value;
+    if(name != null  && name != "" && name != undefined){	
+	    if(confirm("确认修改吗？")){
+			alert("信息已更新成功！页面刷新中...")
+			return true;
+	    }else{
+			return false;
+	    }
     }else{
+		document.getElementById("name").value = null;
+		document.getElementById("name").focus();
 		return false;
     }
+}
+function checkName(){
+    var name = document.getElementById("name").value;
+    if(name != null  && name != "" && name != undefined){		
+		$("#emptyTeacher").hide();		
+	}else{
+	    document.getElementById("name").value = null;
+	    document.getElementById("name").focus();
+		$("#emptyTeacher").show();
+	} 
 }
 </script>
 <% SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
@@ -98,8 +115,8 @@ function check(){
 							</td>
 							<td>
 								<label class="name">
-									<input type="text" value="${sessionScope.teacher.name}" name = "name">
-									<span class="empty">*This field is required.</span>
+									<input type="text" value="${sessionScope.teacher.name}" name = "name" id = "name" onblur="checkName()">
+									<span class="emptyTeacher" id = "emptyTeacher"style="color: red;">*用户名不允许为空</span>
 									<span class="clear"></span>
 								</label>									
 							</td>
@@ -111,6 +128,18 @@ function check(){
 							<td>
 								<label class="name">
 									<input type="text" value="${sessionScope.teacher.sex}" name = "sex">
+									<span class="empty">*This field is required.</span>
+									<span class="clear"></span>
+								</label>
+							</td>
+						</tr>
+						<tr>	
+							<td class = "padbot2">
+								<p class="padbot2">身份证号：</p>
+							</td>
+							<td>
+								<label class="name">
+									<input type="text" value="${sessionScope.teacher.idcard}" name = "idcard">
 									<span class="empty">*This field is required.</span>
 									<span class="clear"></span>
 								</label>

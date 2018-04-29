@@ -42,7 +42,7 @@ function infoMsg(){
                         </form>
                         <p class="good-tips marginB10">
 	                        <a href="${ctx}/forgetPassword.jsp" class="fr">忘记密码？</a>还没有账号？
-	                        <a href="${ctx}/register.jsp" >立即注册</a>
+	                        <a href="${ctx}/teacher/checkUser.do" >立即注册</a>
 	                    </p>
                         <div class="login-box marginB10">                        	
                             <button id="login_btn" type="button" class="btn btn-micv5 btn-block globalLogin">登录</button>

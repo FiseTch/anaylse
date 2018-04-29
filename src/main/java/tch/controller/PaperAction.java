@@ -132,11 +132,12 @@ public class PaperAction {
                 } 	            		        
 								
 				List<Map<Integer,List<String>>> data = ExcelUpUtil.readExcel(file);
-				session.setAttribute("data", data.get(0));
-				
+				session.setAttribute("data", data.get(0));				
 				if (paperId != null) {
 					paperDetail = setPaperDetailAttr(subject, score, subjectPerson, teacher, time, paperTime, term, num);
 					paperDetail.setPaperid(paperId);
+					paperDetail.setTotaltitle(data.get(0).get(1).size()-2);//总列数
+					paperDetail.settId(MyCommonUtil.getUserId(session));
 					int i = paperDetailService.insertPaperDetailSelective(paperDetail);
 					if(i == 1){
 						model.addObject("flag", "插入到表paperDetail成功");
@@ -163,6 +164,52 @@ public class PaperAction {
 		return model;
 	}
 	
+	
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: selctPaperRecord
+	 * @Description: 对试卷详情模糊查询
+	 * @param keyWord
+	 * @param classfiy
+	 * @param session
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @return: ModelAndView
+	 */
+	@RequestMapping(value = "/selctPaperRecord",method = RequestMethod.POST)
+	public ModelAndView selctPaperRecord(@RequestParam("keyWord")String keyWord,
+			@RequestParam("classfiy")String classfiy,HttpSession session) throws UnsupportedEncodingException{
+		ModelAndView model = new ModelAndView();
+		classfiy = MyCommonUtil.changeEncode(classfiy);
+		keyWord = MyCommonUtil.changeEncode(keyWord);
+		if(keyWord == null){
+			model = getPaperRecord(session);//若前台不传递数据，则查询全部
+		}else{
+			PaperDetail paperDetail = setPaperDetailAttrByClassify(classfiy, keyWord);
+			String userId = MyCommonUtil.getUserId(session);
+			if(null != userId){
+				model.addObject("flag",true);
+				paperDetail.settId(userId);
+				List<PaperDetail> paperDetailList = paperDetailService.getGeneralPaperDetailByAttr(paperDetail);		
+				if(null != paperDetailList && paperDetailList.size() > 0){				
+					List<PaperDetailToString> paperDetailToString = convertReview(paperDetailList);			
+					model.addObject("paperDetailList", paperDetailToString);
+					model.addObject("flag1",true);
+				}else{
+					model.addObject("flag1",false);
+				}
+				model.setViewName("upRecord");
+			}else{
+				model.addObject("flag", false);
+				model.addObject("errorMsg","用户id为空");
+				model.setViewName("view/result/uploadFailure");
+			}
+		}
+		return model;
+		
+	}
 	/**
 	 * 
 	 * @user: tongchaohua
@@ -176,25 +223,19 @@ public class PaperAction {
 	public ModelAndView getPaperRecord(HttpSession session){
 		ModelAndView model = new ModelAndView();
 		List<PaperDetailToString> paperDetailToString = new ArrayList<PaperDetailToString>();
-		List<PaperDetail> paperDetailList = new ArrayList<PaperDetail>();
-		String userId = (String) session.getAttribute("userId");
+		String userId = MyCommonUtil.getUserId(session);
 		if(null != userId){
-			List<String> paperIdList = getPaperIdByUserId(userId);
-			if(null != paperIdList && paperIdList.size() > 0){//通过试卷Id去查试卷详细
-				for (int i = 0; i < paperIdList.size(); i++) {					
-					PaperDetail paperDetail = paperDetailService.getPaperDetailById(paperIdList.get(i));
-					if(null != paperDetail ){
-						paperDetailList.add(paperDetail);//每一个paperId取得的paper记录中取一条
-					}
-				}
-			}
+			PaperDetail paperDetail = new PaperDetail();
+			paperDetail.settId(userId);
+			List<PaperDetail> paperDetailList = paperDetailService.getPaperDetailByAttr(paperDetail);			
 			paperDetailToString = convertReview(paperDetailList);
 			if(null != paperDetailToString && paperDetailToString.size() > 0){
 				model.addObject("flag",true);
-				model.addObject("paperList", paperDetailToString);
+				model.addObject("paperDetailList", paperDetailToString);
 			}else{
 				model.addObject("flag", false);
 			}
+			model.addObject("flag1",true);
 			model.setViewName("upRecord");
 		}else{
 			model.addObject("errorMsg","用户id为空");
@@ -437,30 +478,53 @@ public class PaperAction {
 	}
 
 	
-	private List<PaperDetailToString> convertReview(List<PaperDetail> reviewList){
-		List<PaperDetailToString> reviewListToString = new ArrayList<PaperDetailToString>();
-		if(null != reviewList && reviewList.size() > 0 ){
-			for (int i = 0; i < reviewList.size(); i++) {
-				PaperDetailToString reviewToString = new PaperDetailToString();
+	private List<PaperDetailToString> convertReview(List<PaperDetail> paperDetailList){
+		List<PaperDetailToString> paperDetailListToString = new ArrayList<PaperDetailToString>();
+		if(null != paperDetailList && paperDetailList.size() > 0 ){
+			for (int i = 0; i < paperDetailList.size(); i++) {
+				PaperDetailToString paperDetailToString = new PaperDetailToString();
 				
 				//将Date换成String
-				reviewToString.setTime(
-						 MyCommonUtil.formatDate(reviewList.get(i).getTime(),"yy-MM-dd HH:mm:ss"));
-				reviewToString.setUptime(
-				MyCommonUtil.formatDate(reviewList.get(i).getUptime(),"yy-MM-dd HH:mm:ss"));
+				paperDetailToString.setTime(
+						 MyCommonUtil.formatDate(paperDetailList.get(i).getTime(),"yy-MM-dd HH:mm:ss"));
+				paperDetailToString.setUptime(
+				MyCommonUtil.formatDate(paperDetailList.get(i).getUptime(),"yy-MM-dd HH:mm:ss"));
 				
-				reviewToString.setPapertime(reviewList.get(i).getPapertime());
+				paperDetailToString.setPapertime(paperDetailList.get(i).getPapertime());
 				
-				reviewToString.setNum(reviewList.get(i).getNum());
-				reviewToString.setPaperid(reviewList.get(i).getPaperid());
-				reviewToString.setScore(reviewList.get(i).getScore());
-				reviewToString.setSubject(reviewList.get(i).getSubject());
-				reviewToString.setSubjectperson(reviewList.get(i).getSubjectperson());
-				reviewToString.setTeacher(reviewList.get(i).getTeacher());
-				reviewToString.setTerm(reviewList.get(i).getTerm());
+				paperDetailToString.setNum(paperDetailList.get(i).getNum());
+				paperDetailToString.setPaperid(paperDetailList.get(i).getPaperid());
+				paperDetailToString.setScore(paperDetailList.get(i).getScore());
+				paperDetailToString.setSubject(paperDetailList.get(i).getSubject());
+				paperDetailToString.setSubjectperson(paperDetailList.get(i).getSubjectperson());
+				paperDetailToString.setTeacher(paperDetailList.get(i).getTeacher());
+				paperDetailToString.setTerm(paperDetailList.get(i).getTerm());
+				paperDetailListToString.add(paperDetailToString);
 			}
 			
 		}
-		return (null != reviewListToString && reviewListToString.size() > 0) ? reviewListToString : null;		
+		return (null != paperDetailListToString && paperDetailListToString.size() > 0) ? paperDetailListToString : null;		
+	}	
+	
+	private PaperDetail setPaperDetailAttrByClassify(String classfiy,String keyWord){
+		PaperDetail paperDetail = new PaperDetail();
+		if(classfiy != null){
+			switch(classfiy){
+				case "term":
+					paperDetail.setTerm(keyWord);
+					break;
+				case "subject":
+					paperDetail.setSubject(keyWord);
+					break;
+				case "subjectPerson":
+					paperDetail.setSubjectperson(keyWord);
+					break;
+				default:
+					paperDetail.setPaperid(keyWord);
+					break;
+			}
+		}
+		return paperDetail;
+		
 	}
  }

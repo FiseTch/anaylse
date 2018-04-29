@@ -145,7 +145,7 @@
   	 from review_result 
   	 <where>
 	  	 <if test="id != null">
-	        #{id,jdbcType=VARCHAR},
+	        #{id,jdbcType=VARCHAR}
 	      </if>
 	      <if test="pId != null">
 	       	and p_id = #{pId,jdbcType=VARCHAR}
@@ -171,6 +171,22 @@
 	      <if test="distinction != null">
 	        and distinction = #{distinction,jdbcType=DOUBLE}
 	      </if>      	      
+  	 </where> 
+  	 	order  by	time desc
+  </select>
+  
+  <select id="getGeneralRevByAttr" parameterType="tch.model.ReviewResult" resultMap="BaseResultMap">
+  	select 
+  	 <include refid="Base_Column_List" />
+  	 from review_result 
+  	 <where>
+	      <if test="pId != null">
+		  	 <bind name="pattern1" value="'%' + _parameter.pId + '%'" /> 	 
+	       	 p_id LIKE #{pattern1}
+	      </if>
+	      <if test="tId != null">
+	        and t_id = #{tId,jdbcType=VARCHAR}
+	      </if>	      	      
   	 </where> 
   	 	order  by	time desc
   </select>

@@ -29,6 +29,17 @@ public interface IReviewResultService {
 	 */
 	public List<ReviewResult> getRevByAttr(ReviewResult reviewResult);
 
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getGeneralRevByAttr
+	 * @Description: 模糊查询
+	 * @param reviewResult
+	 * @return
+	 * @return: List<ReviewResult>
+	 */
+	public List<ReviewResult> getGeneralRevByAttr(ReviewResult reviewResult);
+	
     /**
      * 
      * @user: tongchaohua

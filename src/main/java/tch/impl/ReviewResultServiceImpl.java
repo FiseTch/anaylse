@@ -93,6 +93,12 @@ public class ReviewResultServiceImpl implements IReviewResultService {
 		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
 		return reviewResultMapper.getRevByAttr(reviewResult);
 	}
+
+	@Override
+	public List<ReviewResult> getGeneralRevByAttr(ReviewResult reviewResult) {
+		log.info("执行"+Thread.currentThread().getStackTrace()[1].getMethodName());
+		return reviewResultMapper.getGeneralRevByAttr(reviewResult);
+	}
 	
 	
 }

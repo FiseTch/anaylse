@@ -9,7 +9,7 @@ public class ConstantTch {
 	
 	//默认User
 	public static final User DEFAULT_USER = getUser();
-	
+	public static final String USERID = "userId_tch";//用户id存取的变量名
 	//excel下载时文件格式
 	public static final String FILEEXTENSION = ".xls";//文件下载时的格式控制
 	public static final String DOWNFILENAME = "试卷结果";//Excel下载时的名称

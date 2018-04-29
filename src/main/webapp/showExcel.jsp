@@ -46,7 +46,7 @@
 <div class="bg">
 	<div id="container"> 
 		<table class="zebra">
-		<caption>文件详细信息${paperId}</caption>
+		<caption>上传文件详细 试卷编号：${paperId}</caption>
 			<thead>
 				<c:forEach var = "headMap" items = "${data}" begin = "1" end ="1" step="1">
 				<tr>

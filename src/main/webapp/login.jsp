@@ -15,7 +15,7 @@
 <title>试卷分析系统&copyFise</title>  
 </head>   
 <body> 
-<%-- <c:set var = "teacher" value = "${teacher}" scope = "session"></c:set>	 --%><!-- 获取页面的值放入到seesion中 -->>
+<%-- <c:set var = "teacher" value = "${teacher}" scope = "session"></c:set>	 --%><!-- 获取页面的值放入到seesion中 -->
 <script type="text/javascript">   
 function logOut() {  
 	if(confirm("确认注销吗？")){

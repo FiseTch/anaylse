@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.mail.internet.MimeUtility;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -45,6 +46,19 @@ public class MyCommonUtil extends DateUtil{
 	 */
 	public static String changeEncode(String s) throws UnsupportedEncodingException{
 		return (s==null)?null:URLDecoder.decode(s.trim(),"UTF-8");
+	}
+	
+	/**
+	 * 
+	 * @user: tongchaohua
+	 * @Title: getUserId
+	 * @Description: 从session中取得userId的值
+	 * @param session
+	 * @return
+	 * @return: String
+	 */
+	public static String getUserId(HttpSession session){		
+		return (null == (String)session.getAttribute(ConstantTch.USERID))?null:(String)session.getAttribute(ConstantTch.USERID);		
 	}
 	public static String encodeFileName(String filename, String agent) {
 		/**

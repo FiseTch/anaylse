@@ -14,6 +14,8 @@ public interface ReviewResultMapper {
     ReviewResult getRevByPrimaryKey(String id);
     
     List<ReviewResult> getRevByAttr(ReviewResult reviewResult);
+    
+    List<ReviewResult> getGeneralRevByAttr(ReviewResult reviewResult);
 
     int updateByPrimaryKeySelective(ReviewResult record);
 
