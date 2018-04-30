@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -50,6 +51,13 @@ public class ExcelExportUtil extends AbstractExcelView {
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         
+        
+        //设置单元格的数字格式
+        HSSFCellStyle style1 = workbook.createCellStyle();
+        style1.setFont(font);
+        style1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style1.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00"));  
+        
         Sheet sheet = workbook.createSheet();
     
         // 第一行文字说明
@@ -58,8 +66,8 @@ public class ExcelExportUtil extends AbstractExcelView {
         Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
         cell.setCellStyle(style);    
         cell.setCellValue(ConstantTch.STUNO);
-		for (int i = 1; i < ((Integer)modle.get("totalNum")+1); i++) {//默认最多有49道题				
-			cell = row.createCell(i, Cell.CELL_TYPE_NUMERIC);//设置类型为数值型
+		for (int i = 1; i < ((Integer)modle.get("totalNum")+1); i++) {//默认最多有23道题				
+			cell = row.createCell(i, Cell.CELL_TYPE_STRING);//设置类型为数值型
 			cell.setCellStyle(style);    
 			cell.setCellValue(new HSSFRichTextString(ConstantTch.ORDER+ i + ConstantTch.QUESTION));
 		}

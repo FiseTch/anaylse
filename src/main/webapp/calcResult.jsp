@@ -89,7 +89,8 @@ function updatePassword(){
 							<th>信度</th>	
 							<th>难度</th>	
 							<th>区分度</th>	
-							<th>校标度</th>							
+							<th>校标度</th>
+							<th>操作</th>							
 						</tr>					
 					</thead>				
 					<tbody>
@@ -100,7 +101,15 @@ function updatePassword(){
 							<td>${reviewResultList.validityB}</td>
 							<td>${reviewResultList.difficulty}</td>
 							<td>${reviewResultList.distinction}</td>
-							<td>${reviewResultList.reliability}</td>												
+							<td>${reviewResultList.reliability}</td>	
+							<td>
+								<div>
+									<form action="${ctx}/downResult/downResult.do" method = "post">
+										<input type = "hidden" name = "id" id = "id" value = "${reviewResultList.id}">
+										<input type = "submit" value = "下载" name = "submit">
+									</form>
+								</div>
+							</td>											
 						</tr>			
 					</c:forEach>
 					</tbody>

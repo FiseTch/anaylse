@@ -1,12 +1,17 @@
 package tch.util;
 
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -16,59 +21,120 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
+import tch.model.Paper;
+import tch.model.ReviewResult;
+
+/**
+ * 
+ * 
+ * Copyright:tch
+ * 
+ * @class: tch.util
+ * @Description: excel结果下载
+ *
+ * @version: v1.0.0
+ * @author: tongch
+ * @date: 2018-04-18
+ * Modification History:
+ * date         Author          Version            Description
+ *------------------------------------------------------------
+ * 2018-04-18     tongch          v1.1.0
+ */
 public class ExcelUpDownUtil extends AbstractExcelView {
-	
 	@Override
-	@SuppressWarnings({ "static-access", "deprecation" })
+	 @SuppressWarnings({ "static-access", "deprecation" })
 	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-        //List<User> list = (List<User>) model.get("infoList");  
+        List<Paper> paperList = (List<Paper>) model.get("paperList"); 
+        paperList
         HSSFFont font = workbook.createFont();
         font.setFontHeightInPoints((short)8);            //设置字体的大小
         font.setFontName("微软雅黑");                        //设置字体的样式，如：宋体、微软雅黑等
         font.setItalic(false);                            //斜体true为斜体
         font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);    //对文中进行加粗
         font.setColor(HSSFColor.BLACK.index);            //设置字体的颜色
+       
+        //设置单元格基本string类型格式
         HSSFCellStyle style = workbook.createCellStyle();
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        
+        //设置单元格的数字格式
+        HSSFCellStyle style1 = workbook.createCellStyle();
+        style1.setFont(font);
+        style1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style1.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00"));  
         
         Sheet sheet = workbook.createSheet();
     
         // 第一行文字说明
         Row row = sheet.createRow(0);
         sheet.autoSizeColumn(1,true);//设置宽度自适应
-        Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
-        cell.setCellStyle(style);    
-        cell.setCellValue(new HSSFRichTextString(ConstantTch.RELIABILITY));	
-        
-		cell = row.createCell(1, Cell.CELL_TYPE_STRING);//设置类型为数值型
-		cell.setCellStyle(style);    
-		cell.setCellValue(new HSSFRichTextString(ConstantTch.DISTINCTION));	
-		
-		cell = row.createCell(2, Cell.CELL_TYPE_STRING);//设置类型为数值型
-		cell.setCellStyle(style);    
-		cell.setCellValue(new HSSFRichTextString(ConstantTch.DIFFICULTY));
-		
-		cell = row.createCell(3, Cell.CELL_TYPE_STRING);//设置类型为数值型
-		cell.setCellStyle(style);    
-		cell.setCellValue(new HSSFRichTextString(ConstantTch.VALIDITY));
+        if(paperList != null && paperList.size() > 0){ 
+        	for (int i = 0; i < paperList.size(); i++) {
+				if(0 == paperList.get(i).getExcelOrder()){					
+					Paper paper = paperList.get(i);
+					String[] paramList = convertToString(paper);
+					for(int j = 0 ;j<paper.getNum() ; j++){						
+						Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
+						cell.setCellStyle(style);    
+						cell.setCellValue(new HSSFRichTextString(paramList[j]));
+					}
+					
+				}
+			}       	
+        }        
 		
 		//填充数据
 	    sheet.setColumnWidth((short) 0, (short) (35.7 * 100));
         row = sheet.createRow(1);
          // 校标度
-        cell = row.createCell(0, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.RELIABILITY));
+        if(paperList != null && paperList.size() > 0){ 
+        	for (int i = 0; i < paperList.size(); i++) {
+				if(1 == paperList.get(i).getExcelOrder()){					
+					Paper paper = paperList.get(i);
+					String[] paramList = convertToString(paper);
+					for(int j = 0 ;j<paper.getNum() ; j++){						
+						Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
+						cell.setCellStyle(style);    
+						cell.setCellValue(new HSSFRichTextString(paramList[j]));
+					}
+					
+				}
+			}
+        }
+        cell = row.createCell(0, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(reviewResult.getId());
         //区分度
-        cell = row.createCell(1, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.DISTINCTION));
+        cell = row.createCell(1, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(reviewResult.getpId());
         //难度
-        cell = row.createCell(2, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.DIFFICULTY));
+        cell = row.createCell(2, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(reviewResult.gettId());
         //信度
-        cell = row.createCell(3, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.VALIDITY));
+        cell = row.createCell(3, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(reviewResult.getTime());
+        
+        cell = row.createCell(4, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getReliability());
+        
+        cell = row.createCell(5, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getDistinction());
+        
+        cell = row.createCell(6, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getDifficulty());
+        
+        cell = row.createCell(7, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getValidityB());
+        
            /* cell = row.createCell(2, Cell.CELL_TYPE_STRING);
             cell.setCellStyle(style);    
             cell.setCellValue("合同登记时间");
@@ -147,7 +213,7 @@ public class ExcelUpDownUtil extends AbstractExcelView {
 
         // 对文件名进行处理。防止文件名乱码
               
-        String fileName = ConstantTch.DOWNFILENAME + MyCommonUtil.getTimeString() + ConstantTch.FILEEXTENSION; 
+        String fileName = ConstantTch.DOWNFILENAME + reviewResult.getId() + ConstantTch.FILEEXTENSION; 
         String userAgent = request.getHeader("User-Agent"); 
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
@@ -163,5 +229,54 @@ public class ExcelUpDownUtil extends AbstractExcelView {
         os.flush();
         os.close();
 	}
+	
+	private String[] convertToString(Paper paper){
+		String[] paramList = new String[]{null,null,null,null,null,    null,null,null,null,null,
+        		null,null,null,null,null,    null,null,null,null,null,       null,null,null,null,null};//长度为25					
+		paramList[0] = paper.getParam1();
+		paramList[1] = paper.getParam2();
+		paramList[2] = paper.getParam3();
+		paramList[3] = paper.getParam4();
+		paramList[4] = paper.getParam5();
+		paramList[5] = paper.getParam6();
+		paramList[6] = paper.getParam7();
+		paramList[7] = paper.getParam8();
+		paramList[8] = paper.getParam9();
+		paramList[9] = paper.getParam10();
+		paramList[10] = paper.getParam11();
+		paramList[11] = paper.getParam12();
+		paramList[12] = paper.getParam13();
+		paramList[13] = paper.getParam14();
+		paramList[14] = paper.getParam15();
+		paramList[15] = paper.getParam16();
+		paramList[16] = paper.getParam17();
+		paramList[17] = paper.getParam18();
+		paramList[18] = paper.getParam19();
+		paramList[19] = paper.getParam20();
+		paramList[20] = paper.getParam21();
+		paramList[21] = paper.getParam22();
+		paramList[22] = paper.getParam23();
+		paramList[23] = paper.getParam24();
+		paramList[24] = paper.getParam25();			
+		return paramList;		
+	}
+	
+	private List<Paper> sortPaperList(List<Paper> paperList){
+		List<Paper> newPaperList = new ArrayList<Paper>();
+		int n = 0;
+		if(paperList != null && paperList.size() > 0){
+			for (int i = 0; i < paperList.size(); i++) {
+				if(n == paperList.get(i).getExcelOrder()){
+					newPaperList.add(paperList.get(i));
+					if(n < paperList.size()){						
+						n++;
+						continue;
+					}else{
+						break;
+					}
+				}
+			}
+		}		
+		return newPaperList;		
+	}
 }
-

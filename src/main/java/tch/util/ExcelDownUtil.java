@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -17,6 +18,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
+
+import tch.model.ReviewResult;
 
 /**
  * 
@@ -39,16 +42,24 @@ public class ExcelDownUtil extends AbstractExcelView {
 	 @SuppressWarnings({ "static-access", "deprecation" })
 	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-        //List<User> list = (List<User>) model.get("infoList");  
+        ReviewResult reviewResult = (ReviewResult) model.get("reviewResult");  
         HSSFFont font = workbook.createFont();
         font.setFontHeightInPoints((short)8);            //设置字体的大小
         font.setFontName("微软雅黑");                        //设置字体的样式，如：宋体、微软雅黑等
         font.setItalic(false);                            //斜体true为斜体
         font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);    //对文中进行加粗
         font.setColor(HSSFColor.BLACK.index);            //设置字体的颜色
+       
+        //设置单元格基本string类型格式
         HSSFCellStyle style = workbook.createCellStyle();
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        
+        //设置单元格的数字格式
+        HSSFCellStyle style1 = workbook.createCellStyle();
+        style1.setFont(font);
+        style1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style1.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00"));  
         
         Sheet sheet = workbook.createSheet();
     
@@ -57,35 +68,72 @@ public class ExcelDownUtil extends AbstractExcelView {
         sheet.autoSizeColumn(1,true);//设置宽度自适应
         Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
         cell.setCellStyle(style);    
-        cell.setCellValue(new HSSFRichTextString(ConstantTch.RELIABILITY));	
+        cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_ID));	
         
-		cell = row.createCell(1, Cell.CELL_TYPE_STRING);//设置类型为数值型
+        cell = row.createCell(1, Cell.CELL_TYPE_STRING);//
 		cell.setCellStyle(style);    
-		cell.setCellValue(new HSSFRichTextString(ConstantTch.DISTINCTION));	
+		cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_PID));
 		
-		cell = row.createCell(2, Cell.CELL_TYPE_STRING);//设置类型为数值型
+		cell = row.createCell(2, Cell.CELL_TYPE_STRING);//
 		cell.setCellStyle(style);    
-		cell.setCellValue(new HSSFRichTextString(ConstantTch.DIFFICULTY));
+		cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_TID));
 		
-		cell = row.createCell(3, Cell.CELL_TYPE_STRING);//设置类型为数值型
+		cell = row.createCell(3, Cell.CELL_TYPE_STRING);//
 		cell.setCellStyle(style);    
-		cell.setCellValue(new HSSFRichTextString(ConstantTch.VALIDITY));
+		cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_TIME));
+		
+		cell = row.createCell(4, Cell.CELL_TYPE_STRING);//设置类型为数值型
+		cell.setCellStyle(style);    
+		cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_RELIABILITY));
+        
+		cell = row.createCell(5, Cell.CELL_TYPE_STRING);//设置类型为数值型
+		cell.setCellStyle(style);    
+		cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_DISTINCTION));	
+		
+		cell = row.createCell(6, Cell.CELL_TYPE_STRING);//设置类型为数值型
+		cell.setCellStyle(style);    
+		cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_DIFFICULTY));
+		
+		cell = row.createCell(7, Cell.CELL_TYPE_STRING);//设置类型为数值型
+		cell.setCellStyle(style);    
+		cell.setCellValue(new HSSFRichTextString(ConstantTch.RESULT_VALIDITY));
 		
 		//填充数据
 	    sheet.setColumnWidth((short) 0, (short) (35.7 * 100));
         row = sheet.createRow(1);
          // 校标度
-        cell = row.createCell(0, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.RELIABILITY));
+        cell = row.createCell(0, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(new HSSFRichTextString(reviewResult.getId()));
         //区分度
-        cell = row.createCell(1, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.DISTINCTION));
+        cell = row.createCell(1, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(new HSSFRichTextString(reviewResult.getpId()));
         //难度
-        cell = row.createCell(2, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.DIFFICULTY));
+        cell = row.createCell(2, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(new HSSFRichTextString(reviewResult.gettId()));
         //信度
-        cell = row.createCell(3, cell.CELL_TYPE_NUMERIC);
-        cell.setCellValue((Double)model.get(ConstantTch.VALIDITY));
+        cell = row.createCell(3, cell.CELL_TYPE_STRING);
+        cell.setCellStyle(style);
+        cell.setCellValue(new HSSFRichTextString(MyCommonUtil.getDateFormat(reviewResult.getTime())));
+        
+        cell = row.createCell(4, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getReliability());
+        
+        cell = row.createCell(5, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getDistinction());
+        
+        cell = row.createCell(6, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getDifficulty());
+        
+        cell = row.createCell(7, cell.CELL_TYPE_NUMERIC);
+        cell.setCellStyle(style1);
+        cell.setCellValue(reviewResult.getValidityB());
+        
            /* cell = row.createCell(2, Cell.CELL_TYPE_STRING);
             cell.setCellStyle(style);    
             cell.setCellValue("合同登记时间");
@@ -164,7 +212,7 @@ public class ExcelDownUtil extends AbstractExcelView {
 
         // 对文件名进行处理。防止文件名乱码
               
-        String fileName = ConstantTch.DOWNFILENAME + MyCommonUtil.getTimeString() + ConstantTch.FILEEXTENSION; 
+        String fileName = ConstantTch.DOWNFILENAME + reviewResult.getId() + ConstantTch.FILEEXTENSION; 
         String userAgent = request.getHeader("User-Agent"); 
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {

@@ -14,11 +14,15 @@ public class ConstantTch {
 	public static final String FILEEXTENSION = ".xls";//文件下载时的格式控制
 	public static final String DOWNFILENAME = "试卷结果";//Excel下载时的名称
 	public static final String DOWNEXPORTFILENAME = "学生成绩表模板";//excel模板下载时的名称
-	//评价指标
-	public static final String VALIDITY = "信度";
-	public static final String DIFFICULTY = "难度";
-	public static final String DISTINCTION = "区分度";
-	public static final String RELIABILITY = "校标度";
+	//分析结果下载时的表头数据
+	public static final String RESULT_ID = "结果编号";
+	public static final String RESULT_PID = "试卷编号";
+	public static final String RESULT_TID = "用户编号";
+	public static final String RESULT_TIME = "结果分析时间";
+	public static final String RESULT_VALIDITY = "信度";
+	public static final String RESULT_DIFFICULTY = "难度";
+	public static final String RESULT_DISTINCTION = "区分度";
+	public static final String RESULT_RELIABILITY = "校标度";
 	//模板下载时表头数据
 	public static final String STUNO = "序号";
 	public static final String TOTAL = "总分";

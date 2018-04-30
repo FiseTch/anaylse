@@ -14,9 +14,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import tch.model.ReviewResult;
+import tch.service.IReviewResultService;
 import tch.util.ExcelDownUtil;
+import tch.util.MyCommonUtil;
 
 
 
@@ -24,6 +28,8 @@ import tch.util.ExcelDownUtil;
 @RequestMapping(value = "/downResult")
 public class DownResultAction {
 	private static Log log = LogFactory.getLog(DownResultAction.class);
+	
+	private IReviewResultService ReviewResultService;
 
 	/**
 	 * 
@@ -39,11 +45,21 @@ public class DownResultAction {
 	 */
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@RequestMapping(value = "/downResult")
-	public ModelAndView downResult(HttpSession session) throws UnsupportedEncodingException, IOException{
-		Map<String,Double> resultMap = new HashMap<String, Double>();		
-		resultMap  = (Map<String, Double>) session.getAttribute("resultMap");		
-		ExcelDownUtil ve = new ExcelDownUtil();  	    
-	    log.info(new Date().toLocaleString());
-	    return new ModelAndView(ve,resultMap);  		
+	public ModelAndView downResult(@RequestParam("paperId") String id) throws UnsupportedEncodingException, IOException{
+		ModelAndView model = null;
+		Map<String,ReviewResult> resultMap = new HashMap<String, ReviewResult>();		
+		id = MyCommonUtil.changeEncode(id);
+		if(id != null){
+			ReviewResult reviewResult = ReviewResultService.getRevById(id);
+			resultMap.put("reviewResult", reviewResult);
+			ExcelDownUtil ve = new ExcelDownUtil();  	    
+			log.info(new Date().toLocaleString());
+			model = new ModelAndView(ve,resultMap);
+		}else{
+			model.addObject("flag", false);
+			model.addObject("errorMsg","当前传入试卷id为空");
+			model.setViewName("view/result/uploadFailure");
+		}
+		return model;  		
 	}
 }

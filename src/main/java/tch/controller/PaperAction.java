@@ -123,14 +123,14 @@ public class PaperAction {
 				FileOutputStream fos = new FileOutputStream(myFilePath);//利用输出流向文件中传输数据		
 				fos.write(bytes);
 				fos.close();//将文件保存在本地d盘中
-				paper = setPaperAttr(subject, score, subjectPerson, teacher, time, paperTime, term, num);				
+				String downloadFilename = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(ExcelUpUtil.POINT));
+				paper = setPaperAttr(subject, score, subjectPerson, teacher, time, downloadFilename, term, num);				
 	            String postfix = ExcelUpUtil.getPostfix(file.getOriginalFilename());  	             
                 if(ExcelUpUtil.OFFICE_EXCEL_2003_POSTFIX.equals(postfix)){ 
                 	paperId = saveXlsDateToBase(paper, file);
                 }else if(ExcelUpUtil.OFFICE_EXCEL_2010_POSTFIX.equals(postfix)){  
                 	paperId = saveXlsxDateToBase(paper, file);  
-                } 	            		        
-								
+                } 	            		        								
 				List<Map<Integer,List<String>>> data = ExcelUpUtil.readExcel(file);
 				session.setAttribute("data", data.get(0));				
 				if (paperId != null) {
@@ -274,7 +274,7 @@ public class PaperAction {
 	 * @throws UnsupportedEncodingException
 	 * @return: Paper
 	 */
-	private Paper setPaperAttr(String subject,String score,String subjectPerson,String teacher,String time,String paperTime,
+	private Paper setPaperAttr(String subject,String score,String subjectPerson,String teacher,String time,String downloadFilename,
 			String term,String num) throws UnsupportedEncodingException{
 		Paper paper = new Paper();
 		paper.setPaperid(MyCommonUtil.getTimeString());//自动生成试卷唯一id
@@ -283,7 +283,7 @@ public class PaperAction {
 		paper.setSubjectperson(MyCommonUtil.changeEncode(subjectPerson));
 		paper.setTeacher(MyCommonUtil.changeEncode(teacher));
 		paper.setTime(MyCommonUtil.getDateFormatToDatabase(time));
-		paper.setPapertime(MyCommonUtil.changeEncode(paperTime));
+		paper.setPapertime(downloadFilename);
 		paper.setTerm(MyCommonUtil.changeEncode(term));
 		paper.setNum((MyCommonUtil.changeEncode(num) == null)?50:Integer.parseInt(MyCommonUtil.changeEncode(num)));//设置默认人数为50人
 		return paper;		
@@ -356,7 +356,7 @@ public class PaperAction {
 	            continue;  
 	        }  
 	        totalRows = hssfSheet.getLastRowNum();//得到总行数，从0开始算  需要+1        
-	        for(int rowNum = 1;rowNum <= totalRows;rowNum++){ //去除表头，rows最后一行可以相等
+	        for(int rowNum = 0;rowNum <= totalRows;rowNum++){ //去除表头，rows最后一行可以相等
 	            HSSFRow hssfRow = hssfSheet.getRow(rowNum);  
 	            String[] sList = new String[]{null,null,null,null,null,    null,null,null,null,null,
 	            		null,null,null,null,null,    null,null,null,null,null,       null,null,null,null,null};//长度为25
@@ -371,20 +371,19 @@ public class PaperAction {
 	                	}          
 					}else{
 						throw new Exception("第 "+ (rowNum+1) + " 行上传超过25列");							
-					}
-	               
+					}	               
+	                paper = setChangeAbleValue(sList, paper);
+	                paper.setNum(totalCells);
+	                paper.setExcelOrder(rowNum);//excel顺序
+	                int flag = paperService.insertPaperSelective(paper);
+	                if (flag == 1) {
+	                	totalNum += 1;
+	                }else{
+	                	throw new Exception("第 "+ (rowNum+1) + " 行插入出错上传字段超过25" +Thread.currentThread().getStackTrace()[1].getMethodName());							 
+	                }
 	            }
-	            paper = setChangeAbleValue(sList, paper);
-	            paper.setExcelOrder(rowNum);//excel顺序
-	            int flag = paperService.insertPaperSelective(paper);
-	            if (flag == 1) {
-					totalNum += 1;
-				}else{
-					throw new Exception("第 "+ (rowNum+1) + " 行插入出错上传字段超过25" +Thread.currentThread().getStackTrace()[1].getMethodName());							 
-				}
 	        }  
-	    }
-             
+	    }             
         return (totalNum == (totalRows))?paper.getPaperid():null;  
  
     } 
@@ -418,7 +417,7 @@ public class PaperAction {
             }  
             totalRows = xssfSheet.getLastRowNum(); 
             //读取Row,从第一行开始  
-            for(int rowNum = 1;rowNum <= totalRows;rowNum++){  
+            for(int rowNum = 0;rowNum <= totalRows;rowNum++){  
                 XSSFRow xssfRow = xssfSheet.getRow(rowNum); 
                 String[] sList = new String[]{null,null,null,null,null,    null,null,null,null,null,
 	            		null,null,null,null,null,    null,null,null,null,null,       null,null,null,null,null};//长度为25                    
@@ -434,6 +433,7 @@ public class PaperAction {
                     	throw new Exception("第 "+ (rowNum+1) + " 行上传超过25列");	
                     }
                     paper = setChangeAbleValue(sList, paper);
+                    paper.setNum(totalCells);
                     paper.setExcelOrder(rowNum);//excel顺序
     	            int flag =   paperService.insertPaperSelective(paper);
     	            if (flag == 1) {
