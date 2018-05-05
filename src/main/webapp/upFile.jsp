@@ -323,7 +323,7 @@ function checkEmpty(){
 								</td>
 								<td>
 									<label class="name">
-										<input type="reset" value="恢复默认">
+										<input type="reset" value="重置">
 									</label>									
 								</td>
 							</tr>

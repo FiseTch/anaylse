@@ -78,7 +78,7 @@ function updatePassword(){
 	</div>
 </header>
 <section>
-	<div class="bg">
+
 	<c:choose>
 		<c:when test="${flag && flag1}">
 			<div id="container">
@@ -97,7 +97,7 @@ function updatePassword(){
 				</div> 
 				<br>		
 				<table class="zebra">
-				<caption>我的试卷上传记录</caption>
+				<caption>试卷上传详细信息</caption>
 					<thead>				
 						<tr>
 							<th>试卷编号</th>
@@ -109,7 +109,9 @@ function updatePassword(){
 							<th>试卷审核人</th>
 							<th>测试人数</th>
 							<th>课程开设学期</th>
-							<th>考试用时</th>					
+							<th>考试用时</th>	
+							<th>用户操作</th>				
+							<th>试卷分析</th>
 						</tr>				
 					</thead>
 					
@@ -126,6 +128,26 @@ function updatePassword(){
 								<td>${paperDetailList.num}</td>
 								<td>${paperDetailList.term}</td>
 								<td>${paperDetailList.papertime}</td>
+								<td>
+									<div>
+										<form action="${ctx}/downOrginExcel/downOrginExcel.do" method = "post">
+											<input type = "hidden" value = "${paperDetailList.paperid}"name = "paperId">
+											<input type = "submit" name = "submit" value = "下载">
+										</form>
+										<form action="${ctx}/showExcel/showExcel.do" method = "post">
+											<input type = "hidden" value = "${paperDetailList.paperid}"name = "paperId">
+											<input type = "submit" name = "submit" value = "查看">
+										</form>
+									</div>
+								</td>
+								<td>
+									<div>
+										<form action="${ctx}/reviewResult/dealData.do" method = "post">
+											<input type = "hidden" value = "${paperDetailList.paperid}"name = "paperId">
+											<input name = "submit" value = "试卷分析" type = "submit">
+										</form>
+									</div>
+								</td>
 		   					</tr>			
 						</c:forEach>
 					</tbody>
@@ -169,7 +191,7 @@ function updatePassword(){
 			<div class="grid_7 suffix_1 padtop33"></div>
 		</div>
 	</div>
-</div>	
+
 </section>
 
 	

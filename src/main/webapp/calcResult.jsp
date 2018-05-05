@@ -68,7 +68,7 @@ function updatePassword(){
 	</div>
 </header>
 <section>
-<div class="bg">
+
 	<c:choose>
 		<c:when test="${flag && flag1}">
 			<div id="container"> 
@@ -106,7 +106,7 @@ function updatePassword(){
 								<div>
 									<form action="${ctx}/downResult/downResult.do" method = "post">
 										<input type = "hidden" name = "id" id = "id" value = "${reviewResultList.id}">
-										<input type = "submit" value = "下载" name = "submit">
+										<input type = "submit" value = "导出分析结果" name = "submit">
 									</form>
 								</div>
 							</td>											
@@ -131,7 +131,8 @@ function updatePassword(){
 		</c:when>
 		<c:otherwise>
 			<div id="container"> 
-				<h4>当前用户暂未分析任何试卷，无分析结果    <%-- <a href="${ctx}/upFile.jsp">上传文档</a> --%></h4>
+				<h4>当前用户暂未分析任何试卷，无分析结果    
+				 <a href="${ctx}/upFile.jsp">上传文档</a> </h4>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -143,7 +144,7 @@ function updatePassword(){
 			<div class="grid_7 suffix_1 padtop33"></div>
 		</div>
 	</div>
-</div>	
+
 </section>
 
 	

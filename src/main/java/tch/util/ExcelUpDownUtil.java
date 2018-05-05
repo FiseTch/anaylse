@@ -46,7 +46,7 @@ public class ExcelUpDownUtil extends AbstractExcelView {
 	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
         List<Paper> paperList = (List<Paper>) model.get("paperList"); 
-        paperList
+        paperList = sortPaperList(paperList);
         HSSFFont font = workbook.createFont();
         font.setFontHeightInPoints((short)8);            //设置字体的大小
         font.setFontName("微软雅黑");                        //设置字体的样式，如：宋体、微软雅黑等
@@ -70,70 +70,31 @@ public class ExcelUpDownUtil extends AbstractExcelView {
         // 第一行文字说明
         Row row = sheet.createRow(0);
         sheet.autoSizeColumn(1,true);//设置宽度自适应
-        if(paperList != null && paperList.size() > 0){ 
-        	for (int i = 0; i < paperList.size(); i++) {
-				if(0 == paperList.get(i).getExcelOrder()){					
-					Paper paper = paperList.get(i);
-					String[] paramList = convertToString(paper);
-					for(int j = 0 ;j<paper.getNum() ; j++){						
-						Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
-						cell.setCellStyle(style);    
-						cell.setCellValue(new HSSFRichTextString(paramList[j]));
-					}
-					
-				}
-			}       	
-        }        
-		
+        if(paperList != null && paperList.size() > 0){ 					
+			Paper paper = paperList.get(0);
+			String[] paramList = convertToString(paper);
+			for(int j = 0 ;j<paper.getNum() ; j++){						
+				Cell cell = row.createCell(j, Cell.CELL_TYPE_STRING);
+				cell.setCellStyle(style);    
+				cell.setCellValue(new HSSFRichTextString(paramList[j]));
+			}						      	
+        }        		
 		//填充数据
-	    sheet.setColumnWidth((short) 0, (short) (35.7 * 100));
-        row = sheet.createRow(1);
          // 校标度
         if(paperList != null && paperList.size() > 0){ 
-        	for (int i = 0; i < paperList.size(); i++) {
-				if(1 == paperList.get(i).getExcelOrder()){					
-					Paper paper = paperList.get(i);
-					String[] paramList = convertToString(paper);
-					for(int j = 0 ;j<paper.getNum() ; j++){						
-						Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
-						cell.setCellStyle(style);    
-						cell.setCellValue(new HSSFRichTextString(paramList[j]));
-					}
-					
+        	for (int i = 1; i < paperList.size(); i++) {							
+        		sheet.setColumnWidth((short) 0, (short) (35.7 * 100));
+        		row = sheet.createRow(i);
+				Paper paper = paperList.get(i);
+				String[] paramList = convertToString(paper);
+				for(int j = 0 ;j<paper.getNum() ; j++){						
+					Cell cell = row.createCell(j, Cell.CELL_TYPE_NUMERIC);
+					cell.setCellStyle(style1);    
+					cell.setCellValue(new HSSFRichTextString(paramList[j]));
 				}
-			}
+				
+			}			
         }
-        cell = row.createCell(0, cell.CELL_TYPE_STRING);
-        cell.setCellStyle(style);
-        cell.setCellValue(reviewResult.getId());
-        //区分度
-        cell = row.createCell(1, cell.CELL_TYPE_STRING);
-        cell.setCellStyle(style);
-        cell.setCellValue(reviewResult.getpId());
-        //难度
-        cell = row.createCell(2, cell.CELL_TYPE_STRING);
-        cell.setCellStyle(style);
-        cell.setCellValue(reviewResult.gettId());
-        //信度
-        cell = row.createCell(3, cell.CELL_TYPE_STRING);
-        cell.setCellStyle(style);
-        cell.setCellValue(reviewResult.getTime());
-        
-        cell = row.createCell(4, cell.CELL_TYPE_NUMERIC);
-        cell.setCellStyle(style1);
-        cell.setCellValue(reviewResult.getReliability());
-        
-        cell = row.createCell(5, cell.CELL_TYPE_NUMERIC);
-        cell.setCellStyle(style1);
-        cell.setCellValue(reviewResult.getDistinction());
-        
-        cell = row.createCell(6, cell.CELL_TYPE_NUMERIC);
-        cell.setCellStyle(style1);
-        cell.setCellValue(reviewResult.getDifficulty());
-        
-        cell = row.createCell(7, cell.CELL_TYPE_NUMERIC);
-        cell.setCellStyle(style1);
-        cell.setCellValue(reviewResult.getValidityB());
         
            /* cell = row.createCell(2, Cell.CELL_TYPE_STRING);
             cell.setCellStyle(style);    
@@ -213,7 +174,7 @@ public class ExcelUpDownUtil extends AbstractExcelView {
 
         // 对文件名进行处理。防止文件名乱码
               
-        String fileName = ConstantTch.DOWNFILENAME + reviewResult.getId() + ConstantTch.FILEEXTENSION; 
+        String fileName = paperList.get(0).getPaperid() + ConstantTch.FILEEXTENSION; 
         String userAgent = request.getHeader("User-Agent"); 
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
@@ -266,9 +227,9 @@ public class ExcelUpDownUtil extends AbstractExcelView {
 		int n = 0;
 		if(paperList != null && paperList.size() > 0){
 			for (int i = 0; i < paperList.size(); i++) {
-				if(n == paperList.get(i).getExcelOrder()){
-					newPaperList.add(paperList.get(i));
+				if(n == paperList.get(i).getExcelorder()){
 					if(n < paperList.size()){						
+						newPaperList.add(paperList.get(i));
 						n++;
 						continue;
 					}else{

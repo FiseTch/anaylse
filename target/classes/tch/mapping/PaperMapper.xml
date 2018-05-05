@@ -72,7 +72,7 @@
     values (#{id,jdbcType=INTEGER}, #{paperid,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, 
       #{score,jdbcType=INTEGER}, #{subjectperson,jdbcType=VARCHAR}, #{teacher,jdbcType=VARCHAR}, 
       #{time,jdbcType=DATE}, #{papertime,jdbcType=VARCHAR}, #{term,jdbcType=VARCHAR}, 
-      #{num,jdbcType=INTEGER}, #{excelOrder,jdbcType=INTEGER}, #{param1,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{excelorder,jdbcType=INTEGER}, #{param1,jdbcType=VARCHAR}, 
       #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR}, 
       #{param5,jdbcType=VARCHAR}, #{param6,jdbcType=VARCHAR}, #{param7,jdbcType=VARCHAR}, 
       #{param8,jdbcType=VARCHAR}, #{param9,jdbcType=VARCHAR}, #{param10,jdbcType=VARCHAR}, 
@@ -116,7 +116,7 @@
       <if test="num != null">
         num,
       </if>
-      <if test="excelOrder != null">
+      <if test="excelorder != null">
         excelOrder,
       </if>
       <if test="param1 != null">
@@ -226,8 +226,8 @@
       <if test="num != null">
         #{num,jdbcType=INTEGER},
       </if>
-      <if test="excelOrder != null">
-        #{excelOrder,jdbcType=INTEGER},
+      <if test="excelorder != null">
+        #{excelorder,jdbcType=INTEGER},
       </if>
       <if test="param1 != null">
         #{param1,jdbcType=VARCHAR},
@@ -336,8 +336,8 @@
       <if test="num != null">
         num = #{num,jdbcType=INTEGER},
       </if>
-      <if test="excelOrder != null">
-        excelOrder = #{excelOrder,jdbcType=INTEGER},
+      <if test="excelorder != null">
+        excelOrder = #{excelorder,jdbcType=INTEGER},
       </if>
       <if test="param1 != null">
         param1 = #{param1,jdbcType=VARCHAR},
@@ -428,7 +428,7 @@
       paperTime = #{papertime,jdbcType=VARCHAR},
       term = #{term,jdbcType=VARCHAR},
       num = #{num,jdbcType=INTEGER},
-      excelOrder = #{excelOrder,jdbcType=INTEGER},
+      excelOrder = #{excelorder,jdbcType=INTEGER},
       param1 = #{param1,jdbcType=VARCHAR},
       param2 = #{param2,jdbcType=VARCHAR},
       param3 = #{param3,jdbcType=VARCHAR},
@@ -489,8 +489,8 @@
       	<if test="num != null">
        		and num = #{num,jdbcType=INTEGER}
      	</if>
-      	<if test="excelOrder != null">
-        	and excelOrder = #{excelOrder,jdbcType=INTEGER}
+      	<if test="excelorder != null">
+        	and excelOrder = #{excelorder,jdbcType=INTEGER}
       	</if>
 		
 		<if test="param1 != null">

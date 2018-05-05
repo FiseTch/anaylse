@@ -100,7 +100,6 @@ public class PaperAction {
 		ModelAndView model = new ModelAndView();
 		Paper paper = new Paper();
 		PaperDetail paperDetail = new PaperDetail();
-		String paperId = "";
 		if (!file.isEmpty()) {			
 	        String strToday =  MyCommonUtil.getDateFormat(new Date());// 获取当前时间
 			String foldPath = ExcelUpUtil.ROOT_CATALOG + File.separator + strToday;//文件上传的目标文件夹		
@@ -127,29 +126,39 @@ public class PaperAction {
 				paper = setPaperAttr(subject, score, subjectPerson, teacher, time, downloadFilename, term, num);				
 	            String postfix = ExcelUpUtil.getPostfix(file.getOriginalFilename());  	             
                 if(ExcelUpUtil.OFFICE_EXCEL_2003_POSTFIX.equals(postfix)){ 
-                	paperId = saveXlsDateToBase(paper, file);
+                	paperDetail = saveXlsDateToBase(paper, file);
                 }else if(ExcelUpUtil.OFFICE_EXCEL_2010_POSTFIX.equals(postfix)){  
-                	paperId = saveXlsxDateToBase(paper, file);  
+                	paperDetail = saveXlsxDateToBase(paper, file);  
                 } 	            		        								
-				List<Map<Integer,List<String>>> data = ExcelUpUtil.readExcel(file);
-				session.setAttribute("data", data.get(0));				
-				if (paperId != null) {
-					paperDetail = setPaperDetailAttr(subject, score, subjectPerson, teacher, time, paperTime, term, num);
-					paperDetail.setPaperid(paperId);
-					paperDetail.setTotaltitle(data.get(0).get(1).size()-2);//总列数
+//				List<Map<Integer,List<String>>> data = ExcelUpUtil.readExcel(file);
+//				session.setAttribute("data", data.get(0));				
+				if (paperDetail != null) {
+					paperDetail = setPaperDetailAttr(paperDetail,subject, score, subjectPerson, teacher, time, paperTime, term, num);
+//					paperDetail.setPaperid(paperId);
+//					paperDetail.setTotaltitle(data.get(0).get(1).size()-2);//总列数
 					paperDetail.settId(MyCommonUtil.getUserId(session));
 					int i = paperDetailService.insertPaperDetailSelective(paperDetail);
 					if(i == 1){
-						model.addObject("flag", "插入到表paperDetail成功");
+						model.addObject("flag",true);
+						PaperDetail paperDetail1 = paperDetailService.getPaperDetailById(paperDetail.getPaperid());
+						List<PaperDetail> paperDetailList = new ArrayList<PaperDetail>();
+						if(paperDetail1 != null){
+							paperDetailList.add(paperDetail1);
+							List<PaperDetailToString> paperDetailToString = convertReview(paperDetailList);//将数据库中的时间进行格式化，并且退后8小时
+							model.addObject("flag1",true);
+							model.addObject("paperDetailList", paperDetailToString);
+						}else{
+							model.addObject("flag1",false);
+						}
 					}else{
-						model.addObject("flag", "插入到表paperDetail失败");
-					}
-					model.addObject("paperId", paperId);
-					session.setAttribute("score", score);//试卷总分
-					session.setAttribute("paperId", paperId);
+						model.addObject("flag",false);
+					}								
+					model.setViewName("upRecord");			
+				}else {	
+					model.addObject("flag", false);
+					model.setViewName("view/result/uploadFailure");	
 				}
-				model.addObject("data", data.get(0));//存取第一页的数据
-				model.setViewName("showExcel");			
+//				model.addObject("data", data.get(0));//存取第一页的数据
 			} catch (IOException e) {
 				log.error(e);
 			}catch (Exception eFilePath){    
@@ -157,7 +166,7 @@ public class PaperAction {
 				log.error(eFilePath);
 			}			
 		}else {	
-			model.addObject("errorMsg", "当前上传文件为空");
+			model.addObject("errorMsg", "当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 			model.addObject("logMsg", "上传文件为空："+Thread.currentThread().getStackTrace()[1].getMethodName());
 			model.setViewName("view/result/uploadFailure");			
 		}
@@ -202,8 +211,7 @@ public class PaperAction {
 				}
 				model.setViewName("upRecord");
 			}else{
-				model.addObject("flag", false);
-				model.addObject("errorMsg","用户id为空");
+				model.addObject("errorMsg", "当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 				model.setViewName("view/result/uploadFailure");
 			}
 		}
@@ -238,15 +246,14 @@ public class PaperAction {
 			model.addObject("flag1",true);
 			model.setViewName("upRecord");
 		}else{
-			model.addObject("errorMsg","用户id为空");
+			model.addObject("errorMsg", "当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 			model.setViewName("view/result/uploadFailure");
 		}
 		return model;
 	}
 
-	private PaperDetail setPaperDetailAttr(String subject,String score,String subjectPerson,String teacher,String time,String paperTime,
+	private PaperDetail setPaperDetailAttr(PaperDetail paperDetail,String subject,String score,String subjectPerson,String teacher,String time,String paperTime,
 			String term,String num) throws UnsupportedEncodingException{
-		PaperDetail paperDetail = new PaperDetail();		
 		paperDetail.setSubject(MyCommonUtil.changeEncode(subject));
 		paperDetail.setScore((MyCommonUtil.changeEncode(score) == null) ? 100: Integer.parseInt(MyCommonUtil.changeEncode(score)));//如果分数为空的话默认设置100分
 		paperDetail.setSubjectperson(MyCommonUtil.changeEncode(subjectPerson));
@@ -340,7 +347,7 @@ public class PaperAction {
 	 * @return: boolean
 	 */
 	@SuppressWarnings("resource")
-	private String saveXlsDateToBase(Paper paper,MultipartFile file) throws Exception{ 
+	private PaperDetail saveXlsDateToBase(Paper paper,MultipartFile file) throws Exception{ 
         // IO流读取文件  
         InputStream input = null;  
         HSSFWorkbook wb = null; 
@@ -374,7 +381,7 @@ public class PaperAction {
 					}	               
 	                paper = setChangeAbleValue(sList, paper);
 	                paper.setNum(totalCells);
-	                paper.setExcelOrder(rowNum);//excel顺序
+	                paper.setExcelorder(rowNum);//excel顺序
 	                int flag = paperService.insertPaperSelective(paper);
 	                if (flag == 1) {
 	                	totalNum += 1;
@@ -383,8 +390,11 @@ public class PaperAction {
 	                }
 	            }
 	        }  
-	    }             
-        return (totalNum == (totalRows))?paper.getPaperid():null;  
+	    }
+	    PaperDetail paperDetail = new PaperDetail();
+	    paperDetail.setTotaltitle(paper.getNum()-2);//设置总列数
+	    paperDetail.setPaperid(paper.getPaperid());//设置试卷id
+        return (totalNum == (totalRows+1))?paperDetail:null;  
  
     } 
 	
@@ -400,7 +410,7 @@ public class PaperAction {
 	 * @return: String
 	 */
 	@SuppressWarnings("resource")
-	private String saveXlsxDateToBase(Paper paper, MultipartFile file) throws Exception {		
+	private PaperDetail saveXlsxDateToBase(Paper paper, MultipartFile file) throws Exception {		
 	    // IO流读取文件  
         InputStream input = null;  
         XSSFWorkbook wb = null; 
@@ -434,7 +444,7 @@ public class PaperAction {
                     }
                     paper = setChangeAbleValue(sList, paper);
                     paper.setNum(totalCells);
-                    paper.setExcelOrder(rowNum);//excel顺序
+                    paper.setExcelorder(rowNum);//excel顺序
     	            int flag =   paperService.insertPaperSelective(paper);
     	            if (flag == 1) {
     					totalNum += 1;
@@ -445,7 +455,10 @@ public class PaperAction {
                
             }           
         }
-		return (totalNum == totalRows + 1)?paper.getPaperid():null;  
+        PaperDetail paperDetail = new PaperDetail();
+	    paperDetail.setTotaltitle(paper.getNum());//设置总列数
+	    paperDetail.setPaperid(paper.getPaperid());//设置试卷id
+		return (totalNum == totalRows + 1)?paperDetail:null;  
 	}
 	
 	
@@ -458,6 +471,7 @@ public class PaperAction {
 	 * @return
 	 * @return: List<String>
 	 */
+	@SuppressWarnings("unused")
 	private List<String> getPaperIdByUserId(String userId){
 		ReviewResult review = new ReviewResult();
 		review.settId(userId);
@@ -486,9 +500,9 @@ public class PaperAction {
 				
 				//将Date换成String
 				paperDetailToString.setTime(
-						 MyCommonUtil.formatDate(paperDetailList.get(i).getTime(),"yy-MM-dd HH:mm:ss"));
+						 MyCommonUtil.databaseToWeb(paperDetailList.get(i).getTime(),"yyyy-MM-dd"));
 				paperDetailToString.setUptime(
-				MyCommonUtil.formatDate(paperDetailList.get(i).getUptime(),"yy-MM-dd HH:mm:ss"));
+				MyCommonUtil.databaseToWeb(paperDetailList.get(i).getUptime(),"yyyy-MM-dd HH:mm:ss"));
 				
 				paperDetailToString.setPapertime(paperDetailList.get(i).getPapertime());
 				
@@ -524,7 +538,6 @@ public class PaperAction {
 					break;
 			}
 		}
-		return paperDetail;
-		
-	}
+		return paperDetail;		
+	}	
  }

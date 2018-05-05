@@ -45,7 +45,7 @@ public class MyCommonUtil extends DateUtil{
 	 * @return: String
 	 */
 	public static String changeEncode(String s) throws UnsupportedEncodingException{
-		return (s==null)?null:URLDecoder.decode(s.trim(),"UTF-8");
+		return (s==null || s.equals(""))?null:URLDecoder.decode(s.trim(),"UTF-8");
 	}
 	
 	/**
@@ -136,13 +136,9 @@ public class MyCommonUtil extends DateUtil{
 	 * @return
 	 * @return: String
 	 */
-    public static String formatDate(Date date,String format){  
-        String result = null;  
-        SimpleDateFormat sdf=new SimpleDateFormat(format);  
-        if(date!=null){  
-            result=sdf.format(date);  
-        }  
-        return result;  
+    public static String formatDate(Date date,String format){   
+        SimpleDateFormat sdf = new SimpleDateFormat(format);                  
+        return (sdf.format(date) == null)?null:sdf.format(date);  
     }  
     /**
      * 
@@ -170,13 +166,14 @@ public class MyCommonUtil extends DateUtil{
      * @return: Date
      */
     public static Date getDateFormatToDatabase(String time){
-    	if(time != null){   		
-    		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    		try {
-    			return df.parse(time+" 23:00:00");
-    		} catch (ParseException e) {           
-    			e.printStackTrace();
-    		}  
+    	if(time != null && !time.equals("")){   		
+    		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");   		
+	        try {
+	        	String stime = time +" 23:00:00";
+				return df.parse(stime);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}    		 
     	}else{   		
     		return null;
     	}
@@ -273,5 +270,23 @@ public class MyCommonUtil extends DateUtil{
     public static int absoluteDay(Calendar cal, boolean use1904windowing) {    
         return DateUtil.absoluteDay(cal, use1904windowing);    
     }  
+    
+    /**
+     * 
+     * @user: tongchaohua
+     * @Title: databaseToWeb
+     * @Description: 解决从数据库中读取的数据显示在java中会多出8个小时 "yyyy-MM-dd HH:mm:ss"或者yyyy-MM-dd
+     * @param date
+     * @return
+     * @return: Date
+     */
+    @SuppressWarnings("deprecation")
+	public static String databaseToWeb(Date date,String time){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);//date 换成已经已知的Date对象
+        cal.add(Calendar.HOUR_OF_DAY, -8);// before 8 hour
+        SimpleDateFormat format = new SimpleDateFormat(time);
+		return format.format(cal.getTime());	
+    }
    
 } 

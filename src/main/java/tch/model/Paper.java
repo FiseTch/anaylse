@@ -23,7 +23,7 @@ public class Paper {
 
     private Integer num;
 
-    private Integer excelOrder;
+    private Integer excelorder;
 
     private String param1;
 
@@ -155,12 +155,12 @@ public class Paper {
         this.num = num;
     }
 
-    public Integer getExcelOrder() {
-        return excelOrder;
+    public Integer getExcelorder() {
+        return excelorder;
     }
 
-    public void setExcelOrder(Integer excelOrder) {
-        this.excelOrder = excelOrder;
+    public void setExcelorder(Integer excelorder) {
+        this.excelorder = excelorder;
     }
 
     public String getParam1() {

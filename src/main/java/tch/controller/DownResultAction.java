@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -29,6 +30,7 @@ import tch.util.MyCommonUtil;
 public class DownResultAction {
 	private static Log log = LogFactory.getLog(DownResultAction.class);
 	
+	@Resource
 	private IReviewResultService ReviewResultService;
 
 	/**
@@ -45,7 +47,7 @@ public class DownResultAction {
 	 */
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@RequestMapping(value = "/downResult")
-	public ModelAndView downResult(@RequestParam("paperId") String id) throws UnsupportedEncodingException, IOException{
+	public ModelAndView downResult(@RequestParam("id") String id) throws UnsupportedEncodingException, IOException{
 		ModelAndView model = null;
 		Map<String,ReviewResult> resultMap = new HashMap<String, ReviewResult>();		
 		id = MyCommonUtil.changeEncode(id);
@@ -56,7 +58,7 @@ public class DownResultAction {
 			log.info(new Date().toLocaleString());
 			model = new ModelAndView(ve,resultMap);
 		}else{
-			model.addObject("flag", false);
+			model.addObject("errorMsg", "当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 			model.addObject("errorMsg","当前传入试卷id为空");
 			model.setViewName("view/result/uploadFailure");
 		}

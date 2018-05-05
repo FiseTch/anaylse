@@ -30,12 +30,8 @@ public class ExcelTempleDownAction {
 			totalNum = Integer.parseInt(num);
 		}
 		map.put("totalNum",(totalNum == 0) ? 50 : totalNum);
-	    /* List<AuContract> list = new ArrayList<AuContract>();	   
-	     list= service.findAuContractList();//获得数据库所有的合同集合
-	     Map<String,List<AuContract>> map = new HashMap<String, List<AuContract>>();  
-	     map.put("infoList", list); */ 
-	    ExcelExportUtil ve = new ExcelExportUtil();  	    
-	    log.info(new Date().toLocaleString());
+	    ExcelExportUtil ve = new ExcelExportUtil();  	  
+	    log.info(new Date().toLocaleString()+Thread.currentThread().getStackTrace()[1].getClassName());
 	    return new ModelAndView(ve,map);  
 	 } 
 

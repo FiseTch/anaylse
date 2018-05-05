@@ -116,7 +116,7 @@ public class ExcelDownUtil extends AbstractExcelView {
         //信度
         cell = row.createCell(3, cell.CELL_TYPE_STRING);
         cell.setCellStyle(style);
-        cell.setCellValue(new HSSFRichTextString(MyCommonUtil.getDateFormat(reviewResult.getTime())));
+        cell.setCellValue(new HSSFRichTextString(MyCommonUtil.formatDate(reviewResult.getTime(),"yyyy-MM-dd HH:mm:ss")));
         
         cell = row.createCell(4, cell.CELL_TYPE_NUMERIC);
         cell.setCellStyle(style1);

@@ -56,7 +56,7 @@ public class TeacherAction {
 					model.setViewName("view/result/uploadFailure");	
 				}
 			}else{
-				model.addObject("errorMsg", "用户未注册！！！");
+				model.addObject("errorMsg", "用户未注册！！！"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 				model.addObject("logMsg","查询数据失败："+Thread.currentThread().getStackTrace()[1].getMethodName());
 				model.setViewName("view/result/uploadFailure");	
 			}
@@ -91,9 +91,9 @@ public class TeacherAction {
 			@RequestParam("subject")String subject,HttpSession session) throws UnsupportedEncodingException{
 				ModelAndView model = new ModelAndView();
 				Teacher teacher = new Teacher();
-				teacher.setId(MyCommonUtil.getUserId(session));
+				teacher.setId(MyCommonUtil.getUserId(session));					
 				teacher.setName(MyCommonUtil.changeEncode(name));
-				teacher.setSex(MyCommonUtil.changeEncode(sex));
+				teacher.setSex(MyCommonUtil.changeEncode(sex));				
 				teacher.setIdcard(MyCommonUtil.changeEncode(idcard));
 				teacher.setTel(MyCommonUtil.changeEncode(tel));
 				teacher.setBirthday(MyCommonUtil.getDateFormatToDatabase(birthday));
@@ -110,12 +110,12 @@ public class TeacherAction {
 						model.addObject("teacher",teacher);
 						model.setViewName("myInformation");				
 					}else{
-						model.addObject("errorMsg", "登录成功，查询用户个人数据失败！！！");
+						model.addObject("errorMsg", "登录成功，查询用户个人数据失败！！！"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 						model.addObject("logMsg", "数据库插入数据失败"+Thread.currentThread().getStackTrace()[1].getMethodName());
 						model.setViewName("view/result/uploadFailure");
 					}
 				}else{
-					model.addObject("errorMsg", "用户修改个人信息失败！！！");
+					model.addObject("errorMsg", "用户修改个人信息失败"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 					model.addObject("logMsg","数据库更新失败："+Thread.currentThread().getStackTrace()[1].getMethodName());
 					model.setViewName("view/result/uploadFailure");
 				}
@@ -153,17 +153,17 @@ public class TeacherAction {
 					session.setAttribute("teacher", t);
 					model.setViewName("login");
 				}else{
-					model.addObject("errorMsg", "注册成功，查询用户个人数据失败！！！");
+					model.addObject("errorMsg", "注册成功，查询为空"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 					model.addObject("logMsg", "数据库插入数据失败"+Thread.currentThread().getStackTrace()[1].getMethodName());
 					model.setViewName("view/result/uploadFailure");
 				}
 			}else{
-				model.addObject("errorMsg", "注册失败！！！");
+				model.addObject("errorMsg", "用户未被注册！！！注册失败"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 				model.addObject("logMsg", "数据库插入数据失败"+Thread.currentThread().getStackTrace()[1].getMethodName());
 				model.setViewName("view/result/uploadFailure");
 			}
 		}else{
-			model.addObject("errorMsg", "该用户已被注册");
+			model.addObject("errorMsg", "用户已被注册！！！"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 			model.addObject("logMsg", "数据库插入数据失败"+Thread.currentThread().getStackTrace()[1].getMethodName());
 			model.setViewName("view/result/uploadFailure");
 		}
@@ -199,12 +199,12 @@ public class TeacherAction {
 					session.setAttribute("teacher", teacher);
 					model.setViewName("login");
 				}else{
-					model.addObject("errorMsg", "修改密码成功，查询用户个人数据失败！！！");
+					model.addObject("errorMsg", "修改密码成功，查询用户个人数据失败！！！"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 					model.addObject("logMsg", "数据库插入数据失败"+Thread.currentThread().getStackTrace()[1].getMethodName());
 					model.setViewName("view/result/uploadFailure");
 				}
 			}else{
-				model.addObject("errorMsg", "用户修改密码失败！！！");
+				model.addObject("errorMsg", "用户修改密码失败！！！"+"  当前页面为"+Thread.currentThread().getStackTrace()[1].getClassName());
 				model.addObject("logMsg","数据库更新失败："+Thread.currentThread().getStackTrace()[1].getMethodName());
 				model.setViewName("view/result/uploadFailure");
 			}
