@@ -1,6 +1,7 @@
 ![jxufe](https://github.com/FiseTch/anaylse/raw/master/src/main/webapp/images/logo.png) 
 #### 项目名称 ： anaylse
-#### 系统框架 ：ssm(spring,springMvc,mybatis)+ maven 
+#### 系统框架 ：ssm(spring,springMvc,mybatis)+ maven
+#### 系统特色功能 ：excel的上传，解析及自定义内容下载，spring注解的使用，前台到数据库的文件内容的传递，数据库mybatis的xml运用（模糊查询，多表联合查询）
 #### 系统结构 : 标准的mvc模式，将整个系统划分为表现层，controller层，service层，DAO层四层
   ##### 使用spring MVC负责请求的转发和视图管理 ，spring实现业务对象管理，mybatis作为数据对象的持久化引擎
   ##### 系统说明 ：2018毕设 
